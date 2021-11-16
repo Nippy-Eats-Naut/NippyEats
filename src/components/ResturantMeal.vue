@@ -23,12 +23,14 @@
         </div>
     </div>
     <FoodDetails />
+    <Reviews />
 </template>
 <script>
+import Reviews from "./Reviews.vue"
 import FoodDetails from "./FoodDetails.vue"
 export default {
     name: 'ResturantMeal',
-    components: {FoodDetails},
+    components: {FoodDetails, Reviews},
     props:{
         title:{
             type: String

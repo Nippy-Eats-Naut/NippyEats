@@ -16,7 +16,8 @@
                                     <i class="bi bi-star-fill text--orange"></i>
                                 </div>
                                 <p class="ms-2">4.5(245)</p><i class="mx-1 bi bi-dot"></i>
-                                <router-link to="" class="text-secondary">Reviews (3)</router-link>
+                                <a class="text-secondary" data-bs-toggle="modal" data-bs-target="#Reviews" data-bs-dismiss="modal">Reviews (3)</a>
+                                <!--<Reviews />-->
                             </div>
                         </div>
                         
@@ -126,13 +127,15 @@
     </div>
 </template>
 <script>
+//import Reviews from "./Reviews.vue"
 export default {
-    name: 'FoodDetails',
-    data(){
-        return{
+    name: "FoodDetails",
+    data() {
+        return {
             quantity: 1
-        }
-    }
+        };
+    },
+    //components: { Reviews }
 }
 </script>
 <style scoped>

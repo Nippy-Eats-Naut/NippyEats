@@ -12,7 +12,8 @@
                             <i class="bi bi-star-fill text--orange"></i>
                         </div>
                         <p class="ms-2">4.5(245)</p><i class="mx-1 bi bi-dot"></i>
-                        <router-link to="" class="text-secondary">Reviews (3)</router-link>
+                        <a class="text-secondary" data-bs-toggle="modal" data-bs-target="#Reviews">Reviews (3)</a>
+                        <Reviews />
                     </div>
                     <div class="d-flex">
                         <p class=" me-3">
@@ -71,7 +72,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="border border-1 rounded border-dark px-2 py-1">
-                        <p class="fw-bold text-center">Basket</p>
+                        <p class="fw-bold text-center fs-6">Basket</p>
                         <BasketMeal :meals="meals.slice(0,2)"/>
 
                         <p class="">Order Summary</p>
@@ -99,6 +100,7 @@ import data from '@/assets/db.json'
 import ResturantMeal from "../components/ResturantMeal.vue"
 import BasketMeal from "../components/BasketMeal.vue";
 import ResturantPageCarousel from '../components/ResturantPageCarousel.vue';
+import Reviews from '../components/Reviews.vue';
 export default {
     name: "Resturant",
     data() {
@@ -112,6 +114,6 @@ export default {
             return data[0].meals;
         },
     },
-    components: { ResturantMeal, BasketMeal, ResturantPageCarousel }
+    components: { ResturantMeal, BasketMeal, ResturantPageCarousel, Reviews }
 }
 </script>
