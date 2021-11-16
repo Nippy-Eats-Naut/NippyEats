@@ -1,0 +1,46 @@
+[
+    {
+        "meals":[
+            {
+                "title": "Noodles",
+                "image": "@/assets/images/dummyImg/Rectangle_26.png"
+            },
+            {
+                "title": "Sauce",
+                "image": "@/assets/images/dummyImg/Rectangle_119.png"
+            },
+            {
+                "title": "Rice",
+                "image": "@/assets/images/dummyImg/Rectangle_41.png"
+            },
+            {
+                "title": "Swallow",
+                "image": "@/assets/images/dummyImg/Rectangle_37.png"
+            }
+        ]
+    },
+    {
+        "resturants":[
+            {
+                "title": "Noodles",
+                "image": "@/assets/dummyImg/"
+            },
+            {
+                "title": "Sauce",
+                "image": "@/assets/dummyImg/"
+            },
+            {
+                "title": "Rice",
+                "image": "@/assets/dummyImg/"
+            },
+            {
+                "title": "Pasta",
+                "image": "@/assets/dummyImg/"
+            },
+            {
+                "title": "Pasta",
+                "image": "@/assets/dummyImg/"
+            }
+        ]
+    }
+]
