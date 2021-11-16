@@ -14,7 +14,7 @@ import InviteFriends from "../views/InviteFriends.vue"
 import Login from "../views/Login.vue"
 import Order from "../views/Order.vue"
 import OrderSuccess from "../views/OrderSuccess.vue"
-import Resturant from "../views/Resturant.vue"
+import Resturants from "../views/Resturants.vue"
 import ResturantPage from "../views/ResturantPage.vue"
 import SignUp from "../views/SignUp.vue"
 import TermsAndConditions from "../views/TermsAndConditions.vue"
@@ -100,8 +100,8 @@ const routes = [
     },
     {
         path: '/resturants',
-        name: 'Resturant',
-        component: Resturant
+        name: 'Resturants',
+        component: Resturants
     },
     {
         path: '/resturant',
