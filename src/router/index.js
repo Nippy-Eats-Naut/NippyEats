@@ -20,6 +20,7 @@ import ResturantPage from "../views/ResturantPage.vue"
 import SignUp from "../views/SignUp.vue"
 import TermsAndConditions from "../views/TermsAndConditions.vue"
 import TrackOrders from "../views/TrackOrders.vue"
+import Wallet from "../views/Wallet.vue"
 import WhatWeDo from "../views/WhatWeDo.vue"
 
 
@@ -128,6 +129,11 @@ const routes = [
         path: '/trackorders',
         name: 'TrackOrders',
         component: TrackOrders
+    },
+    {
+        path: '/wallet',
+        name: 'Wallet',
+        component: Wallet
     },
     {
         path: '/what-we-do',

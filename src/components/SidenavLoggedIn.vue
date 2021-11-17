@@ -45,14 +45,14 @@
                     </router-link>
                 </li>
                 <li class="mb-3">
-                    <router-link to="" class="d-flex">
+                    <a class="d-flex" data-bs-toggle="modal" data-bs-target="#Logout">
                         <i class="bi bi-box-arrow-right me-3"></i>
                         <p class="mb-0">Log Out</p>
-                    </router-link>
+                    </a><Logout />
                 </li>
             </ul>
         </div>
-        <div class="nav--footer">
+        <div class="mt-5">
             <img src="@/assets/images/logo.png" alt="Nippyeats logo" width="230" height="50">
             <div class="d-flex mt-3">
                 <a href="" class="me-3">
@@ -66,23 +66,25 @@
     </div>
 </template>
 <script>
+import Logout from "./Logout.vue"
 export default {
-    name: 'SidenavLoggedIn',
-    props:{
-        open:{
+    name: "SidenavLoggedIn",
+    props: {
+        open: {
             type: Boolean,
         }
     },
-    data () {
-        return { 
+    data() {
+        return {
             fooOpen: false
+        };
+    },
+    methods: {
+        handleClick() {
+            this.$emit("update:parent", this.fooOpen);
         }
     },
-    methods:{
-        handleClick() {
-            this.$emit('update:parent', this.fooOpen)
-        }
-    }
+    components: { Logout }
 }
 </script>
 <style scoped>
@@ -108,9 +110,6 @@ export default {
         background-color: white;
         overflow-x: hidden;
         transition: 0.5s;
-    }
-    .nav--footer{
-        position: absolute;
-        bottom: 16px
+        overflow-y: scroll;
     }
 </style>
