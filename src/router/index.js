@@ -3,6 +3,7 @@ import Homepage from "../views/HomePage.vue";
 import AboutUs from "../views/AboutUs.vue"
 import Basket from "../views/Basket.vue"
 import CheckoutGuest from "../views/CheckoutGuest.vue"
+import CheckoutRegisteredUser from "../views/CheckoutRegisteredUser.vue"
 import ContactUs from "../views/ContactUs.vue"
 import DeliveryPartner from "../views/DeliveryPartner.vue"
 import FAQs from "../views/FAQs.vue"
@@ -42,6 +43,11 @@ const routes = [
         path: '/checkout/guest',
         name: 'CheckoutGuest',
         component: CheckoutGuest
+    },
+    {
+        path: '/checkout/user',
+        name: 'CheckoutRegisteredUser',
+        component: CheckoutRegisteredUser
     },
     {
         path: '/contact-us',

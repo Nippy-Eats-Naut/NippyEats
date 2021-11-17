@@ -19,6 +19,9 @@ body {
 .text--orange {
   color: rgba(252, 76, 1, 1);
 }
+.btn.outline--orange {
+  border: 1px solid rgba(252, 76, 1, 1);
+}
 .btn.bg--orange {
   background-color: rgba(252, 76, 1, 1);
 }
@@ -56,4 +59,7 @@ ul li {
 }
 .image-div {
   background-size: cover;
+}
+.justify-items-center {
+  justify-items: center;
 }

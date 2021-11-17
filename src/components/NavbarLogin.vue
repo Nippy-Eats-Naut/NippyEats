@@ -17,7 +17,7 @@
                     <span class="form-control-feedback">
                         <i class="bi bi-search text-secondary"></i>
                     </span>
-                    <input type="text" placeholder="Search food or resturants" class="form-control rounded">
+                    <input type="text" placeholder="Search food or resturants" class="bg-light form-control rounded">
                 </div>
             </div>
             <div>
