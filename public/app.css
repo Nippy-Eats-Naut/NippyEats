@@ -3,7 +3,8 @@
   src: url(@/assets/fonts/Manrope/Manrope-VariableFont_wght.ttf);
 }
 a {
-  text-decoration: none;
+  color: rgba(0, 0, 0, 1) !important;
+  text-decoration: none !important;
 }
 body {
   margin: 0;
@@ -62,4 +63,7 @@ ul li {
 }
 .justify-items-center {
   justify-items: center;
+}
+.router-link-exact-active {
+  color: rgba(252, 76, 1, 1) !important;
 }

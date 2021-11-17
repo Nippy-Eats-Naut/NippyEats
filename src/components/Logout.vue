@@ -3,12 +3,15 @@
         <div class="modal fade" id="Logout" tabindex="-1" aria-labelledby="Logout" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="">
-                            <button type="button" class="bg-dark text-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                        </div>
-                        <div>
-                            <button type="button" class="bg--orange text-white">Log Out</button>
+                    <div class="modal-body p-3">
+                        <p class="text-center">Are you sure you want to log out?</p>
+                        <div class="d-flex justify-content-evenly">
+                            <div class="">
+                                <button type="button" class="bg-dark btn text-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                            </div>
+                            <div>
+                                <button type="button" class="bg--orange btn text-white">Log Out</button>
+                            </div>
                         </div>
                     </div>
                 </div>

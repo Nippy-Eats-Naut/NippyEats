@@ -33,7 +33,7 @@
                     </router-link>
                 </li>
                 <li class="mb-3">
-                    <router-link to="" class="d-flex">
+                    <router-link to="/wallet" class="d-flex">
                         <i class="bi bi-wallet me-3"></i>
                         <p class="mb-0">Wallet</p>
                     </router-link>
@@ -48,7 +48,7 @@
                     <a class="d-flex" data-bs-toggle="modal" data-bs-target="#Logout">
                         <i class="bi bi-box-arrow-right me-3"></i>
                         <p class="mb-0">Log Out</p>
-                    </a><Logout />
+                    </a>
                 </li>
             </ul>
         </div>
@@ -64,6 +64,7 @@
             </div>
         </div>
     </div>
+    <Logout />
 </template>
 <script>
 import Logout from "./Logout.vue"
@@ -88,18 +89,6 @@ export default {
 }
 </script>
 <style scoped>
-    
-    .router-link-exact-active {
-        color: rgba(252, 76, 1, 1);
-    }
-    a.d-flex{
-        color: black;
-        text-decoration: none;
-    }
-    a.d-flex:hover{
-        color: rgba(252, 76, 1, 1);
-        text-decoration: underline;
-    }
     .--sidenav {
         height: 100%;
         width: 300px;
