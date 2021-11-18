@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <div class="d-flex mb-3">
+    <div class="container mt-5">
+        <div class="d-flex mb-4">
             <div class="form-check mr-3 p-0">
                 <input type="radio" name="type" class="form-check-input d-none" id="type1"  value="Delivery" v-model="type">
                 <label for="type1" class="form-check-label btn" :class="type=='Delivery'? 'btn-dark text-white': ''">
@@ -33,7 +33,7 @@
         </div>
         <div class="mb-5">
             <p class="fs-5 fw-bold">Browse By Food</p>
-            <RecommendationCard :meals="meals.slice(0,3)" />
+            <RecommendationCard :meals="3" />
         </div>
     </div>
 </template>

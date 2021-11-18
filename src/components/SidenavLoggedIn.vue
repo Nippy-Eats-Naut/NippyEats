@@ -101,4 +101,7 @@ export default {
         transition: 0.5s;
         overflow-y: scroll;
     }
+    li a.d-flex{
+        color: rgba(0, 0, 0, 1);
+    }
 </style>

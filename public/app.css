@@ -33,8 +33,9 @@ body {
   background: rgba(195, 195, 195, 0.21);
   border: 0.597283px solid rgba(1, 1, 1, 0.2);
 }
-.searchbar::placeholder {
+.form-control.searchbar::placeholder {
   color: rgba(1, 1, 1, 0.3);
+  font-size: small;
 }
 .bg--footer {
   background: rgba(6, 6, 16, 1);

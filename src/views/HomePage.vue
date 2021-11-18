@@ -14,11 +14,11 @@
             </div>
         </div>
     </div>
-    <div class="container mb-5">
+    <div class="container my-5">
         <p class="fs-4 text-center fw-bold">Our Top Recommendatons</p>
         <p class="text-center">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
         <div class="mt-3">
-            <RecommendationCard :meals="meals" />
+            <RecommendationCard :meals="4" />
         </div>
     </div>
     <div class="container mb-5">

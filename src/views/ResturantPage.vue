@@ -12,7 +12,7 @@
                             <i class="bi bi-star-fill text--orange"></i>
                         </div>
                         <p class="ms-2">4.5(245)</p><i class="mx-1 bi bi-dot"></i>
-                        <a class="text-secondary" data-bs-toggle="modal" data-bs-target="#Reviews">Reviews (3)</a>
+                        <a class="text-secondary text-decoration-underline" data-bs-toggle="modal" data-bs-target="#Reviews">Reviews (3)</a>
                         <Reviews />
                     </div>
                     <div class="d-flex">
