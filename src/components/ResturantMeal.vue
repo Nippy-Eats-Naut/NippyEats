@@ -2,12 +2,12 @@
     <div>
         <p class="fs-4 fw-bold mb-4">{{title}}</p>
         <div class="row">
-            <div class="col-md-6 card border-0 mb-3" v-for="meal,index in meals" :key="index" >
+            <div class="card border-0 mb-4" v-for="meal,index in meals" :key="index" :class="col">
                 <a class="row text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#FoodDetails">
                     <div class="col-md-6">
                         <div class="card-img-overlay">
-                            <button class="bg--grey btn rounded-circle">
-                                <i class="bi bi-heart text-white"></i>
+                            <button class="btn-light btn-sm btn rounded-circle">
+                                <i class="bi bi-heart text-dark"></i>
                             </button>
                         </div>
                         <img src="@/assets/images/dummyImg/Rectangle_24.png" class="card-img" height="169">
@@ -36,14 +36,13 @@ export default {
             type: String
         },
         meals: {
-            type: Object
+            type: Number
+        },
+        col:{
+            type: String
         }
     }
 }
 </script>
 <style scoped>
-    
-    .card-img-overlay{
-        left: unset;
-    }
 </style>

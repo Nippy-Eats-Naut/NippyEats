@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <div v-for="meal,index in meals" :key="index" class="col-md-3 card border-0 px-2">
+            <div v-for="meal,index in meals" :key="index" class="col-md-3 mb-3 card border-0 px-2">
                 <div class="card-img-overlay">
                      <button class="bg--grey btn rounded-circle">
                         <i class="bi bi-heart-fill text-white"></i>
@@ -27,10 +27,10 @@
 </template>
 <script>
 export default {
-    name: 'MealCard',
+    name: 'ResturantCard',
     props: {
         meals:{
-            type: Object
+            type: Number
         }
     }
 }

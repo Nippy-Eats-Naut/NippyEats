@@ -21,15 +21,15 @@
             </div>
         </div>
         <div class="mb-5">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-baseline">
                 <p class="fs-5 fw-bold">Popular Near You</p>
                 <router-link to="" class="text-dark small text-decoration-none">See All</router-link>
             </div>
-            <MealCard :meals="meals.slice(0,4)"/>
+            <ResturantCard :meals="4"/>
         </div>
         <div class="mb-5">
             <p class="fs-5 fw-bold">Dishes we Recommend</p>
-            <MealCard :meals="meals.slice(0,4)"/>
+            <ResturantCard :meals="4"/>
         </div>
         <div class="mb-5">
             <p class="fs-5 fw-bold">Browse By Food</p>
@@ -39,7 +39,7 @@
 </template>
 <script>
 import data from '@/assets/db.json'
-import MealCard from "../components/MealCard.vue"
+import ResturantCard from "../components/ResturantCard.vue"
 import RecommendationCard from "../components/RecommendationCard.vue";
 export default {
     name: "HomePageAfterLogin",
@@ -54,7 +54,7 @@ export default {
             return data[0].meals;
         },
     },
-    components: { MealCard, RecommendationCard }
+    components: { ResturantCard, RecommendationCard }
 }
 </script>
 <style scoped>

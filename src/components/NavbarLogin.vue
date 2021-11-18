@@ -20,13 +20,19 @@
                     <input type="text" placeholder="Search food or resturants" class="bg-light form-control rounded">
                 </div>
             </div>
-            <div>
-                <button class="btn">
-                    <i class="bi bi-bell-fill text-dark"></i>
-                </button>
-                <router-link to="/login" class="btn btn-dark rounded">
+            <div class="d-flex align-items-baseline">
+                <div class="dropdown me-3" >
+                    <button class="btn p-0 position-relative" type="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="10,20">
+                        <i class="bi bi-bell-fill text-dark"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                            <span class="visually-hidden">New notifications</span>
+                        </span>
+                    </button>
+                    <Notifications />
+                </div>
+                <router-link to="/basket" class="btn btn-dark rounded">
                     <i class="bi bi-basket-fill"></i>
-                    Basket . 2
+                    Basket <i class="bi bi-dot"></i> 2
                 </router-link>
             </div>
         </div>
@@ -35,12 +41,13 @@
 
 <script>
 import SidenavLoggedIn from "./SidenavLoggedIn.vue";
+import Notifications from "./Notifications.vue";
 export default{
     name: "NavbarLogin",
-    components: { SidenavLoggedIn },
+    components: { SidenavLoggedIn, Notifications},
     data(){
         return{
-            Open: false
+            Open: false,
         }
     },
     methods:{

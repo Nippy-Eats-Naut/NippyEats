@@ -58,16 +58,16 @@
                         <button class="btn">More</button>
                     </div>
                     <div class="mb-5">
-                        <ResturantMeal title="Breakfast" :meals="meals.slice(0,4)" />
+                        <ResturantMeal title="Breakfast" :meals="4" col="col-md-6" />
                     </div>
                     <div class="mb-5">
-                        <ResturantMeal title="Lunch" :meals="meals.slice(0,4)" />
+                        <ResturantMeal title="Lunch" :meals="4" col="col-md-6" />
                     </div>
                     <div class="mb-5">
-                        <ResturantMeal title="Dinner" :meals="meals.slice(0,3)" />
+                        <ResturantMeal title="Dinner" :meals="3" col="col-md-6" />
                     </div>
                     <div class="mb-5">
-                        <ResturantMeal title="Brunch" :meals="meals.slice(0,2)" />
+                        <ResturantMeal title="Brunch" :meals="2" col="col-md-6" />
                     </div>
                 </div>
                 <div class="col-md-4">

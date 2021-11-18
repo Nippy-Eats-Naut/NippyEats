@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row py-5">
                 <div class="col-md-4 pe-5">
-                    <img src="@/assets/images/logo.png" alt="Nippyeats logo" class="mb-2"/>
+                    <img src="@/assets/images/Frame.png" alt="Nippyeats logo" class="mb-2"/>
                     <p class="text-white">Make meals more accessible on your fingertips</p>
                 </div>
                 <div class="col-md-3">
@@ -30,7 +30,7 @@
                             <router-link class="footer--link" to="/contact-us">Contact Us</router-link>
                         </li>
                         <li>
-                            <router-link class="footer--link" to="">Privacy Policy</router-link>
+                            <router-link class="footer--link" to="/">Privacy Policy</router-link>
                         </li>
                         <li>
                             <router-link class="footer--link" to="/terms-conditions">Terms and Conditions</router-link>
