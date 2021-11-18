@@ -67,3 +67,11 @@ ul li {
 .router-link-exact-active {
   color: rgba(252, 76, 1, 1) !important;
 }
+.bg--hero {
+  background: rgba(6, 6, 16, 1);
+  position: relative;
+  z-index: 100;
+  right: 150px;
+  width: 696px;
+  color: rgba(6, 6, 16, 1);
+}

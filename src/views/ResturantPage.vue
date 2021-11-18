@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="container">
         <div>
             <ResturantPageCarousel />
         </div>
-        <div class="container mt-3">
+        <div class="mt-3">
             <div class="d-flex justify-content-between">
                 <div>
                     <p class="fs-3 fw-bold">Jevinik Resturant</p>

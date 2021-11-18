@@ -15,9 +15,9 @@
                 </div>
                 <div class="input-group has-icon">
                     <span class="form-control-feedback">
-                        <i class="bi bi-search text-secondary"></i>
+                        <i class="bi bi-search text-secondary opacity-25"></i>
                     </span>
-                    <input type="text" placeholder="Search food or resturants" class="bg-light form-control rounded">
+                    <input type="text" placeholder="Search food or resturants" class="bg-light form-control rounded searchbar">
                 </div>
             </div>
             <div class="d-flex align-items-baseline">
