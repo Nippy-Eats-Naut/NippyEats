@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card border-0">
         <div class="row">
             <div v-for="meal,index in meals" :key="index" class="col-md-4 card border-0 px-3">
                     <img src="@/assets/images/dummyImg/Rectangle_26.png" class="card-img" width="224" height="176">
@@ -8,11 +8,11 @@
                 </router-link>
             </div>
         </div>
-        <div class="card-overlay">
-            <button class="btn bg-light text--orange" @click="scroll_left">
+        <div class="card-img-overlay d-flex justify-content-between align-items-center">
+            <button class="btn bg-light text--orange rounded-circle" @click="scroll_left">
                 <i class="bi bi-arrow-left"></i>
             </button>
-            <button class="btn bg-light text--orange" @click="scroll_right">
+            <button class="btn bg-light text--orange rounded-circle" @click="scroll_right">
                 <i class="bi bi-arrow-right"></i>
             </button>
         </div>
@@ -49,7 +49,7 @@ export default {
         border-radius: 5px;
     }
     .row{
-        overflow-x: auto;
+        overflow-x: hidden;
         flex-wrap: nowrap;
     }
 </style>

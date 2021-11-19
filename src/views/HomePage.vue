@@ -8,8 +8,8 @@
                     <span class="form-control-feedback">
                         <i class="bi bi-geo-alt-fill text-white"></i>
                     </span>
-                    <input type="text" class="form-control border-0 rounded bg-transparent w-50" placeholder="Where are you at?">
-                    <button class="btn text-white bg--orange">Find Food</button>
+                    <input type="text" class="form-control border-0 rounded bg-transparent w-50" placeholder="Where are you at?" v-model="addr">
+                    <button class="btn text-white bg--orange" @click="getProvider">Find Food</button>
                 </div>
             </div>
         </div>
@@ -43,9 +43,9 @@
         </div>
     </div>
     <div class="container">
-        <div class="row mb-4">
+        <div class="row mb-5">
             <div class="col-md-6">
-                <img src="@/assets/images/Group_68.png" alt="Where To Eat">
+                <img src="@/assets/images/Group_68.png" alt="Where To Eat" class="img-fluid">
             </div>
             <div class="col-md-4">
                 <p class="fw-bold fs-1">Looking for Where To Eat?</p>
@@ -55,21 +55,21 @@
                 </router-link>
             </div>
         </div>
-        <div class="row mb-4">
+        <div class="row mb-5 justify-content-center">
             <div class="col-md-4">
                 <p class="fw-bold fs-1">List Your Food Business</p>
                 <p class="text-secondary mb-4">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
-                <router-link to="/food-lisiting" class="btn text--orange">
+                <router-link to="/food-listing" class="btn text--orange">
                     Enlist Resturant <i class="ms-2 bi bi-arrow-right"></i>
                 </router-link>
             </div>
             <div class="col-md-6">
-                <img src="@/assets/images/Group_71.png" alt="Food Business">
+                <img src="@/assets/images/Group_71.png" alt="Food Business" class="img-fluid">
             </div>
         </div>
-        <div class="row mb-4">
+        <div class="row mb-5">
             <div class="col-md-6">
-                <img src="@/assets/images/Group_73.png" alt="Delivery Partner">
+                <img src="@/assets/images/Group_73.png" alt="Delivery Partner" class="img-fluid">
             </div>
             <div class="col-md-4">
                 <p class="fw-bold fs-1">Become A Delivery Partner</p>
@@ -88,7 +88,35 @@ import NewResturants from '../components/NewResturants.vue';
 export default {
     name: "HomePage",
     data() {
-        return {};
+        return {
+            longitude: null,
+            latitude: null,
+            addr: null
+        };
+    },
+    methods:{
+        getProvider(){
+            const success = (position) => {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                console.log(latitude, longitude);
+                this.latitude = latitude
+                this.longitude = longitude
+            };
+            const error = (err) => {
+                console.log(err);
+            };
+            navigator.geolocation.getCurrentPosition(success, error);
+
+            var config = {
+                method: 'get',
+                url: `{{base_url}}/providers?${this.longitude}&${this.latitude}`,
+                headers: { }
+            };
+            this.axios.get(config).then((response) => {
+                console.log(response.data);
+            });
+        },
     },
     computed: {
         meals() {

@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <div class="content">
+    <div class="card border-0">
+        <div class="row --nr">
             <div v-for="res,index in resturants" :key="index" class="col-md-3 card border-0 px-2">
-                <div class="card-img-overlay">
+                <div class="card-img-overlay --a">
                      <button class="bg--grey btn rounded-circle">
                         <i class="bi bi-heart-fill text-white"></i>
                     </button>
@@ -23,6 +23,14 @@
                 </router-link>
             </div>
         </div>
+        <div class="card-img-overlay d-flex justify-content-between align-items-center">
+            <button class="btn bg-light text--orange rounded-circle" @click="scroll_left">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <button class="btn bg-light text--orange rounded-circle" @click="scroll_right">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+        </div>
     </div>
 </template>
 <script>
@@ -31,6 +39,16 @@ export default {
     props: {
         resturants:{
             type: Object
+        }
+    },
+    methods: {
+        scroll_left() {
+        let content = document.querySelector(".row.--nr");
+        content.scrollLeft -= 50;
+        },
+        scroll_right() {
+        let content = document.querySelector(".row.--nr");
+        content.scrollLeft += 50;
         }
     }
 }
@@ -42,11 +60,11 @@ export default {
     .btn.bg--grey{
         background: rgba(1, 1, 1, 0.7);
     }
-    .card-img-overlay{
+    .card-img-overlay.--a{
         left: unset;
     }
-    .content{
-        display: flex;
-        overflow-x: scroll;
+    .row{
+        flex-wrap: nowrap;
+        overflow-x: hidden;
     }
 </style>

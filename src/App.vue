@@ -1,5 +1,5 @@
 <template>
-  <NavbarLogin v-show="$route.name !== 'Login' || $route.name !== 'SignUp'"/>
+  <NavbarLogin v-if="!Auth"/>
   <!--<NavbarNoLogin />-->
   <router-view></router-view>
   <Footer />
@@ -13,7 +13,13 @@ import NavbarLogin from './components/NavbarLogin.vue'
 export default {
   name: 'App',
   components: {
-     NavbarLogin, Footer,//NavbarNoLogin
+    NavbarLogin, Footer,//NavbarNoLogin
+  },
+  computed:{
+    Auth(){
+      var auth = this.$route.name === 'Login' || this.$route.name === 'SignUp';
+      return auth;
+    }
   }
 }
 </script>
