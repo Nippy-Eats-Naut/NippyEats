@@ -38,7 +38,7 @@
     </div>
 </template>
 <script>
-import data from '@/assets/db.json'
+import {mapGetters} from 'vuex'
 import ResturantCard from "../components/ResturantCard.vue"
 import RecommendationCard from "../components/RecommendationCard.vue";
 export default {
@@ -50,11 +50,21 @@ export default {
     },
     
     computed: {
-        meals() {
-            return data[0].meals;
-        },
+        ...mapGetters([
+            'longitude','latitude'
+        ]),
     },
-    components: { ResturantCard, RecommendationCard }
+    components: { ResturantCard, RecommendationCard },
+    beforeMount(){
+        var config = {
+            method: 'get',
+            url: `{{base_url}}/providers?${this.longitude}&${this.latitude}`,
+            headers: { }
+        };
+        /*this.axios.get(config).then((response) => {
+            console.log(response.data);
+        });*/
+    }
 }
 </script>
 <style scoped>

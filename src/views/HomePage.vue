@@ -89,34 +89,19 @@ export default {
     name: "HomePage",
     data() {
         return {
-            longitude: null,
-            latitude: null,
             addr: null
         };
     },
     methods:{
         getProvider(){
-            const success = (position) => {
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                console.log(latitude, longitude);
-                this.latitude = latitude
-                this.longitude = longitude
-            };
-            const error = (err) => {
-                console.log(err);
-            };
-            navigator.geolocation.getCurrentPosition(success, error);
-
-            var config = {
-                method: 'get',
-                url: `{{base_url}}/providers?${this.longitude}&${this.latitude}`,
-                headers: { }
-            };
-            this.axios.get(config).then((response) => {
-                console.log(response.data);
-            });
-        },
+            navigator.geolocation.getCurrentPosition(position => {
+                var lat = position.coords.latitude;
+                var long = position.coords.longitude;
+                this.$store.commit('store_location', {long,lat});
+                console.log(lat, long);
+            })
+            this.$router.push('/home')
+        }
     },
     computed: {
         meals() {
