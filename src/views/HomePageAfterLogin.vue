@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-5">
+    <div class="container" :class="desktop?'mt-5':'mt-3'">
         <div class="d-flex mb-4">
             <div class="form-check mr-3 p-0">
                 <input type="radio" name="type" class="form-check-input d-none" id="type1"  value="Delivery" v-model="type">
@@ -25,7 +25,7 @@
                 <p class="fs-5 fw-bold">Popular Near You</p>
                 <router-link to="" class="text-dark small text-decoration-none">See All</router-link>
             </div>
-            <ResturantCard :meals="4"/>
+            <ResturantCard :meals="resturants"/>
         </div>
         <div class="mb-5">
             <p class="fs-5 fw-bold">Dishes we Recommend</p>
@@ -45,25 +45,40 @@ export default {
     name: "HomePageAfterLogin",
     data() {
         return {
-            type: "Delivery"
+            type: "Delivery",
+            resturants: [],
+            meals: []
         };
     },
-    
+    inject: ['mq'],
     computed: {
         ...mapGetters([
             'longitude','latitude'
         ]),
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
     },
     components: { ResturantCard, RecommendationCard },
     beforeMount(){
         var config = {
             method: 'get',
-            url: `{{base_url}}/providers?${this.longitude}&${this.latitude}`,
+            url: `https://api.nippyeats.com/v1/foodies/providers?longitude=${this.longitude}&latitude=${this.latitude}`,
             headers: { }
         };
-        this.axios.get(config).then((response) => {
-            console.log(response.data);
-        });
+        if (localStorage.getItem('nippy.token') === null){  
+            this.axios(config)
+            .then((response) => {
+                console.log(response.data);
+            });
+        }else{
+            localStorage.getItem('nippy.user.location') 
+            this.axios(config)
+            .then((response) => {
+                this.resturants = response.data.data.data
+            });
+        }
+        
     }
 }
 </script>

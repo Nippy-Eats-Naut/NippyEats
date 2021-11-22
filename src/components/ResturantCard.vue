@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="row">
-            <div v-for="meal,index in meals" :key="index" class="col-md-3 mb-3 card border-0 px-2">
+        <div class="row"  :class="desktop?'':'hr-scroll'">
+            <div v-for="meal,index in meals" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
                 <div class="card-img-overlay">
                      <button class="bg--grey btn rounded-circle">
                         <i class="bi bi-heart-fill text-white"></i>
@@ -9,15 +9,15 @@
                 </div>
                 <router-link to="" class="text-decoration-none text-dark">
                     <div class="rounded image-div">
-                        <img src="@/assets/images/dummyImg/Rectangle_29.png" class="card-img" height="176">
+                        <img :src="meal.logo.fileUrl" class="card-img img-fluid">
                     </div>
                     <div class="d-flex justify-content-between py-2 card-body px-1">
                         <div>
-                            <p class="card-title fw-bold">Cloud Kitchen</p>
-                            <p class="card-text small text-secondary">N300 Delivery Fee <i class="bi bi-dot"></i> 30-40 min</p>
+                            <p class="card-title fw-bold">{{meal.name}}</p>
+                            <p class="card-text small text-secondary">N{{meal.orderInformation.minimumOrderAmount}} Delivery Fee <i class="bi bi-dot"></i>{{meal.orderInformation.averageFoodTimes}}</p>
                         </div>
                         <div>
-                            <p class="small d-flex"><i class="bi bi-star-fill text--orange me-1"></i> 4.5</p>
+                            <p class="small d-flex"><i class="bi bi-star-fill text--orange me-1"></i>{{meal.rating}}</p>
                         </div>
                     </div>
                 </router-link>
@@ -30,12 +30,22 @@ export default {
     name: 'ResturantCard',
     props: {
         meals:{
-            type: Number
+            type: Array
         }
-    }
+    },
+    inject: ['mq'],
+    computed: {
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
+    },
 }
 </script>
 <style scoped>
+    .row.hr-scroll{
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
     p.card-text.text-secondary{
         font-size: 0.8rem;
     }
