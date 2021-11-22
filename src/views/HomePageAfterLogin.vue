@@ -61,9 +61,9 @@ export default {
             url: `{{base_url}}/providers?${this.longitude}&${this.latitude}`,
             headers: { }
         };
-        /*this.axios.get(config).then((response) => {
+        this.axios.get(config).then((response) => {
             console.log(response.data);
-        });*/
+        });
     }
 }
 </script>

@@ -53,7 +53,8 @@ export default {
         };
     },
     methods: {
-        Login() {
+        Login(e) {
+            e.preventDefault()
             if (!this.data.email || !this.data.password) {
                 this.errors.push("Email and password cannot be empty");
             }
@@ -63,26 +64,40 @@ export default {
             else {
                 var config = {
                     method: "post",
-                    url: "{{base_url}}/login",
+                    url: "https://api.nippyeats.com/v1/foodies/login",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    data: this.data
+                    data: JSON.stringify(this.data)
                 };
-                this.axios.get(config).then((response) => {
-                    console.log(response.data);
-                });
+                this.axios(config)
+                .then((response) => {
+                    localStorage.setItem('nippy.user', JSON.stringify(response.data.data.foodie))
+                    localStorage.setItem('nippy.token', response.data.data.authorization.token)
+
+                    if (localStorage.getItem('nippy.token') != null) {
+                        this.$emit('loggedIn')
+                        if (this.$route.query.redirect != null) {
+                            this.$router.push(this.$route.query.redirect)
+                        } else {
+                            this.$router.push('/home')
+                        }
+                    }
+                })
+                .catch(err => {
+                    this.errors.push(err.response.data.message);
+                })
             }
             setTimeout(() => {
                 this.errors = [];
-            }, 5000);
+            }, 10000);
         },
         validEmail: function (email) {
             var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
         },
     },
-    components: { Alert }
+    components: { Alert },
 }
 </script>
 <style scoped>

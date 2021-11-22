@@ -9,6 +9,11 @@
             </div>
         <div :class="mq.current === 'xs' || mq.current === 'sm' ? '' : 'px--16'">
             <div class="">
+                <div class="alert alert-success alert-dismissible fade mb-3" role="alert" v-show="!message">
+                    <strong>{{message}}</strong> 
+                    <router-link to="/verify-signup"></router-link>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 <p class="fw-bold fs-4">Create An Account</p>
                 <div class="mb-3 row">
                     <div class="col-md-6" :class="mq.current === 'xs' || mq.current === 'sm' ? 'mb-3' : ''">
@@ -43,7 +48,6 @@
                 </div>
             </div>
         </div>
-        <Alert :errors="errors"/>
     </div>
 </template>
 <script>
@@ -58,9 +62,11 @@ export default {
                 lastname: null,
                 email: null,
                 password: null,
+               // referralcode: null,
+               // phone: null,
                 location: null
             },
-            errors: [],
+            message: null,
             tncbx: null
         };
     },
@@ -78,19 +84,22 @@ export default {
             else {
                 var config = {
                     method: "post",
-                    url: "{{base_url}}/signup",
+                    url: "https://api.nippyeats.com/v1/foodies/signup",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    data: this.data
+                    data: JSON.stringify(this.data)
                 };
-                this.axios.get(config).then((response) => {
-                    console.log(response.data);
-                });
+                this.axios(config)
+                .then((response) => {
+                    this.message = response.data.message
+                    localStorage.setItem('nippy.user', JSON.stringify(response.data.data.foodie))
+                    localStorage.setItem('nippy.token', response.data.data.authorization.token)   
+                })
+                .catch(err => {
+                    this.message = err.response.data.message;
+                })
             }
-            setTimeout(() => {
-                this.errors = [];
-            }, 5000);
         },
         validEmail: function (email) {
             var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

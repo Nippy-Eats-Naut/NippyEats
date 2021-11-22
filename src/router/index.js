@@ -22,6 +22,7 @@ import TermsAndConditions from "../views/TermsAndConditions.vue"
 import TrackOrders from "../views/TrackOrders.vue"
 import Wallet from "../views/Wallet.vue"
 import WhatWeDo from "../views/WhatWeDo.vue"
+import VerifySignUp from "../views/VerifySignUp.vue"
 
 
 const routes = [
@@ -48,7 +49,10 @@ const routes = [
     {
         path: '/checkout/user',
         name: 'CheckoutRegisteredUser',
-        component: CheckoutRegisteredUser
+        component: CheckoutRegisteredUser,
+        meta: {
+            requireAuth: true
+        }
     },
     {
         path: '/contact-us',
@@ -68,7 +72,10 @@ const routes = [
     {
         path: '/favourites',
         name: 'Favourites',
-        component: Favourites
+        component: Favourites,
+        meta: {
+            requireAuth: true
+        }
     },
     {
         path: '/Category',
@@ -83,17 +90,26 @@ const routes = [
     {
         path: '/home',
         name: 'HomePageAfterLogin',
-        component: HomePageAfterLogin
+        component: HomePageAfterLogin,
+        meta: {
+            requireAuth: true
+        }
     },
     {
         path: '/invite-friends',
         name: 'InviteFriends',
-        component: InviteFriends
+        component: InviteFriends,
+        meta: {
+            requireAuth: true
+        }
     },
     {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: Login,
+        meta: {
+            class: 'Auth'
+        }
     },
     {
         path: '/order',
@@ -118,7 +134,10 @@ const routes = [
     {
         path: '/signup',
         name: 'SignUp',
-        component: SignUp
+        component: SignUp,
+        meta: {
+            class: 'Auth'
+        }
     },
     {
         path: '/terms-conditions',
@@ -133,18 +152,47 @@ const routes = [
     {
         path: '/wallet',
         name: 'Wallet',
-        component: Wallet
+        component: Wallet,
+        meta: {
+            requireAuth: true
+        }
     },
     {
         path: '/what-we-do',
         name: 'WhatWeDo',
         component: WhatWeDo
     },
+    {
+        path: '/verify-signup',
+        name: 'VerifySignUp',
+        component: VerifySignUp,
+        meta: {
+            class: 'Auth'
+        }
+    },
+    
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requireAuth)){
+        if (localStorage.getItem('nippy.token') == null){
+            next({
+                path:'/login',
+                query: { redirect: to.fullPath }
+            })
+        }
+        else{
+          next()
+        }
+    }
+    else {
+      next()
+    }
 })
 
 export default router
