@@ -9,10 +9,12 @@
             </div>
         <div :class="mq.current === 'xs' || mq.current === 'sm' ? '' : 'px--16'">
             <div class="">
-                <div class="alert alert-success alert-dismissible fade mb-3" role="alert" v-show="!message">
-                    <strong>{{message}}</strong> 
-                    <router-link to="/verify-signup"></router-link>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div v-show="message != null">
+                    <div class="alert alert-dismissible fade mb-1" :class="success == true ? 'alert-success': 'alert-danger'" role="alert">
+                        {{message}}
+                        <router-link to="/verify-signup"><strong>Verify Signup</strong></router-link>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 </div>
                 <p class="fw-bold fs-4">Create An Account</p>
                 <div class="mb-3 row">
@@ -51,7 +53,6 @@
     </div>
 </template>
 <script>
-import Alert from "../components/Alert.vue";
 export default {
     name: "SignUp",
     inject: ["mq"],
@@ -67,19 +68,20 @@ export default {
                 location: null
             },
             message: null,
-            tncbx: null
+            tncbx: null,
+            success: null
         };
     },
     methods: {
         SignUp() {
             if (!this.data.email || !this.data.password || !this.data.firstname || !this.data.lastname || !this.data.location) {
-                this.errors.push("Field cannot be empty");
+                this.message = "Field cannot be empty";
             }
             else if (!this.validEmail(this.data.email)) {
-                this.errors.push("Valid email required.");
+                this.message = "Valid email required.";
             }
              else if (!this.tncbx) {
-                this.errors.push("Agreement needs to be checked");
+                this.message = "Agreement needs to be checked";
             }
             else {
                 var config = {
@@ -93,6 +95,7 @@ export default {
                 this.axios(config)
                 .then((response) => {
                     this.message = response.data.message
+                    this.success = response.data.success
                     localStorage.setItem('nippy.user', JSON.stringify(response.data.data.foodie))
                     localStorage.setItem('nippy.token', response.data.data.authorization.token)   
                 })
@@ -106,7 +109,6 @@ export default {
             return re.test(email);
         },
     },
-    components: { Alert }
 }
 </script>
 <style scoped>
