@@ -3,7 +3,7 @@
         <div class="my-5">
             <p class="fs-4 fw-bold text-center">About Us</p>
         </div>
-        <div class="d-flex mb-4 align-items-baseline">   
+        <div class="mb-4 position-relative" v-if="desktop">   
             <div>
                 <img src="@/assets/images/Group_196.png" class="rounded img-fluid">
             </div>
@@ -22,10 +22,19 @@
                 </router-link>
             </div>
         </div>
+        <div v-else>
+
+        </div>
     </div>
 </template>
 <script>
 export default {
-    name: 'AboutUs'
+    name: 'AboutUs',
+    inject: ["mq"],
+    computed: {
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
+    },
 }
 </script>

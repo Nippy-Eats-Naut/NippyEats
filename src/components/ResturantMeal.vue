@@ -12,7 +12,7 @@
                         </div>
                         <img src="@/assets/images/dummyImg/Rectangle_24.png" class="card-img" height="169">
                     </div>
-                    <div class="col-md-6" col-6>
+                    <div class="col-md-6 col-6">
                         <p class="fw-bold mb-1">English Breakfast</p>
                         <p class="text-secondary small mb-2">Tender chicken marinated daily with an exotic blend of potato chips and ketchup</p>
                         <p class="text-secondary mb-1 fw-bold">N3,000</p>

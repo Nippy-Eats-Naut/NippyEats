@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="d-flex mb-3" v-if="desktop">
-                    <div class="form-check mr-3 p-0" v-for="modes,index in provider.orderInformation.deliveryModes" :key="index">
+                    <div class="form-check mr-3 p-0" v-for="modes,index in deliveryModes" :key="index">
                         <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="type">
                         <label :for="`type${index}`" class="form-check-label btn" :class="type == modes? 'btn-dark text-white': ''">
                             {{modes}}
@@ -31,7 +31,7 @@
                     {{provider.contactInformation.address}}
                 </p>
                 <div class="d-flex">
-                    <i class="bi bi-clock-fill me-1"></i>
+                    <i class="bi bi-clock-fill me-3"></i>
                     <p v-if="provider.orderInformation.workingDays.length >= 4">{{workingDays}}</p>
                     <div class="d-flex" v-else>
                         <ul class="ps-1">
@@ -41,16 +41,16 @@
                     </div>
                 </div>
             </div>
-            <div v-if="!desktop">
-                <div class="d-flex justify-content-evenly mb-3 tab border-bottom">
-                    <button class="btn text--orange">Breakfast</button>
+            <div v-if="!desktop" class="mb-4">
+                <div class="d-flex mb-3 tab border-bottom">
+                    <button class="btn text--orange" v-for="_time,index in Time" :key="index">{{_time}}</button>
                     <button class="btn">Lunch</button>
                     <button class="btn">Dinner</button>
                     <button class="btn">Brunch</button>
                     <button class="btn">Late Night</button>
                     <button class="btn">More</button>
                 </div>
-                <div class="d-flex mb-3">
+                <div class="d-flex">
                     <div class="form-check mr-3 p-0" v-for="modes,index in deliveryModes" :key="index">
                         <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="type">
                         <label :for="`type${index}`" class="form-check-label btn" :class="type == modes? 'btn-dark text-white': ''">
@@ -138,18 +138,25 @@ export default {
         },
         workingDays(){
             var init = ["Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-            var days = this.provider.orderInformation.workingDays
+            var wDays = this.provider.orderInformation.workingDays
+            var days = []
             var fooDays = {
                 __days: [],
-                closingTime: days[0].closingTime,
-                openingTime: days[0].openingTime
+                closingTime: wDays[0].closingTime,
+                openingTime: wDays[0].openingTime
             }
-            if(days.length >= 4){
+            wDays.filter(_day=> {
+                    days.push(_day.day)
+            });
+            if(wDays.length == 7){
+                return `EveryDay  ${fooDays.openingTime} - ${fooDays.closingTime}`
+            }
+            else if (wDays.length >= 4){
                 let ex = init.filter(_day => !days.includes(_day));
                 return `EveryDay  ${fooDays.openingTime} - ${fooDays.closingTime}, except ${ex.toString()}`
             }
             else{
-                days.filter(_day=> {
+                wDays.filter(_day=> {
                     fooDays.__days.push(_day.day)
                 })
                 return fooDays;

@@ -3,7 +3,7 @@
         <div class="my-5">
             <p class="fs-4 fw-bold text-center">What We Do</p>
         </div>
-        <div class="d-flex mb-4 align-items-baseline">   
+        <div class="dmb-4 position-relative">   
             <div>
                 <img src="@/assets/images/Group_196.png" class="rounded img-fluid">
             </div>
