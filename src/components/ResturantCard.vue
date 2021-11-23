@@ -1,15 +1,15 @@
 <template>
     <div>
         <div class="row"  :class="desktop?'':'hr-scroll'">
-            <div v-for="meal,index in meals" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
+            <div v-for="meal,index in meals.slice(0,4)" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
                 <div class="card-img-overlay">
                      <button class="bg--grey btn rounded-circle">
                         <i class="bi bi-heart-fill text-white"></i>
                     </button>
                 </div>
-                <router-link to="" class="text-decoration-none text-dark">
-                    <div class="rounded image-div">
-                        <img :src="meal.logo.fileUrl" class="card-img img-fluid">
+                <router-link :to="`/resturant/${meal.id}`" class="text-decoration-none text-dark">
+                    <div class="image-div">
+                        <img :src="meal.logo != null ? meal.logo.fileUrl : ''" class="card-img" height="172">
                     </div>
                     <div class="d-flex justify-content-between py-2 card-body px-1">
                         <div>
@@ -37,7 +37,7 @@ export default {
     computed: {
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
-        }
+        },
     },
 }
 </script>
@@ -54,5 +54,8 @@ export default {
     }
     .card-img-overlay{
         left: unset;
+    }
+    img.card-img{
+        border-radius: 6.29213px;
     }
 </style>

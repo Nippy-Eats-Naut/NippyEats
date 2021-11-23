@@ -1,9 +1,9 @@
 <template>
     <div class="card border-0">
         <div title="meal image" class="card-img hero-img"></div>
-        <div class="card-img-overlay px-5">
+        <div class="card-img-overlay" :class="desktop? 'px-5':''">
             <p class="fs-1 fw-bold text-white">Eat anywhere !</p>
-            <div class="p-2 w-50 --address">
+            <div class="p-2 --address" :class="desktop? 'w-50':''">
                 <div class="input-group has-icon rounded">
                     <span class="form-control-feedback">
                         <i class="bi bi-geo-alt-fill text-white"></i>
@@ -18,7 +18,7 @@
         <p class="fs-4 text-center fw-bold">Our Top Recommendatons</p>
         <p class="text-center">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
         <div class="mt-3">
-            <RecommendationCard :meals="4" />
+            <BrowseCard :meals="4" />
         </div>
     </div>
     <div class="container mb-5">
@@ -83,10 +83,11 @@
 </template>
 <script>
 import data from '@/assets/db.json'
-import RecommendationCard from '../components/RecommendationCard.vue'
+import BrowseCard from '../components/BrowseCard.vue'
 import NewResturants from '../components/NewResturants.vue';
 export default {
     name: "HomePage",
+    inject: ["mq"],
     data() {
         return {
             addr: null
@@ -110,8 +111,11 @@ export default {
         resturants() {
             return data[1].resturants;
         },
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
     },
-    components: { RecommendationCard, NewResturants }
+    components: { BrowseCard, NewResturants }
 }
 </script>
 <style scoped>
@@ -132,7 +136,7 @@ export default {
     .hero-img{
         background-image: url("../assets/images/Rectangle_1.png");
         background-color: hsla(0, 0%, 0%, 0.55);
-        height: 100vh;
+        height: 40vh;
         background-size: cover;
     }
     input::placeholder{
@@ -142,5 +146,10 @@ export default {
         background: rgba(195, 195, 195, 0.21);
         border: 1px solid #FFFFFF;
         border-radius: 5px;
+    }
+    @media only screen and (min-width: 768px) {
+        .hero-img{
+            height: 100vh;
+        } 
     }
 </style>

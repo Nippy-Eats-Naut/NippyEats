@@ -127,7 +127,7 @@ const routes = [
         component: Resturants
     },
     {
-        path: '/resturant',
+        path: '/resturant/:id',
         name: 'ResturantPage',
         component: ResturantPage
     },

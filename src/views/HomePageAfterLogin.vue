@@ -29,25 +29,26 @@
         </div>
         <div class="mb-5">
             <p class="fs-5 fw-bold">Dishes we Recommend</p>
-            <ResturantCard :meals="4"/>
+            <RecommendationCard :meals="recommended"/>
         </div>
         <div class="mb-5">
             <p class="fs-5 fw-bold">Browse By Food</p>
-            <RecommendationCard :meals="3" />
+            <BrowseCard :meals="3" />
         </div>
     </div>
 </template>
 <script>
 import {mapGetters} from 'vuex'
 import ResturantCard from "../components/ResturantCard.vue"
-import RecommendationCard from "../components/RecommendationCard.vue";
+import BrowseCard from "../components/BrowseCard.vue";
+import RecommendationCard from '../components/RecommendationCard.vue';
 export default {
     name: "HomePageAfterLogin",
     data() {
         return {
             type: "Delivery",
             resturants: [],
-            meals: []
+            recommended: []
         };
     },
     inject: ['mq'],
@@ -59,25 +60,37 @@ export default {
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         }
     },
-    components: { ResturantCard, RecommendationCard },
+    components: { ResturantCard, BrowseCard, RecommendationCard },
     beforeMount(){
         var config = {
             method: 'get',
             url: `https://api.nippyeats.com/v1/foodies/providers?longitude=${this.longitude}&latitude=${this.latitude}`,
             headers: { }
         };
-        if (localStorage.getItem('nippy.token') === null){  
-            this.axios(config)
-            .then((response) => {
-                console.log(response.data);
-            });
-        }else{
-            localStorage.getItem('nippy.user.location') 
+         var config2 = {
+            method: 'get',
+            url: `https://api.nippyeats.com/v1/foodies/providers/featured-and-recommended`,
+            headers: { }
+        };
+        /*if (localStorage.getItem('nippy.token') === null){  
             this.axios(config)
             .then((response) => {
                 this.resturants = response.data.data.data
             });
-        }
+            this.axios(config2)
+            .then((response) => {
+                this.resturants = response.data.data.data
+            });
+        }else{
+            localStorage.getItem('nippy.user.location') */
+            this.axios(config)
+            .then((response) => {
+                this.resturants = response.data.data.data
+            });this.axios(config2)
+            .then((response) => {
+                this.recommended = response.data.data.recommended
+            });
+        //}
         
     }
 }

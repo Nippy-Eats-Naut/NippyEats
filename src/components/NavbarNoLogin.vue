@@ -2,15 +2,15 @@
     <SidenavNoLogin  :open="Open" @update:parent="Open = $event"/>
     <div class="container">
         <div class="d-flex justify-content-between py-3">
-            <div>
+            <div v-if="desktop">
                 <button class="me-3 btn" @click="OpenSidenav">
                     <i class="bi bi-justify"></i>
                 </button>
-                <img src="@/assets/images/logo.png" alt="Nippyeats logo" width="180" height="39">
+                <img src="@/assets/images/logo.svg" alt="Nippyeats logo" :width="desktop ?180:90" :height="desktop ?39:30">
             </div>
             <div>
                 <router-link to="/login" class="btn bg--orange text-white">
-                    Login/Sign Up
+                    <i class="bi bi-person" v-if="!desktop"></i>Login/Sign Up
                 </router-link>
             </div>
         </div>
@@ -20,6 +20,7 @@
 import SidenavNoLogin from "./SidenavNoLogin.vue";
 export default{
     name: "NavbarNoLogin",
+    inject: ["mq"],
     components: { SidenavNoLogin },
      data(){
         return{
@@ -30,6 +31,11 @@ export default{
         OpenSidenav(){
             this.Open = true;
         },
+    },
+    computed:{
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
     }
 }
 </script>

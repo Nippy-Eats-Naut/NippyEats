@@ -76,3 +76,6 @@ ul li {
   width: 696px;
   color: rgba(6, 6, 16, 1);
 }
+img.card-img {
+  border-radius: 6.29213px;
+}

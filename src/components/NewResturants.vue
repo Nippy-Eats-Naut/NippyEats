@@ -1,15 +1,15 @@
 <template>
     <div class="card border-0">
         <div class="row --nr">
-            <div v-for="res,index in resturants" :key="index" class="col-md-3 card border-0 px-2">
+            <div v-for="res,index in resturants" :key="index" class="col-md-3 col-6 card border-0 px-2">
                 <div class="card-img-overlay --a">
                      <button class="bg--grey btn rounded-circle">
                         <i class="bi bi-heart-fill text-white"></i>
                     </button>
                 </div>
                 <router-link to="" class="text-decoration-none text-dark">
-                    <div class="rounded image-div">
-                        <img src="@/assets/images/dummyImg/Rectangle_29.png" class="card-img" height="176">
+                    <div class="image-div">
+                        <img src="@/assets/images/dummyImg/Rectangle_29.png" class="card-img" height="172">
                     </div>
                     <div class="d-flex justify-content-between py-2 card-body px-1">
                         <div>
@@ -23,7 +23,7 @@
                 </router-link>
             </div>
         </div>
-        <div class="card-img-overlay d-flex justify-content-between align-items-center">
+        <div class="card-img-overlay d-flex justify-content-between align-items-center" v-if="desktop">
             <button class="btn bg-light text--orange rounded-circle" @click="scroll_left">
                 <i class="bi bi-arrow-left"></i>
             </button>
@@ -36,6 +36,7 @@
 <script>
 export default {
     name: 'NewResturants',
+    inject: ["mq"],
     props: {
         resturants:{
             type: Object
@@ -49,6 +50,11 @@ export default {
         scroll_right() {
         let content = document.querySelector(".row.--nr");
         content.scrollLeft += 50;
+        }
+    },
+    computed:{
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         }
     }
 }
@@ -64,7 +70,12 @@ export default {
         left: unset;
     }
     .row{
+        overflow-x: auto;
         flex-wrap: nowrap;
-        overflow-x: hidden;
+    }
+    @media only screen and (min-width: 768px) {
+        .row{
+            overflow-x: hidden;
+        }
     }
 </style>

@@ -1,20 +1,27 @@
 <template>
-    <div class="card border-0">
-        <div class="row">
-            <div v-for="meal,index in meals" :key="index" class="col-md-4 card border-0 px-3">
-                    <img src="@/assets/images/dummyImg/Rectangle_26.png" class="card-img" width="224" height="176">
-                <router-link to="#" class="card-img-overlay btn-overlay btn py-2 px-4 mb-3 mx-5">
-                        Noodles<i class="bi bi-arrow-right"></i>
+    <div>
+        <div class="row"  :class="desktop?'':'hr-scroll'">
+            <div v-for="meal,index in meals.slice(0,4)" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
+                <div class="card-img-overlay">
+                     <button class="bg--grey btn rounded-circle">
+                        <i class="bi bi-heart-fill text-white"></i>
+                    </button>
+                </div>
+                <router-link :to="`/resturant/${meal.id}`" class="text-decoration-none text-dark">
+                    <div class="image-div">
+                        <img :src="meal.logo != null ? meal.logo.fileUrl : ''" class="card-img" height="172">
+                    </div>
+                    <div class="d-flex justify-content-between py-2 card-body px-1">
+                        <div>
+                            <p class="card-title fw-bold">{{meal.name}}</p>
+                            <p class="card-text small text-secondary">N{{meal.orderInformation.minimumOrderAmount}} Delivery Fee <i class="bi bi-dot"></i>{{meal.orderInformation.averageFoodTimes}}</p>
+                        </div>
+                        <div>
+                            <p class="small d-flex"><i class="bi bi-star-fill text--orange me-1"></i>{{meal.rating}}</p>
+                        </div>
+                    </div>
                 </router-link>
             </div>
-        </div>
-        <div class="card-img-overlay d-flex justify-content-between align-items-center">
-            <button class="btn bg-light text--orange rounded-circle" @click="scroll_left">
-                <i class="bi bi-arrow-left"></i>
-            </button>
-            <button class="btn bg-light text--orange rounded-circle" @click="scroll_right">
-                <i class="bi bi-arrow-right"></i>
-            </button>
         </div>
     </div>
 </template>
@@ -23,33 +30,32 @@ export default {
     name: 'RecommendationCard',
     props: {
         meals:{
-            type: Number
+            type: Array
         }
     },
-    methods: {
-        scroll_left() {
-        let content = document.querySelector(".row");
-        content.scrollLeft -= 50;
+    inject: ['mq'],
+    computed: {
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         },
-        scroll_right() {
-        let content = document.querySelector(".row");
-        content.scrollLeft += 50;
-        }
-    }
+    },
 }
 </script>
 <style scoped>
-    .card-img-overlay.btn-overlay{
-        display: flex;
-        justify-content: space-between;
-        background: rgba(255, 255, 255, 1);
-        top: unset;
-        color: black;
-        text-decoration: none;
-        border-radius: 5px;
-    }
-    .row{
-        overflow-x: hidden;
+    .row.hr-scroll{
         flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+    p.card-text.text-secondary{
+        font-size: 0.8rem;
+    }
+    .btn.bg--grey{
+        background: rgba(1, 1, 1, 0.7);
+    }
+    .card-img-overlay{
+        left: unset;
+    }
+    img.card-img{
+        border-radius: 6.29213px;
     }
 </style>

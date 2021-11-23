@@ -6,8 +6,8 @@
                 <button class="me-3 btn" @click="OpenSidenav" :class="desktop ? '' : 'pt-0 pe-1'">
                     <i class="bi bi-justify"></i>
                 </button>
-                <div v-if="desktop">
-                    <img src="@/assets/images/logo.png" alt="Nippyeats logo" width="180" height="39">
+                <div>
+                    <img src="@/assets/images/logo.svg" alt="Nippyeats logo" :width="desktop ?180:90" :height="desktop ?39:30">
                 </div>
             </div>
             <div class="d-flex align-items-baseline" v-if="desktop">
