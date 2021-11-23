@@ -29,7 +29,7 @@ export default {
     name: 'BasketMeal',
     props:{
         meals: {
-            type: Object
+            type: Number
         }
     },
     data(){

@@ -4,7 +4,7 @@
         <div class="row">
             <div class="card border-0 mb-4" v-for="meal,index in meals" :key="index" :class="col">
                 <a class="row text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#FoodDetails">
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-6">
                         <div class="card-img-overlay">
                             <button class="btn-light btn-sm btn rounded-circle">
                                 <i class="bi bi-heart text-dark"></i>
@@ -12,7 +12,7 @@
                         </div>
                         <img src="@/assets/images/dummyImg/Rectangle_24.png" class="card-img" height="169">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" col-6>
                         <p class="fw-bold mb-1">English Breakfast</p>
                         <p class="text-secondary small mb-2">Tender chicken marinated daily with an exotic blend of potato chips and ketchup</p>
                         <p class="text-secondary mb-1 fw-bold">N3,000</p>

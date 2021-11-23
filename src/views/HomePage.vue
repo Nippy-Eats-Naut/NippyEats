@@ -8,7 +8,7 @@
                     <span class="form-control-feedback">
                         <i class="bi bi-geo-alt-fill text-white"></i>
                     </span>
-                    <input type="text" class="form-control border-0 rounded bg-transparent w-50" placeholder="Where are you at?" v-model="addr">
+                    <input type="text" class="form-control border-0 text-white rounded bg-transparent w-50" placeholder="Where are you at?" v-model="addr">
                     <button class="btn text-white bg--orange" @click="getProvider">Find Food</button>
                 </div>
             </div>
