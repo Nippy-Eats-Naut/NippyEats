@@ -26,17 +26,17 @@
         <NewResturants :resturants="resturants" />
     </div>
     <div class="container mb-5">
-        <div class="card border-0 rounded-3">
-            <img class="card-img download" src="@/assets/images/Mask_Group.png">
-            <div class="card-img-overlay download px-5">
-                <p class="text-white fw-bold fs-1">Download the App</p>
-                <p class="text-white">Make meals more accessible on your fingertips</p>
-                <div class="d-flex mt-3">
+        <div class="card border-0">
+            <img class="card-img download" src="@/assets/images/Mask_Group.png" :class="desktop?'':'ms-2'">
+            <div class="card-img-overlay download" :class="desktop?'px-5':'ps-2 pe-5'">
+                <p class="text-white fw-bold" :class="desktop?'fs-1':'fs-4'">Download the App</p>
+                <p class="text-white"  :class="desktop?'':'small w-75 mb-1'">Make meals more accessible on your fingertips</p>
+                <div class="d-flex mt-2">
                     <a href="" class="me-3">
-                        <img src="@/assets/images/google.png" alt="Get on google play" width="100" height="30">
+                        <img src="@/assets/images/google.png" alt="Get on google play" :width="desktop?100:60" :height="desktop?30:20">
                     </a>
                     <a href="">
-                        <img src="@/assets/images/apple.png" alt="Get on apple store" width="100" height="30">
+                        <img src="@/assets/images/apple.png" alt="Get on apple store" :width="desktop?100:60" :height="desktop?30:20">
                     </a>
                 </div>
             </div>
@@ -132,6 +132,7 @@ export default {
         flex-direction: column;
         justify-content: center;
         background-color: rgba(252, 76, 1, 1);
+        border-radius: 15px;
     }
     .hero-img{
         background-image: url("../assets/images/Rectangle_1.png");

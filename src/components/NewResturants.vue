@@ -60,6 +60,9 @@ export default {
 }
 </script>
 <style scoped>
+    .card-img-overlay.d-flex.justify-content-between{
+        padding-bottom: 33px;
+    }
     p.card-text.text-secondary{
         font-size: 0.8rem;
     }

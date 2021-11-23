@@ -2,8 +2,8 @@
     <div class="card border-0">
         <div class="row">
             <div v-for="meal,index in meals" :key="index" class="col-md-4 col-6 card border-0 px-3">
-                    <img src="@/assets/images/dummyImg/Rectangle_26.png" class="card-img rounded-0" :height="desktop? 178:156">
-                <router-link to="#" class="card-img-overlay btn-overlay btn py-2 mb-3 mx-5" :class="desktop?'px-4':'px-1'">
+                    <img src="@/assets/images/dummyImg/Rectangle_26.png" class="card-img rounded-0" :height="desktop? 220:156">
+                <router-link to="/category/id" class="card-img-overlay btn-overlay btn py-2 mb-3 mx-5" :class="desktop?'px-4':'px-1'">
                         Noodles<i class="bi bi-arrow-right"></i>
                 </router-link>
             </div>
@@ -45,7 +45,7 @@ export default {
 }
 </script>
 <style scoped>
-    .card-img-overlay.btn-overlay{
+    .card-img-overlay.btn-overlay.btn{
         display: flex;
         justify-content: space-between;
         background: rgba(255, 255, 255, 1);
@@ -53,6 +53,7 @@ export default {
         color: black;
         text-decoration: none;
         border-radius: 5px;
+        font-size: small;
     }
     .row{
         overflow-x: auto;

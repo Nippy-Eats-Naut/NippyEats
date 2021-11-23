@@ -2,8 +2,8 @@
     <SidenavNoLogin  :open="Open" @update:parent="Open = $event"/>
     <div class="container">
         <div class="d-flex justify-content-between py-3">
-            <div v-if="desktop">
-                <button class="me-3 btn" @click="OpenSidenav">
+            <div>
+                <button class="me-3 btn" @click="OpenSidenav" v-if="desktop">
                     <i class="bi bi-justify"></i>
                 </button>
                 <img src="@/assets/images/logo.svg" alt="Nippyeats logo" :width="desktop ?180:90" :height="desktop ?39:30">

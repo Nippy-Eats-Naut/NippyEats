@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store'
+
 import Homepage from "../views/HomePage.vue";
 import AboutUs from "../views/AboutUs.vue"
 import Basket from "../views/Basket.vue"
@@ -78,7 +80,7 @@ const routes = [
         }
     },
     {
-        path: '/Category',
+        path: '/category/:id',
         name: 'FoodCategory',
         component: FoodCategory
     },
@@ -92,7 +94,7 @@ const routes = [
         name: 'HomePageAfterLogin',
         component: HomePageAfterLogin,
         meta: {
-            requireAuth: true
+            requirePermission: true
         }
     },
     {
@@ -181,6 +183,17 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requireAuth)){
         if (localStorage.getItem('nippy.token') == null){
+            next({
+                path:'/login',
+                query: { redirect: to.fullPath }
+            })
+        }
+        else{
+          next()
+        }
+    }
+    else if (to.matched.some(record => record.meta.requirePermission)){
+        if (localStorage.getItem('nippy.token') == null && store.state.longitude == ""){
             next({
                 path:'/login',
                 query: { redirect: to.fullPath }

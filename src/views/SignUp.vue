@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div :class="mq.current === 'xs' || mq.current === 'sm' ? 'pt-3 pb-5' : 'p-5'">
-            <button class="btn text--orange">
+            <button class="btn text--orange" @click="goBack">
                 <i class="bi bi-arrow-left"></i> Back
             </button>
             <div class="text-center">
@@ -73,6 +73,9 @@ export default {
         };
     },
     methods: {
+        goBack(){
+            window.history.back()
+        },
         SignUp() {
             if (!this.data.email || !this.data.password || !this.data.firstname || !this.data.lastname || !this.data.location) {
                 this.message = "Field cannot be empty";
