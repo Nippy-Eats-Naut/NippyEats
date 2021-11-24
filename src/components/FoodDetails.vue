@@ -17,7 +17,7 @@
                                 </div>
                                 <p class="ms-2">4.5(245)</p><i class="mx-1 bi bi-dot"></i>
                                 <a class="text-secondary" data-bs-toggle="modal" data-bs-target="#Reviews" data-bs-dismiss="modal">Reviews (3)</a>
-                                <!--<Reviews />-->
+                                <Reviews :reviews="reviews" class="menu" />
                             </div>
                         </div>
                         
@@ -127,15 +127,43 @@
     </div>
 </template>
 <script>
-//import Reviews from "./Reviews.vue"
+import Reviews from "./Reviews.vue"
 export default {
     name: "FoodDetails",
+    props:{
+        id: {
+            type: String,
+        }
+    },
     data() {
         return {
-            quantity: 1
+            quantity: 1,
+            menu: null,
+            reviews: []
         };
     },
-    //components: { Reviews }
+    components: { Reviews },
+    beforeMount(){
+        var config = {
+            method: 'get',
+            //url: `https://api.nippyeats.com/v1/foodies/menus/${this.id}`,
+            headers: { }
+        };
+        var config2 = {
+            method: 'get',
+           // url: `https://api.nippyeats.com/v1/foodies/providers/${this.id}/reviews`,
+            headers: { }
+        };
+        this.axios(config)
+        .then((response) => {
+            this.menu = response.data.data
+        });
+        this.axios(config2)
+        .then((response) => {
+            this.reviews = response.data.data
+        });
+    
+    }
 }
 </script>
 <style scoped>

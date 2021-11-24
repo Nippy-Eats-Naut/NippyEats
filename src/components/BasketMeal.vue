@@ -1,7 +1,7 @@
 <template>
     <div class="border border-1 border-dark rounded d-flex px-1 py-1 mb-3" v-for="meal,index in meals" :key="index" >
         <div class="me-1">
-            <button class="btn btn-sm">
+            <button class="btn btn-sm pe-1">
                 <i class="bi bi-x text-dark"></i>
             </button>
         </div>

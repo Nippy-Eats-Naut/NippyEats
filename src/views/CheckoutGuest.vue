@@ -6,10 +6,10 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="mb-4">
-                    <p class="mb-2 text-black">Personal Information</p>
+                    <p class="mb-2 text-dark h6">Personal Information</p>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <div class="form-floating">
+                            <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="fname" placeholder="name@example.com">
                                 <label for="fname">First Name</label>
                             </div>
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="email" placeholder="name@example.com">
                                 <label for="email">Email Address</label>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="mb-4">
-                    <p class="mb-2 text-black">Delivery Address</p>
+                    <p class="mb-2 text-dark h6">Delivery Address</p>
                     <div class="mb-3">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="sAddr" placeholder="name@example.com">
@@ -45,13 +45,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="city" placeholder="name@example.com">
                                 <label for="city">City</label>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="state" placeholder="name@example.com">
                                 <label for="state">State</label>
@@ -66,9 +66,9 @@
                     </div>
                 </div>
                 <div>
-                    <p class="mb-2 text-black">Payment Method</p>
-                    <div class="row">
-                        <div class="col-md-6">
+                    <p class="mb-2 text-dark h6">Payment Method</p>
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
                             <div class="px-3 border py-2 rounded form-check d-flex justify-content-between" :class="payMethod == 'Flutterwave'? 'border-primary' : ''">
                                 <label class="form-check-label" for="flutterradio">
                                     <img src="@/assets/images/flutterwave.svg" alt="" width="16" height="16" class="me-1">

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-grid justify-items-center align-items-center my-5 px--16">
+    <div class="d-grid justify-items-center align-items-center my-5" :class="desktop?'px--16':''">
         <div class="mb-3">
             <img src="@/assets/images/success.png" class="rounded" height="106">           
         </div>
@@ -19,6 +19,12 @@
 </template>
 <script>
 export default {
-    name: 'OrderSuccess'
+    name: 'OrderSuccess',
+    inject: ["mq"],
+    computed: {
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        },
+    }
 }
 </script>

@@ -51,9 +51,15 @@
                             <div>
                                 <div class="mb-2">
                                     <input type="text" name="review" id="review" class="form-control"
-                                    placeholder="What was your experience like?">
+                                    placeholder="What was your experience like?" v-model="comment">
                                 </div>
-                                <button type="button" class="btn bg--orange w-100 btn lg text-white">
+                                <div v-show="message != null">
+                                    <div class="alert alert-dismissible fade mb-1" :class="success == true ? 'alert-success': 'alert-danger'" role="alert">
+                                        {{message}}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn bg--orange w-100 btn lg text-white" @click="shareReview">
                                     Share Review
                                 </button>
                             </div>
@@ -66,6 +72,45 @@
 </template>
 <script>
 export default {
-    name: 'Reviews'
+    name: 'Reviews',
+    props:{
+        reviews:{type: Array},
+        menuId: {type: String},
+        class: {type: String}
+    },
+    data(){
+        return{
+            data: {
+                comment: '',
+                commentableType: '',
+                commentableId: ''
+            },
+            alert: null,
+            success: null
+        }
+    },
+    methods:{
+        shareReview(){
+            var config = {
+                method: 'post',
+               url: `https://api.nippyeats.com/v1/foodies/menus/${this.menuId}/comment`,
+                headers: { 
+                    'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`, 
+                    'Content-Type': 'application/json'
+                },
+                data : JSON.stringify(this.data)
+            };
+
+            this.axios(config)
+            .then(function (response) {
+                this.success = response.data.success
+                this.alert = response.data.message
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+
 }
 </script>

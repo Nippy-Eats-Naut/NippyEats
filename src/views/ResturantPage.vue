@@ -13,7 +13,7 @@
                         </div>
                         <p class="ms-2">{{provider.rating}}(0)</p><i class="mx-1 bi bi-dot"></i>
                         <a class="text-secondary text-decoration-underline" data-bs-toggle="modal" data-bs-target="#Reviews">Reviews (0)</a>
-                        <Reviews :reviews="reviews"/>
+                        <Reviews :reviews="reviews" class="provider"/>
                     </div>
                 </div>
                 <div class="d-flex mb-3" v-if="desktop">
@@ -26,12 +26,12 @@
                 </div>
             </div>
             <div :class="desktop?'d-flex':''">
-                <p class=" me-3 mb-2">
+                <p class="me-3 mb-2">
                     <i class="bi bi-geo-alt-fill me-1"></i>
                     {{provider.contactInformation.address}}
                 </p>
                 <div class="d-flex">
-                    <i class="bi bi-clock-fill me-3"></i>
+                    <i class="bi bi-clock-fill me-1"></i>
                     <p v-if="provider.orderInformation.workingDays.length >= 4">{{workingDays}}</p>
                     <div class="d-flex" v-else>
                         <ul class="ps-1">
@@ -43,12 +43,7 @@
             </div>
             <div v-if="!desktop" class="mb-4">
                 <div class="d-flex mb-3 tab border-bottom">
-                    <button class="btn text--orange" v-for="_time,index in Time" :key="index">{{_time}}</button>
-                    <button class="btn">Lunch</button>
-                    <button class="btn">Dinner</button>
-                    <button class="btn">Brunch</button>
-                    <button class="btn">Late Night</button>
-                    <button class="btn">More</button>
+                    <button class="btn text--orange" v-for="_time,index in Time" :key="index" :class="Time[0]? 'text--orange':''">{{_time}}</button>
                 </div>
                 <div class="d-flex">
                     <div class="form-check mr-3 p-0" v-for="modes,index in deliveryModes" :key="index">
@@ -62,12 +57,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="d-flex justify-content-evenly mb-3" v-if="desktop">
-                        <button class="btn text--orange">Breakfast</button>
-                        <button class="btn">Lunch</button>
-                        <button class="btn">Dinner</button>
-                        <button class="btn">Brunch</button>
-                        <button class="btn">Late Night</button>
-                        <button class="btn">More</button>
+                        <button class="btn text--orange" v-for="_time,index in Time" :key="index" :class="Time[0]? 'text--orange':''">{{_time}}</button>
                     </div>
                     <div class="mb-5">
                         <ResturantMeal title="Breakfast" :meals="4" col="col-md-6" />
@@ -118,7 +108,8 @@ export default {
         return {
             type: "Delivery",
             provider: null,
-            reviews:[]
+            reviews:[],
+            Time: ["Breakfast", "Lunch", "Dinner", "Brunch", "Late Night", "More"]
         };
     },
     inject: ["mq"],
@@ -170,7 +161,7 @@ export default {
             url: `https://api.nippyeats.com/v1/foodies/providers/${this.$route.params.id}`,
             headers: { }
         };
-         var config2 = {
+        var config2 = {
             method: 'get',
             url: `https://api.nippyeats.com/v1/foodies/providers/${this.$route.params.id}/reviews`,
             headers: { }
