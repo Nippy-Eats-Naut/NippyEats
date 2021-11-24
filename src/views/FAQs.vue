@@ -4,7 +4,7 @@
             <p class="fs-4 text-center fw-bold">Keep In Touch With Us</p>
             <p class="text-secondary text-center">Answers about NippyEats</p>
         </div>
-        <div class="accordion border-0 px--16" id="faqsaccordion">
+        <div class="accordion border-0" id="faqsaccordion" :class="desktop ? 'px--16': ''">
             <div class="accordion-item mb-3" v-for="faq, index in faqs" :key="index">
                 <h2 class="accordion-header" :id="'heading'+index">
                     <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse'+index" aria-expanded="true" :aria-controls="'collapse'+index">
@@ -48,6 +48,12 @@ export default {
                 },
             ]
         }
-    }
+    },  
+    inject: ["mq"],
+    computed: {
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
+    },
 }
 </script>

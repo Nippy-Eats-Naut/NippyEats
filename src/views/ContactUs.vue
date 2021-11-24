@@ -1,14 +1,14 @@
 <template>
-    <div class="container">
+    <div class="container mb-5">
         <div class="my-5">
             <p class="fs-4 text-center fw-bold">Keep In Touch With Us</p>
-            <p class="text-secondary text-center px--16">
+            <p class="text-secondary text-center" :class="desktop ? 'px--16': ''">
                 Do you need more information about or service or want to talk with us? 
                 Reach out to us and we'll respond as soon as possible.
             </p>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" v-if="desktop">
                 <img src="@/assets/images/Group__73.png" class="rounded img-fluid">
             </div>
             <div class="col-md-6">
@@ -28,6 +28,12 @@
 <script>
 export default {
     name: 'ContactUs',
+    inject: ["mq"],
+    computed: {
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
+    },
 }
 </script>
 <style scoped>

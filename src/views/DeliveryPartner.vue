@@ -2,12 +2,12 @@
     <div class="container mb-5">
         <div class="my-5">
             <p class="fs-4 text-center fw-bold">Become A Delivery Partner</p>
-            <p class="text-secondary text-center px--16">
+            <p class="text-secondary text-center" :class="desktop ? 'px--16': ''">
                 Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. 
                 Velit officia consequat duis enim velit mollit. 
             </p>
         </div>
-        <div class="px--16">
+        <div :class="desktop ? 'px--16': ''">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="fname" placeholder="name@example.com">
                 <label for="text">Full Name</label>
@@ -30,7 +30,13 @@
 </template>
 <script>
 export default {
-    name: 'DeliveryPartner',
+    name: 'DeliveryPartner', 
+    inject: ["mq"],
+    computed: {
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
+    },
     data(){
         return{
         }
