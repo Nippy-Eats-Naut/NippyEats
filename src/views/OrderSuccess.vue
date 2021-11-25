@@ -13,7 +13,7 @@
             <router-link class="text-white bg--orange btn" to="/trackorders">Track Order</router-link>
         </div>
         <div class="">
-            <router-link class="text--orange btn" to="">Edit Order</router-link>
+            <router-link class="text--orange btn" to="/orders">Edit Order</router-link>
         </div>
     </div>
 </template>

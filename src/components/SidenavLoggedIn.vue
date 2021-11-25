@@ -1,5 +1,70 @@
 <template>
-    <div v-show="open == true" class="--sidenav px-3 py-3">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header justify-content-end">
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">   
+            <div class="d-flex justify-content-center mb-3">
+                <img src="#" alt="" class="me-3" width="" height="">
+                <div>
+                    <p class="fw-bold fs-4 mb-1">{{firstname}} {{lastname}}</p>
+                    <router-link class="text--orange" to="/trackorders">Account Settings</router-link>
+                </div>
+            </div>
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 ps-5">
+                <li class="nav-item">
+                    <router-link to="/home" class="nav-link">
+                        <i class="bi bi-columns-gap me-3"></i>
+                        <p class="mb-0">Home</p>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/orders" class="nav-link">
+                        <i class="bi bi-journal-check me-3"></i>
+                        <p class="mb-0">My Order</p>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/favourites" class="nav-link">
+                        <i class="bi bi-heart me-3"></i>
+                        <p class="mb-0">Favourites</p>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/wallet" class="nav-link">
+                        <i class="bi bi-wallet me-3"></i>
+                        <p class="mb-0">Wallet</p>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/invite-friends" class="nav-link">
+                        <i class="bi bi-gift me-3"></i>
+                        <p class="mb-0">Invites Friends</p>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#Logout">
+                        <i class="bi bi-box-arrow-right me-3"></i>
+                        <p class="mb-0">Log Out</p>
+                    </a>
+                </li>
+            </ul>
+            <div class="mt-5 ps-5">
+                <img src="@/assets/images/logo.png" alt="Nippyeats logo" width="230" height="50">
+                <div class="d-flex mt-3">
+                    <a href="" class="me-3">
+                        <img src="@/assets/images/google.png" alt="Get on google play" width="100" height="30">
+                    </a>
+                    <a href="">
+                        <img src="@/assets/images/apple.png" alt="Get on apple store" width="100" height="30">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <Logout />
+
+    <!--<div v-show="open == true" class="--sidenav px-3 py-3">
         <div class="d-flex mb-3 justify-content-end">
             <button class="btn" @click="handleClick">
                 <i class="bi bi-x fs-5"></i>
@@ -64,7 +129,7 @@
             </div>
         </div>
     </div>
-    <Logout />
+    <Logout />-->
 </template>
 <script>
 import Logout from "./Logout.vue"
@@ -77,13 +142,15 @@ export default {
     },
     data() {
         return {
-            fooOpen: false
+            fooOpen: false,
+            firstname: JSON.parse(localStorage.getItem('nippy.user')).firstName,
+            lastname: JSON.parse(localStorage.getItem('nippy.user')).lastName
         };
     },
     methods: {
-        handleClick() {
+       /* handleClick() {
             this.$emit("update:parent", this.fooOpen);
-        }
+        }*/
     },
     components: { Logout }
 }
@@ -103,5 +170,9 @@ export default {
     }
     li a.d-flex{
         color: rgba(0, 0, 0, 1);
+    }
+    .nav-item .nav-link{
+        display: flex;
+        color: #000000;
     }
 </style>

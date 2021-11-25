@@ -32,6 +32,8 @@ export default {
         box-shadow: 0px 4px 20px 6px rgba(196, 196, 196, 0.18);
         width: 296px;
         height: 278px;
+        right: 0;
+        left: unset;
     }
     .--trans{
         transform: rotate(26.95deg)

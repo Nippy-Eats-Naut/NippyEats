@@ -36,6 +36,12 @@ export default {
             type: Number
         }
     },
+    data(){
+        return{
+            message: null,
+            success: null
+        }
+    },
     inject: ['mq'],
     computed: {
         desktop(){
@@ -54,13 +60,12 @@ export default {
                 data : JSON.stringify({"providerId": id})
             };
 
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-})
-.catch(function (error) {
-  console.log(error);
-});
+            this.axios(config)
+            .then(function (response) {
+                let msg = response.data.message
+                let succ = response.data.success
+                this.$store.commit('add_alert', {msg,succ})
+            })
         }
     }
 }

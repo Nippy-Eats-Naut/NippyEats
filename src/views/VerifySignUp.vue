@@ -9,10 +9,7 @@
             </div>
         <div :class="mq.current === 'xs' || mq.current === 'sm' ? '' : 'px--16'">
             <div class="">
-                <div class="alert alert-dismissible fade mb-3" :class="success == true ? 'alert-success': 'alert-danger'" role="alert" v-show="message != null">
-                    {{message}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <Alert :message="message" category="alert" :success="success"/>
                 <p class="fw-bold fs-4">Enter verification code</p>
                 <div class="mb-3">
                     <input type="text" placeholder="code" class="form-control" v-model="data.code">
@@ -38,6 +35,7 @@ export default {
                 code: null,
             },
             message: null,
+            success: null
         };
     },
     methods: {
@@ -59,6 +57,7 @@ export default {
                 };
                 this.axios(config)
                 .then((response) => {
+                    this.success = response.data.success;
                     localStorage.setItem('nippy.user', JSON.stringify(response.data.data.foodie))
                     localStorage.setItem('nippy.token', response.data.data.authorization.token)
 

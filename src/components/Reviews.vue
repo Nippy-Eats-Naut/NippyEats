@@ -53,12 +53,7 @@
                                     <input type="text" name="review" id="review" class="form-control"
                                     placeholder="What was your experience like?" v-model="comment">
                                 </div>
-                                <div v-show="message != null">
-                                    <div class="alert alert-dismissible fade mb-1" :class="success == true ? 'alert-success': 'alert-danger'" role="alert">
-                                        {{message}}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
-                                </div>
+                                <Alert :message="message" category="alert" :success="success"/>
                                 <button type="button" class="btn bg--orange w-100 btn lg text-white" @click="shareReview">
                                     Share Review
                                 </button>
@@ -71,8 +66,10 @@
     </div>
 </template>
 <script>
+import Alert from './Alert.vue';
 export default {
     name: 'Reviews',
+    components: { Alert },
     props:{
         reviews:{type: Array},
         menuId: {type: String},
@@ -85,7 +82,7 @@ export default {
                 commentableType: '',
                 commentableId: ''
             },
-            alert: null,
+            message: null,
             success: null
         }
     },
@@ -104,7 +101,7 @@ export default {
             this.axios(config)
             .then(function (response) {
                 this.success = response.data.success
-                this.alert = response.data.message
+                this.message = response.data.message
             })
             .catch(function (error) {
                 console.log(error);

@@ -9,13 +9,7 @@
             </div>
         <div :class="mq.current === 'xs' || mq.current === 'sm' ? '' : 'px--16'">
             <div class="">
-                <div v-show="message != null">
-                    <div class="alert alert-dismissible fade mb-1" :class="success == true ? 'alert-success': 'alert-danger'" role="alert">
-                        {{message}}
-                        <router-link to="/verify-signup"><strong>Verify Signup</strong></router-link>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
+                <Alert :message="message" category="alert" :success="success" :link="true"/>
                 <p class="fw-bold fs-4">Create An Account</p>
                 <div class="mb-3 row">
                     <div class="col-md-6" :class="mq.current === 'xs' || mq.current === 'sm' ? 'mb-3' : ''">

@@ -1,5 +1,6 @@
 <template>
     <div class="container mt-4">
+        <Alert :message="message" category="alert" :success="success"/>
         <div class="mb-5">
             <div class="d-flex justify-content-between align-items-baseline">
                 <p class="fs-4 fw-bold">Popular Resturants</p>
@@ -17,7 +18,9 @@
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 import ResturantCard from "../components/ResturantCard.vue";
+import Alert from '../components/Alert.vue';
 export default {
     name: "Resturants",
     data(){
@@ -26,7 +29,7 @@ export default {
             recommended:[]
         }
     },
-    components: { ResturantCard },
+    components: { ResturantCard, Alert },
     beforeMount(){
         var config = {
             method: 'get',
@@ -39,6 +42,11 @@ export default {
             this.recommended = response.data.data.recommended
         });
         
+    },
+    computed:{
+        ...mapGetters([
+            'message', 'success'
+        ])
     }
 }
 </script>

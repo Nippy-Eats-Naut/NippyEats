@@ -1,5 +1,5 @@
 <template>
-  <NavbarLogin v-if="Login"/>
+  <NavbarLogin id="navbar" v-if="Login"/>
   <NavbarNoLogin v-if="NoLogin"/>
   <router-view></router-view>
   <Footer />

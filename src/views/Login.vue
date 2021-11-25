@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <Alert :errors="errors"/>
+        <Alert :errors="errors" category="toast"/>
     </div>
 </template>
 <script>

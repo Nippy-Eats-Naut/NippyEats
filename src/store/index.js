@@ -4,7 +4,9 @@ const store = createStore({
     state(){
         return {
             longitude: '',
-            latitude: ''
+            latitude: '',
+            message: null,
+            success: null
         }
     },
 
@@ -12,6 +14,18 @@ const store = createStore({
         store_location(state, payload) {
             state.latitude = payload.lat
             state.longitude = payload.long
+        },
+        add_alerts(state, payload){
+            state.message = payload.msg
+            state.success = payload.succ
+
+            this.commit('clear_alerts');
+        },
+        clear_alerts(state){
+            setTimeout(() => {
+                state.message = null;
+                state.success = null;
+            }, 10000)
         },
     },
 
@@ -22,6 +36,13 @@ const store = createStore({
         latitude: state=> {
             return state.latitude;
         },
+        message: state => {
+            return state.message;
+        },
+        success: state => {
+            return state.success;
+        },
+        
     }
 
 })
