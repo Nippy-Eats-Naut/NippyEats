@@ -28,12 +28,12 @@
                 <div class="mb-3">
                     <input type="password" placeholder="Password" class="form-control" v-model="data.password">
                 </div>
-                <div class="mb-4 d-flex align-items-baseline">
-                    <input type="checkbox" class="me-2" v-model="tncbx">
-                    <p>I hearby acknowlege and agree that I have read and understood 
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" value="" id="flexCheck" v-model="tncbx">
+                    <label class="form-check-label" for="flexCheck">I hearby acknowlege and agree that I have read and understood 
                         <router-link to="" class="text--orange">Nippyeat's Privacy Policy</router-link> and
                         <router-link to="/terms-conditions" class="text--orange">Terms and condition</router-link>
-                    </p>
+                    </label>
                 </div>
                 <div class="mb-4">
                     <button class="btn bg--orange btn-lg w-100 text-white" @click="SignUp">SignUp</button>
@@ -47,6 +47,8 @@
     </div>
 </template>
 <script>
+import Alert from "../components/Alert.vue";
+
 export default {
     name: "SignUp",
     inject: ["mq"],
@@ -57,8 +59,8 @@ export default {
                 lastname: null,
                 email: null,
                 password: null,
-               // referralcode: null,
-               // phone: null,
+                // referralcode: null,
+                // phone: null,
                 location: null
             },
             message: null,
@@ -67,8 +69,8 @@ export default {
         };
     },
     methods: {
-        goBack(){
-            window.history.back()
+        goBack() {
+            window.history.back();
         },
         SignUp() {
             if (!this.data.email || !this.data.password || !this.data.firstname || !this.data.lastname || !this.data.location) {
@@ -77,7 +79,7 @@ export default {
             else if (!this.validEmail(this.data.email)) {
                 this.message = "Valid email required.";
             }
-             else if (!this.tncbx) {
+            else if (!this.tncbx) {
                 this.message = "Agreement needs to be checked";
             }
             else {
@@ -90,15 +92,15 @@ export default {
                     data: JSON.stringify(this.data)
                 };
                 this.axios(config)
-                .then((response) => {
-                    this.message = response.data.message
-                    this.success = response.data.success
-                    localStorage.setItem('nippy.user', JSON.stringify(response.data.data.foodie))
-                    localStorage.setItem('nippy.token', response.data.data.authorization.token)   
+                    .then((response) => {
+                    this.message = response.data.message;
+                    this.success = response.data.success;
+                    localStorage.setItem("nippy.user", JSON.stringify(response.data.data.foodie));
+                    localStorage.setItem("nippy.token", response.data.data.authorization.token);
                 })
-                .catch(err => {
+                    .catch(err => {
                     this.message = err.response.data.message;
-                })
+                });
             }
         },
         validEmail: function (email) {
@@ -106,6 +108,7 @@ export default {
             return re.test(email);
         },
     },
+    components: { Alert }
 }
 </script>
 <style scoped>

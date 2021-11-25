@@ -26,6 +26,7 @@
     </div>
 </template>
 <script>
+import Alert from "../components/Alert.vue";
 export default {
     name: "VerifySignUp",
     inject: ["mq"],
@@ -39,8 +40,8 @@ export default {
         };
     },
     methods: {
-        goBack(){
-            window.history.back()
+        goBack() {
+            window.history.back();
         },
         Verify() {
             if (!this.data.code) {
@@ -56,25 +57,26 @@ export default {
                     data: JSON.stringify(this.data)
                 };
                 this.axios(config)
-                .then((response) => {
+                    .then((response) => {
                     this.success = response.data.success;
-                    localStorage.setItem('nippy.user', JSON.stringify(response.data.data.foodie))
-                    localStorage.setItem('nippy.token', response.data.data.authorization.token)
-
-                    if (localStorage.getItem('nippy.token') != null) {
-                        this.$emit('loggedIn')
+                    localStorage.setItem("nippy.user", JSON.stringify(response.data.data.foodie));
+                    localStorage.setItem("nippy.token", response.data.data.authorization.token);
+                    if (localStorage.getItem("nippy.token") != null) {
+                        this.$emit("loggedIn");
                         if (this.$route.query.redirect != null) {
-                            this.$router.push(this.$route.query.redirect)
-                        } else {
-                            this.$router.push('/home')
+                            this.$router.push(this.$route.query.redirect);
                         }
-                    } 
+                        else {
+                            this.$router.push("/home");
+                        }
+                    }
                 })
-                .catch(err => {
+                    .catch(err => {
                     this.message = err.response.data.message;
-                })
+                });
             }
         },
     },
+    components: { Alert }
 }
 </script>

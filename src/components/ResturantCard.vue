@@ -61,7 +61,7 @@ export default {
             };
 
             this.axios(config)
-            .then(function (response) {
+            .then(response => {
                 let msg = response.data.message
                 let succ = response.data.success
                 this.$store.commit('add_alert', {msg,succ})

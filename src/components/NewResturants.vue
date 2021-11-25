@@ -7,17 +7,17 @@
                         <i class="bi bi-heart-fill text-white"></i>
                     </button>
                 </div>
-                <router-link to="" class="text-decoration-none text-dark">
+                <router-link :to="`/resturant/${res.id}`" class="text-decoration-none text-dark">
                     <div class="image-div">
-                        <img src="@/assets/images/dummyImg/Rectangle_29.png" class="card-img" height="172">
+                        <img :src="res.logo != null ? res.logo.fileUrl : ''" class="card-img" height="172">
                     </div>
                     <div class="d-flex justify-content-between py-2 card-body px-1">
                         <div>
-                            <p class="card-title fw-bold">Cloud Kitchen</p>
-                            <p class="card-text small text-secondary">N300 Delivery Fee <i class="bi bi-dot"></i> 30-40 min</p>
+                            <p class="card-title fw-bold">{{res.name}}</p>
+                            <p class="card-text small text-secondary">N{{res.orderInformation.minimumOrderAmount}} Delivery Fee <i class="bi bi-dot"></i>{{res.orderInformation.averageFoodTimes}}</p>
                         </div>
                         <div>
-                            <p class="small d-flex"><i class="bi bi-star-fill text--orange me-1"></i> 4.5</p>
+                            <p class="small d-flex"><i class="bi bi-star-fill text--orange me-1"></i> {{res.rating}}</p>
                         </div>
                     </div>
                 </router-link>

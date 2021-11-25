@@ -99,7 +99,7 @@ export default {
             };
 
             this.axios(config)
-            .then(function (response) {
+            .then(response => {
                 this.success = response.data.success
                 this.message = response.data.message
             })

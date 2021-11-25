@@ -3,15 +3,19 @@
         <div class="offcanvas-header justify-content-end">
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">   
+        <div class="offcanvas-body position-relative">   
             <div class="d-flex justify-content-center mb-3">
                 <img src="#" alt="" class="me-3" width="" height="">
                 <div>
-                    <p class="fw-bold fs-4 mb-1">{{firstname}} {{lastname}}</p>
-                    <router-link class="text--orange" to="/trackorders">Account Settings</router-link>
+                    <p class="fw-bold fs-4 mb-1">{{user.firstName}} {{user.lastName}}</p>
+                    <div class="d-flex align-items-baseline w-50">
+                        <i class="bi bi-geo-alt-fill me-2"></i>
+                        <p class="navbar-text mb-0 me-2 text-truncate">{{user.deliveryAddresses}}</p>
+                    </div>
+                    <router-link class="text--orange" to="/account-settings">Account Settings</router-link>
                 </div>
             </div>
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 ps-5">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" :class="desktop?'ps-5':'ps-3'">
                 <li class="nav-item">
                     <router-link to="/home" class="nav-link">
                         <i class="bi bi-columns-gap me-3"></i>
@@ -49,9 +53,9 @@
                     </a>
                 </li>
             </ul>
-            <div class="mt-5 ps-5">
+            <div class="position-absolute bottom-0 ps-5">
                 <img src="@/assets/images/logo.png" alt="Nippyeats logo" width="230" height="50">
-                <div class="d-flex mt-3">
+                <div class="d-flex my-3">
                     <a href="" class="me-3">
                         <img src="@/assets/images/google.png" alt="Get on google play" width="100" height="30">
                     </a>
@@ -63,114 +67,26 @@
         </div>
     </div>
     <Logout />
-
-    <!--<div v-show="open == true" class="--sidenav px-3 py-3">
-        <div class="d-flex mb-3 justify-content-end">
-            <button class="btn" @click="handleClick">
-                <i class="bi bi-x fs-5"></i>
-            </button>
-        </div>
-        <div class="d-flex justify-content-center mb-5">
-            <img src="#" alt="" class="me-3" width="" height="">
-            <div>
-                <p class="fw-bold fs-4 mb-1">John Doe</p>
-                <p class="text--orange">Account Settings</p>
-            </div>
-        </div>
-        <div>
-            <ul>
-                <li class="mb-3">
-                    <router-link to="/home" class="d-flex">
-                        <i class="bi bi-columns-gap me-3"></i>
-                        <p class="mb-0">Home</p>
-                    </router-link>
-                </li>
-                <li class="mb-3">
-                    <router-link to="/orders" class="d-flex">
-                        <i class="bi bi-journal-check me-3"></i>
-                        <p class="mb-0">My Order</p>
-                    </router-link>
-                </li>
-                <li class="mb-3">
-                    <router-link to="/favourites" class="d-flex">
-                        <i class="bi bi-heart me-3"></i>
-                        <p class="mb-0">Favourites</p>
-                    </router-link>
-                </li>
-                <li class="mb-3">
-                    <router-link to="/wallet" class="d-flex">
-                        <i class="bi bi-wallet me-3"></i>
-                        <p class="mb-0">Wallet</p>
-                    </router-link>
-                </li>
-                <li class="mb-3">
-                    <router-link to="/invite-friends" class="d-flex">
-                        <i class="bi bi-gift me-3"></i>
-                        <p class="mb-0">Invites Friends</p>
-                    </router-link>
-                </li>
-                <li class="mb-3">
-                    <a class="d-flex" data-bs-toggle="modal" data-bs-target="#Logout">
-                        <i class="bi bi-box-arrow-right me-3"></i>
-                        <p class="mb-0">Log Out</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="mt-5">
-            <img src="@/assets/images/logo.png" alt="Nippyeats logo" width="230" height="50">
-            <div class="d-flex mt-3">
-                <a href="" class="me-3">
-                    <img src="@/assets/images/google.png" alt="Get on google play" width="100" height="30">
-                </a>
-                <a href="">
-                    <img src="@/assets/images/apple.png" alt="Get on apple store" width="100" height="30">
-                </a>
-            </div>
-        </div>
-    </div>
-    <Logout />-->
 </template>
 <script>
 import Logout from "./Logout.vue"
 export default {
     name: "SidenavLoggedIn",
+    inject: ["mq"],
     props: {
-        open: {
-            type: Boolean,
+        user: {
+            type: Object,
         }
     },
-    data() {
-        return {
-            fooOpen: false,
-            firstname: JSON.parse(localStorage.getItem('nippy.user')).firstName,
-            lastname: JSON.parse(localStorage.getItem('nippy.user')).lastName
-        };
-    },
-    methods: {
-       /* handleClick() {
-            this.$emit("update:parent", this.fooOpen);
-        }*/
-    },
-    components: { Logout }
+    components: { Logout },
+    computed:{
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
+    }
 }
 </script>
 <style scoped>
-    .--sidenav {
-        height: 100%;
-        width: 300px;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: white;
-        overflow-x: hidden;
-        transition: 0.5s;
-        overflow-y: scroll;
-    }
-    li a.d-flex{
-        color: rgba(0, 0, 0, 1);
-    }
     .nav-item .nav-link{
         display: flex;
         color: #000000;

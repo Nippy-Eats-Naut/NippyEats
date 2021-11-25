@@ -1,20 +1,22 @@
 <template>
-    <SidenavNoLogin  :open="Open" @update:parent="Open = $event"/>
-    <div class="container">
-        <div class="d-flex justify-content-between py-3">
-            <div>
-                <button class="me-3 btn" @click="OpenSidenav" v-if="desktop">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="nav-item">
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <i class="bi bi-justify"></i>
                 </button>
-                <img src="@/assets/images/logo.svg" alt="Nippyeats logo" :width="desktop ?180:90" :height="desktop ?39:30">
+                <SidenavNoLogin />
+                <router-link to="/home" class="navbar-brand">
+                    <img src="@/assets/images/logo.png" alt="Nippyeats logo" :width="desktop ?180:90" :height="desktop ?39:30">
+                </router-link>
             </div>
-            <div>
+            <div class="nav-item">
                 <router-link to="/login" class="btn bg--orange text-white">
                     <i class="bi bi-person" v-if="!desktop"></i>Login/Sign Up
                 </router-link>
             </div>
         </div>
-    </div>
+    </nav>
 </template>
 <script>
 import SidenavNoLogin from "./SidenavNoLogin.vue";
@@ -24,13 +26,7 @@ export default{
     components: { SidenavNoLogin },
      data(){
         return{
-            Open: false
         }
-    },
-    methods:{
-        OpenSidenav(){
-            this.Open = true;
-        },
     },
     computed:{
         desktop(){

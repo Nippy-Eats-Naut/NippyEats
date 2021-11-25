@@ -25,6 +25,10 @@ import TrackOrders from "../views/TrackOrders.vue"
 import Wallet from "../views/Wallet.vue"
 import WhatWeDo from "../views/WhatWeDo.vue"
 import VerifySignUp from "../views/VerifySignUp.vue"
+import PasswordReset from "../views/PasswordReset.vue"
+import AccountSettings from "../views/AccountSettings.vue"
+import Search from "../views/Search.vue"
+import Notification from "../views/MobileNotification.vue"
 
 
 const routes = [
@@ -170,6 +174,38 @@ const routes = [
         component: VerifySignUp,
         meta: {
             class: 'Auth'
+        }
+    },
+    {
+        path: '/password-reset',
+        name: 'PasswordReset',
+        component: PasswordReset,
+        meta: {
+            class: 'Auth'
+        }
+    },
+    {
+        path: '/notification',
+        name: 'Notification',
+        component: Notification,
+        meta: {
+            requireAuth: true
+        }
+    },
+    {
+        path: '/account-settings',
+        name: 'AccountSettings',
+        component: AccountSettings,
+        meta: {
+            requireAuth: true
+        }
+    },
+    {
+        path: '/search?q',
+        name: 'Search',
+        component: Search,
+        meta: {
+            requireAuth: true
         }
     },
     

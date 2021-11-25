@@ -23,7 +23,7 @@
     </div>
     <div class="container mb-5">
         <p class="fs-4 text-center fw-bold">New On NippyEats</p>
-        <NewResturants :resturants="resturants" />
+        <NewResturants :resturants="newProviders" />
     </div>
     <div class="container mb-5">
         <div class="card border-0">
@@ -85,12 +85,14 @@
 import data from '@/assets/db.json'
 import BrowseCard from '../components/BrowseCard.vue'
 import NewResturants from '../components/NewResturants.vue';
+import moment from 'moment'
 export default {
     name: "HomePage",
     inject: ["mq"],
     data() {
         return {
-            addr: null
+            addr: null,
+            newProviders: []
         };
     },
     methods:{
@@ -108,14 +110,30 @@ export default {
         meals() {
             return data[0].meals;
         },
-        resturants() {
-            return data[1].resturants;
-        },
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         }
     },
-    components: { BrowseCard, NewResturants }
+    components: { BrowseCard, NewResturants },
+    beforeMount(){
+        var config = {
+            method: 'get',
+            url: 'https://api.nippyeats.com/v1/foodies/providers',
+            headers: { }
+        };
+
+        this.axios(config)
+        .then(response => {
+            let data = response.data.data.data
+            let fooData =  data.sort(function(a, b){
+                var foo = moment(a.updatedAt, "DD/MM/YYYY").format();
+                var bar = moment(b.updatedAt, "DD/MM/YYYY").format();
+
+                return new Date( bar ) - new Date( foo )
+            }).slice(0,6);
+            this.newProviders = fooData;
+        })
+    }
 }
 </script>
 <style scoped>

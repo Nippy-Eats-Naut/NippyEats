@@ -46,7 +46,7 @@ export default {
         };
 
         this.axios(config)
-        .then(function (response) {
+        .then(response => {
             this.Ongoing = response.data.data.ongoing
             this.Previous = response.data.data.previous
         })

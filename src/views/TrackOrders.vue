@@ -103,7 +103,7 @@ export default {
         };
 
         this.axios(config)
-        .then(function (response) {
+        .then(response => {
             this.order = response.data.data
         })
         .catch(function (error) {

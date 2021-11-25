@@ -119,7 +119,8 @@ export default {
             method: 'get',
             url: 'https://api.nippyeats.com/v1/foodies/',
             headers: { 
-                'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`
+                'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`,
+                'Content-Type': 'application/json'
             }
         };
 
