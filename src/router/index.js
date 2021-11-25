@@ -114,7 +114,7 @@ const routes = [
         }
     },
     {
-        path: '/order',
+        path: '/orders',
         name: 'Order',
         component: Order
     },
@@ -147,7 +147,7 @@ const routes = [
         component: TermsAndConditions
     },
     {
-        path: '/trackorders',
+        path: '/trackorders/:id',
         name: 'TrackOrders',
         component: TrackOrders
     },

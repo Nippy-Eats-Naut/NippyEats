@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container">
-            <div class="mb-2">
+            <div class="mb-4">
                 <button class="btn text--orange">
                     <i class="bi bi-arrow-left"></i> Back
                 </button>
@@ -9,17 +9,17 @@
             <div class="mb-4">
                 <p class="fs-4 fw-bold">Track Order</p>
             </div>
+            <p class="mb-1 h6">Pap and Akara</p>
         </div>
         <div class="container d-flex justify-content-between align-items-center">
             <div>
-                <p class="mb-1 fw-bold">Pap and Akara</p>
-                <p class="mb-0 small">Jevinik Resturant</p>
+                <p class="mb-0 small text-center">Jevinik Resturant</p>
             </div>
             <div>
-                <p class="mb-0 small">Order Number <i class="bi bi-dot"></i> 123456</p>
+                <p class="mb-0 small text-center">Order Number <i class="bi bi-dot"></i> 123456</p>
             </div>
             <div>
-                <p class="mb-0 small">Delivery Time <i class="bi bi-dot"></i> 30mins</p>
+                <p class="mb-0 small text-center">Delivery Time <i class="bi bi-dot"></i> 30mins</p>
             </div>
         </div>
         <hr>
@@ -55,6 +55,7 @@ export default {
     name: 'TrackOrders',
     data(){
         return{
+            order: {},
             tracks: [
                 {
                     title: 'Order Placed',
@@ -90,6 +91,24 @@ export default {
                 }
             ]
         }
-    }
+    },
+    /*beforeMount(){
+        var config = {
+            method: 'get',
+            url: `https://api.nippyeats.com/v1/foodies/orders/${this.$route.params.id}`,
+            headers: { 
+                'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`, 
+                'Content-Type': 'application/json'
+            },
+        };
+
+        this.axios(config)
+        .then(function (response) {
+            this.order = response.data.data
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }*/
 }
 </script>

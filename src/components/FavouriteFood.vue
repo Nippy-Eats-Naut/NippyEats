@@ -3,7 +3,7 @@
         <div v-for="n, index in 2" :key="index" class="p-4 d-flex justify-content-between border border-dark mb-4 rounded align-items-center">
             <div class="d-flex">
                 <div class="me-3">
-                    <img src="@/assets/images/dummyImg/Rectangle_24.png" alt="" height="96" class="rounded">
+                    <img src="@/assets/images/dummyImg/Rectangle_24.png" alt="" :height="desktop?96:72" class="rounded">
                 </div>
                 <div>
                     <p class="mb-1 fw-bold">English Breakfast</p>
@@ -24,5 +24,11 @@
 <script>
 export default {
     name: 'FavoruiteFood',
+    inject: ["mq"],
+    computed: {
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
+    }
 }
 </script>

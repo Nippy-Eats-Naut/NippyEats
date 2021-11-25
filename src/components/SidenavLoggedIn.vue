@@ -21,7 +21,7 @@
                     </router-link>
                 </li>
                 <li class="mb-3">
-                    <router-link to="/order" class="d-flex">
+                    <router-link to="/orders" class="d-flex">
                         <i class="bi bi-journal-check me-3"></i>
                         <p class="mb-0">My Order</p>
                     </router-link>

@@ -3,7 +3,7 @@
         <div class="container my-5">
             <p class="fs-4 fw-bold">Your Wallet</p>
         </div><hr>
-        <div class="container">
+        <div class="container mb-5">
             <p class="fs-5">Payment methods</p>
             <div class="d-flex">
                 <img src="@/assets/images/Group_247.png" class="rounded" height="120">

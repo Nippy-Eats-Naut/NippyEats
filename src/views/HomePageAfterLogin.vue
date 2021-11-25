@@ -25,7 +25,7 @@
                 <p class="fs-5 fw-bold">Popular Near You</p>
                 <router-link to="/resturants" class="text-dark small text-decoration-none">See All</router-link>
             </div>
-            <ResturantCard :meals="resturants"/>
+            <ResturantCard :providers="resturants" :pag="4"/>
         </div>
         <div class="mb-5">
             <p class="fs-5 fw-bold">Dishes we Recommend</p>

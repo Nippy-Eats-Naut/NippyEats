@@ -12,8 +12,8 @@
             </button>
         </div>
         <div>
-            <OngoingOrder v-show="tab=='Ongoing'"/>
-            <PreviousOrders v-show="tab=='Previous'" />
+            <OngoingOrder :data="Ongoing" v-show="tab=='Ongoing'"/>
+            <PreviousOrders :data="Previous" v-show="tab=='Previous'" />
         </div>
     </div>
 </template>
@@ -24,7 +24,9 @@ export default {
     name: "Order",
     data() {
         return {
-            tab: "Ongoing"
+            tab: "Ongoing",
+            Ongoing: [],
+            Previous: []
         };
     },
     methods: {
@@ -32,6 +34,25 @@ export default {
             this.tab = name;
         }
     },
-    components: { PreviousOrders, OngoingOrder }
+    components: { PreviousOrders, OngoingOrder },
+    beforeMount(){
+        var config = {
+            method: 'get',
+            url: `https://api.nippyeats.com/v1/foodies/orders`,
+            headers: { 
+                'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`, 
+                'Content-Type': 'application/json'
+            },
+        };
+
+        this.axios(config)
+        .then(function (response) {
+            this.Ongoing = response.data.data.ongoing
+            this.Previous = response.data.data.previous
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
 }
 </script>
