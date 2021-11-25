@@ -1,17 +1,18 @@
 <template>
         <div>
-            <ResturantPageCarousel :banner="provider.banner.fileUrl"/>
+            <ResturantPageCarousel :banner="provider.banner != null ? provider.banner.fileUrl : ''"/>
         </div>
     <div class="container">
         <div class="mt-3">
             <div class="d-flex justify-content-between">
                 <div>
                     <p class="fs-3 fw-bold mb-2">{{provider.name}}</p>
-                    <div class="d-flex">
-                        <div class="d-flex">
-                            <i class="bi bi-star-fill text--orange"></i>
-                        </div>
-                        <p class="ms-2">{{provider.rating}}(0)</p><i class="mx-1 bi bi-dot"></i>
+                    <div class="d-flex align-items-baseline">
+                        <star-rating class="justify-content-center"
+                            v-model:rating="provider.rating" :read-only="true" 
+                            :increment="0.5" :star-size="20">
+                        </star-rating>
+                        <p class="">(0)</p><i class="mx-1 bi bi-dot"></i>
                         <a class="text-secondary text-decoration-underline" data-bs-toggle="modal" data-bs-target="#Reviews">Reviews (0)</a>
                         <Reviews :reviews="reviews" class="provider"/>
                     </div>
@@ -43,7 +44,12 @@
             </div>
             <div v-if="!desktop" class="mb-4">
                 <div class="d-flex mb-3 tab border-bottom">
-                    <button class="btn text--orange" v-for="_time,index in Time" :key="index" :class="Time[0]? 'text--orange':''">{{_time}}</button>
+                    <div class="form-check" v-for="_time,index in Time" :key="index">
+                        <input type="radio" name="time" class="form-check-input d-none" :id="`time${index}`" :value="_time" v-model="selectedTime">
+                        <label :for="`time${index}`" class="form-check-label btn" :class="selectedTime == _time? 'text--orange': ''">
+                            {{_time}}
+                        </label>
+                    </div>
                 </div>
                 <div class="d-flex">
                     <div class="form-check mr-3 p-0" v-for="modes,index in deliveryModes" :key="index">
@@ -57,19 +63,24 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="d-flex justify-content-evenly mb-3" v-if="desktop">
-                        <button class="btn text--orange" v-for="_time,index in Time" :key="index" :class="Time[0]? 'text--orange':''">{{_time}}</button>
+                        <div class="form-check" v-for="_time,index in Time" :key="index">
+                            <input type="radio" name="time" class="form-check-input d-none" :id="`time${index}`" :value="_time" v-model="selectedTime">
+                            <label :for="`time${index}`" class="form-check-label btn" :class="selectedTime == _time? 'text--orange': ''">
+                                {{_time}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-5" v-if="selectedTime= 'All' || 'Breakfast'">
+                        <ResturantMeal title="Breakfast" :meals="menus.slice(0,4)" col="col-md-6" />
                     </div>
                     <div class="mb-5">
-                        <ResturantMeal title="Breakfast" :meals="4" col="col-md-6" />
+                        <ResturantMeal title="Lunch" :meals="menus.slice(4,8)" col="col-md-6" />
                     </div>
                     <div class="mb-5">
-                        <ResturantMeal title="Lunch" :meals="4" col="col-md-6" />
+                        <ResturantMeal title="Dinner" :meals="menus.slice(8,12)" col="col-md-6" />
                     </div>
                     <div class="mb-5">
-                        <ResturantMeal title="Dinner" :meals="3" col="col-md-6" />
-                    </div>
-                    <div class="mb-5">
-                        <ResturantMeal title="Brunch" :meals="2" col="col-md-6" />
+                        <ResturantMeal title="Brunch" :meals="menus.slice(12,16)" col="col-md-6" />
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -90,7 +101,7 @@
                             <p class="">Total</p>
                             <p>N3,500</p>
                         </div>
-                        <button class="btn bg--orange text-white w-100 btn-lg">Proceed To Checkout</button>
+                        <router-link to="/checkout/user" class="btn bg--orange text-white w-100 btn-lg">Proceed To Checkout</router-link>
                     </div>
                 </div>
             </div>
@@ -102,6 +113,7 @@ import ResturantMeal from "../components/ResturantMeal.vue"
 import BasketMeal from "../components/BasketMeal.vue";
 import ResturantPageCarousel from '../components/ResturantPageCarousel.vue';
 import Reviews from '../components/Reviews.vue';
+import StarRating from 'vue-star-rating'
 export default {
     name: "Resturant",
     data() {
@@ -109,7 +121,9 @@ export default {
             type: "Delivery",
             provider: null,
             reviews:[],
-            Time: ["Breakfast", "Lunch", "Dinner", "Brunch", "Late Night", "More"]
+            menus: [],
+            Time: ["All", "Breakfast", "Lunch", "Dinner", "Brunch", "Late Night"],
+            selectedTime: "All"
         };
     },
     inject: ["mq"],
@@ -154,11 +168,11 @@ export default {
             }
         }
     },
-    components: { ResturantMeal, BasketMeal, ResturantPageCarousel, Reviews },
+    components: { ResturantMeal, BasketMeal, ResturantPageCarousel, Reviews, StarRating },
     beforeMount(){
         var config = {
             method: 'get',
-            url: `https://api.nippyeats.com/v1/foodies/providers/${this.$route.params.id}`,
+            url: `https://api.nippyeats.com/v1/foodies/providers/${this.$route.params.id}/`,
             headers: { }
         };
         var config2 = {
@@ -166,14 +180,32 @@ export default {
             url: `https://api.nippyeats.com/v1/foodies/providers/${this.$route.params.id}/reviews`,
             headers: { }
         };
-            this.axios(config)
-            .then((response) => {
-                this.provider = response.data.data
-            });
-            this.axios(config2)
-            .then((response) => {
-                this.reviews = response.data.data
-            });
+        var config3 = {
+            method: "get",
+            url: "https://api.nippyeats.com/v1/foodies/explore",
+            headers: { }
+        };
+        this.axios(config)
+        .then((response) => {
+            this.provider = response.data.data
+        });
+
+        this.axios(config2)
+        .then((response) => {
+            this.reviews = response.data.data
+        });
+
+        this.axios(config3)
+            .then(response => {
+            let data = response.data.data;
+            let __data = data.filter(a => {
+                if (a.category == "menu") {
+                    var name = a.value.providerId.toLowerCase().includes(this.$route.params.id.toLowerCase());
+                    return name;
+                }
+            }).slice(0, 16);
+            this.menus = __data;
+        });
         
     }
 }

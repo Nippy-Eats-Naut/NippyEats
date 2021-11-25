@@ -78,3 +78,14 @@ ul li {
 img.card-img {
   border-radius: 6.29213px;
 }
+
+.--empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.--trans {
+  transform: rotate(26.95deg);
+}

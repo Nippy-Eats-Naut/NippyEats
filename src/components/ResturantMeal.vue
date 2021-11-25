@@ -10,16 +10,16 @@
                                 <i class="bi bi-heart text-dark"></i>
                             </button>
                         </div>
-                        <img src="@/assets/images/dummyImg/Rectangle_24.png" class="card-img" height="169">
+                        <img :src="meal.value.img.fileUrl != null ? meal.value.img.fileUrl : ''" class="card-img" height="116">
                     </div>
                     <div class="col-md-6 col-6">
-                        <p class="fw-bold mb-1">English Breakfast</p>
-                        <p class="text-secondary small mb-2">Tender chicken marinated daily with an exotic blend of potato chips and ketchup</p>
-                        <p class="text-secondary mb-1 fw-bold">N3,000</p>
+                        <p class="fw-bold mb-1">{{meal.value.title}}</p>
+                        <p class="text-secondary small mb-2 text-truncate" :title="meal.value.description">{{meal.value.description}}</p>
+                        <p class="text-secondary mb-1 fw-bold">{{meal.value.currency}} {{meal.value.price}}</p>
                         <p class="text-secondary small mb-0">Delivery Fee <i class="bi bi-dot"></i>30-40 min</p>
                     </div>
                 </router-link>
-                <FoodDetails :id="2"/>
+                <FoodDetails :menu="meal"/>
             </div>
         </div>
     </div>
@@ -34,12 +34,12 @@ export default {
             type: String
         },
         meals: {
-            type: Number
+            type: Array
         },
         col:{
             type: String
         }
-    }
+    },
 }
 </script>
 <style scoped>

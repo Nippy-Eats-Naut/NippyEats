@@ -201,9 +201,10 @@ const routes = [
         }
     },
     {
-        path: '/search?q',
+        path: '/search',
         name: 'Search',
         component: Search,
+        props: route => ({ query: route.query.q}),
         meta: {
             requireAuth: true
         }

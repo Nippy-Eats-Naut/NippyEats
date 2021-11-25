@@ -11,7 +11,7 @@
                 </router-link>
             </div>
             <div class="nav-item" v-if="desktop">
-                <div class="nav-item align-items-baseline w-50">
+                <div class="nav-item align-items-baseline" :class="user.deliveryAddresses==null?'d-none':'w-50'">
                     <i class="bi bi-geo-alt-fill me-2"></i>
                     <p class="navbar-text mb-0 me-2 text-truncate">{{user.deliveryAddresses}}</p>
                 </div>

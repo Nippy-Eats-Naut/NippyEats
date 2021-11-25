@@ -8,33 +8,35 @@
                         <div>
                             <p class="fs-4 fw-bold">Reviews</p>
                         </div>
-                        <button type="button" class="btn-close bg-dark text-white rounded-circle mt-3 mx-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close bg-light rounded-circle mx-3" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3" v-for="n, index in 2" :key="index">
+                        <div v-if="reviews.length==0" class="--empty h-100 w-100"> 
+                            <p class="text-secondary">
+                                <i class="bi bi-chat-left fs-3"></i>
+                            </p>
+                            <p class="text-secondary">Nothing here yet</p>
+                        </div>
+                        <div class="mb-3" v-for="rev, index in reviews" :key="index">
                             <div class="d-flex justify-content-between mb-2">
                                 <div class="d-flex">
                                     <div class="mr-3">
                                         <img src="" alt="">
                                     </div>
                                     <div>
-                                        <p class="mb-1 fs-5 fw-bold">Sam Doe</p>
-                                        <div class="d-flex">
-                                            <div v-for="n, index in 5" :key="index">
-                                                <i class="bi bi-star-fill text--orange"></i>
-                                            </div>
-                                        </div>
+                                        <p class="mb-1 fs-5 fw-bold">{{rev.fnamelname}}</p>
+                                        <star-rating class="justify-content-center mr-1"
+                                            :rating="rev.rating" :read-only="true" 
+                                            :increment="0.5" :star-size="20">
+                                        </star-rating>
                                     </div>
                                 </div>
                                 <div>
-                                    <p class=" fw-bold">24th Oct, 2021</p>
+                                    <p class=" fw-bold">{{rev.date}}</p>
                                 </div>
                             </div>
                             <div>
-                                <p class="text-secondary">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. 
-                                    Velit officia consequat duis enim velit mollit.
-                                     Exercitation veniam consequat sunt nostrud amet.
-                                </p>
+                                <p class="text-secondary">{{rev.comment}} </p>
                             </div>
                             <hr>
                         </div>
@@ -42,16 +44,15 @@
                             <div class="text-center">
                                 <p class="fs-5 fw-bold mb-1">Share your review</p>
                                 <p class="mb-1">Let others know what you think</p>
-                                <div class="d-flex justify-content-center mb-3">
-                                    <div v-for="n, index in 5" :key="index">
-                                        <i class="bi bi-star text-secondary"></i>
-                                    </div>
-                                </div>
+                                <star-rating  class="justify-content-center mb-3"
+                                    v-model:rating="rating" 
+                                    :increment="0.5" :star-size="30">
+                                </star-rating>
                             </div>
                             <div>
                                 <div class="mb-2">
                                     <input type="text" name="review" id="review" class="form-control"
-                                    placeholder="What was your experience like?" v-model="comment">
+                                    placeholder="What was your experience like?" v-model="data.comment">
                                 </div>
                                 <Alert :message="message" category="alert" :success="success"/>
                                 <button type="button" class="btn bg--orange w-100 btn lg text-white" @click="shareReview">
@@ -67,9 +68,10 @@
 </template>
 <script>
 import Alert from './Alert.vue';
+import StarRating from 'vue-star-rating'
 export default {
     name: 'Reviews',
-    components: { Alert },
+    components: { Alert, StarRating },
     props:{
         reviews:{type: Array},
         menuId: {type: String},
@@ -83,7 +85,8 @@ export default {
                 commentableId: ''
             },
             message: null,
-            success: null
+            success: null,
+            rating: null
         }
     },
     methods:{

@@ -5,120 +5,47 @@
                 <div class="modal-content">
                     <div class="modal-header p-0">
                         <button type="button" class="btn-close bg-light mt-3 mx-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <img src="@/assets/images/dummyImg/Rectangle_24.png" alt="" height="200" class="rounded w-100">
+                        <img :src="menu.value.img.fileUrl" alt="" height="200" class="rounded w-100">
                     </div>
                     <div class="modal-body">
                         <div>
-                            <p class="fw-bold fs-3 mb-1">English Breakfast</p>
-                            <p class="text-secondary small mb-2">Tender chicken marinated daily with an exotic blend of potato chips and ketchup</p>
-                            <div class="d-flex">
-                                <div class="d-flex" v-for="n, index in 5" :key="index">
-                                    <i class="bi bi-star-fill text--orange"></i>
-                                </div>
-                                <p class="ms-2">4.5(245)</p><i class="mx-1 bi bi-dot"></i>
-                                <a class="text-secondary" data-bs-toggle="modal" data-bs-target="#Reviews" data-bs-dismiss="modal">Reviews (3)</a>
+                            <p class="fw-bold fs-3 mb-1">{{menu.value.title}}</p>
+                            <p class="text-secondary small mb-2">{{menu.value.description}}</p>
+                            <div class="d-flex align-items-baseline">
+                                <star-rating class="justify-content-center mr-1"
+                                    :rating="menu.rating" :read-only="true" 
+                                    :increment="0.5" :star-size="20">
+                                </star-rating>
+                                <p class="ms-2">{{menu.rating}}()</p><i class="mx-1 bi bi-dot"></i>
+                                <a class="text-secondary" data-bs-toggle="modal" data-bs-target="#Reviews" data-bs-dismiss="modal">Reviews ()</a>
                                 <Reviews :reviews="reviews" class="menu" />
                             </div>
                         </div>
                         
                         <div class="border border-1 border-light px-1 py-2">
                             <a class="btn d-flex justify-content-between" data-bs-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
-                                <p class="fw-bold">Extra Protein</p>
+                                <p class="fw-bold">Ingredient</p>
                                 <p><i class="text-secondary bi bi-chevron-down"></i></p>
                             </a>
                             <div class="collapse" id="collapseExample1">
                                 <div class="card card-body border-0">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio1">
-                                        <label class="form-check-label" for="radio1">Chili Lime Shrimp</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio2">
-                                        <label class="form-check-label" for="radio2">Lemongrass Chicken</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio3">
-                                        <label class="form-check-label" for="radio3">Seasoned Fried Egg</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-1 border-light px-1 py-2">
-                            <a class="btn d-flex justify-content-between" data-bs-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
-                                <p class="fw-bold">Choice of Drink</p>
-                                <p><i class="text-secondary bi bi-chevron-down"></i></p>
-                            </a>
-                            <div class="collapse" id="collapseExample2">
-                                <div class="card card-body border-0">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio1">
-                                        <label class="form-check-label" for="radio1">Chili Lime Shrimp</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio2">
-                                        <label class="form-check-label" for="radio2">Lemongrass Chicken</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio3">
-                                        <label class="form-check-label" for="radio3">Seasoned Fried Egg</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-1 border-light px-1 py-2">
-                            <a class="btn d-flex justify-content-between" data-bs-toggle="collapse" href="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3">
-                                <p class="fw-bold">Extra Protein</p>
-                                <p><i class="text-secondary bi bi-chevron-down"></i></p>
-                            </a>
-                            <div class="collapse" id="collapseExample3">
-                                <div class="card card-body border-0">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio1">
-                                        <label class="form-check-label" for="radio1">Chili Lime Shrimp</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio2">
-                                        <label class="form-check-label" for="radio2">Lemongrass Chicken</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio3">
-                                        <label class="form-check-label" for="radio3">Seasoned Fried Egg</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-1 border-light px-1 py-2">
-                            <a class="btn d-flex justify-content-between" data-bs-toggle="collapse" href="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4">
-                                <p class="fw-bold">Extra Protein</p>
-                                <p><i class="text-secondary bi bi-chevron-down"></i></p>
-                            </a>
-                            <div class="collapse" id="collapseExample4">
-                                <div class="card card-body border-0">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio1">
-                                        <label class="form-check-label" for="radio1">Chili Lime Shrimp</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio2">
-                                        <label class="form-check-label" for="radio2">Lemongrass Chicken</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radioo" id="radio3">
-                                        <label class="form-check-label" for="radio3">Seasoned Fried Egg</label>
+                                    <div class="form-check" v-for="i,index in menu.value.ingredient" :key="index">
+                                        <input class="form-check-input" type="radio" name="radioo" :id="`radio${index}`">
+                                        <label class="form-check-label" for="radio1">i</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex p-3">
-                        <div class="input-group">
-                            <button class="btn btn-dark border-0">-</button>
+                        <div class="input-group me-3">
+                            <button class="btn btn-dark border-end">-</button>
                             <input class="quantity-input" type="text" v-model="quantity">
-                            <button class="btn btn-dark border-0">+</button>
+                            <button class="btn btn-dark border-start">+</button>
                         </div>
                         <button type="button" class="btn bg--orange w-100 btn lg text-white">
                             <i class="bi bi-basket-fill me-1"></i>
-                            Add to Basket (N6000)
+                            Add to Basket ({{menu.value.currency}} {{menu.value.price.toString()}})
                         </button>
                     </div>
                 </div>
@@ -128,42 +55,33 @@
 </template>
 <script>
 import Reviews from "./Reviews.vue"
+import StarRating from 'vue-star-rating'
 export default {
     name: "FoodDetails",
     props:{
-        id: {
-            type: String,
+        menu: {
+            type: Object,
         }
     },
     data() {
         return {
             quantity: 1,
-            menu: null,
             reviews: []
         };
     },
-    components: { Reviews },
-    beforeMount(){
-        var config = {
+    components: { Reviews, StarRating },
+    /*beforeMount(){
+        /*var config = {
             method: 'get',
-            //url: `https://api.nippyeats.com/v1/foodies/menus/${this.id}`,
+            url: `https://api.nippyeats.com/v1/foodies/providers/${this.id}/reviews`,
             headers: { }
-        };
-        var config2 = {
-            method: 'get',
-           // url: `https://api.nippyeats.com/v1/foodies/providers/${this.id}/reviews`,
-            headers: { }
-        };
-        this.axios(config)
-        .then((response) => {
-            this.menu = response.data.data
-        });
-        this.axios(config2)
+        };*/
+        /*this.axios(config)
         .then((response) => {
             this.reviews = response.data.data
-        });
+        });*/
     
-    }
+    //}
 }
 </script>
 <style scoped>
@@ -178,5 +96,9 @@ export default {
         border: 0px;
         font-size: small;
         background-color: #212529;
+    }
+    .input-group{
+        flex-wrap: nowrap;
+        width: unset;
     }
 </style>

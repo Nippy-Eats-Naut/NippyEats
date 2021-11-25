@@ -8,7 +8,7 @@
                 <img src="#" alt="" class="me-3" width="" height="">
                 <div>
                     <p class="fw-bold fs-4 mb-1">{{user.firstName}} {{user.lastName}}</p>
-                    <div class="d-flex align-items-baseline w-50">
+                    <div class="d-flex align-items-baseline" :class="user.deliveryAddresses==null?'d-none':'w-50'">
                         <i class="bi bi-geo-alt-fill me-2"></i>
                         <p class="navbar-text mb-0 me-2 text-truncate">{{user.deliveryAddresses}}</p>
                     </div>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row"  :class="desktop?'':'hr-scroll'">
-            <div v-for="provider,index in providers.slice(0,pag)" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
+            <div v-for="provider,index in providers" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
                 <div class="card-img-overlay">
                      <button class="bg--grey btn rounded-circle" @click="Fav(provider.id)">
                         <i class="bi bi-heart-fill text-white"></i>
@@ -32,9 +32,6 @@ export default {
         providers:{
             type: Array
         },
-        pag:{
-            type: Number
-        }
     },
     data(){
         return{
