@@ -1,6 +1,16 @@
 <template>
     <div>
-        <div v-for="foo, index in data" :key="index" class="px-3 py-2 border border-dark mb-4 rounded">
+        <div v-if="data.length == 0" class="--empty w-100">
+            <p class="text-secondary">
+                <i class="bi bi-cliboard-x fs-3"></i>
+            </p>
+            <p class="text-secondary">Nothing here yet</p>
+            <router-link to="/home" class="btn text--orange cs">
+                <i class="bi bi-arrow-left"></i>
+                Continue Shopping
+            </router-link>
+        </div>
+        <div v-else v-for="foo, index in data" :key="index" class="px-3 py-2 border border-dark mb-4 rounded">
             <div class="d-flex justify-content-around mb-3 align-items-start">
                 <div>
                     <img :src="foo.img.fileUrl" alt="" :height="desktop?96:72" class="rounded">

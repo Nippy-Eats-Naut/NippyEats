@@ -1,5 +1,15 @@
 <template>
     <div>
+        <!--<div v-if="data.length == 0" class="--empty w-100">
+            <p class="text-secondary">
+                <i class="bi bi-heart-half fs-3"></i>
+            </p>
+            <p class="text-secondary">Nothing here yet</p>
+            <router-link to="/home" class="btn text--orange cs">
+                <i class="bi bi-arrow-left"></i>
+                Continue Shopping
+            </router-link>
+        </div>v-else-->
         <div v-for="n, index in 2" :key="index" class="p-4 d-flex justify-content-between border border-dark mb-4 rounded align-items-center">
             <div class="d-flex">
                 <div class="me-4">

@@ -10,13 +10,13 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="fname" placeholder="name@example.com">
+                                <input type="text" class="form-control" id="fname" placeholder="name@example.com" v-model="firstName">
                                 <label for="fname">First Name</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="lname" placeholder="name@example.com">
+                                <input type="text" class="form-control" id="lname" placeholder="name@example.com" v-model="lastName">
                                 <label for="lname">Last Name</label>
                             </div>
                         </div>
@@ -24,13 +24,13 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                                <input type="email" class="form-control" id="email" placeholder="name@example.com" v-model="email">
                                 <label for="email">Email Address</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pnum" placeholder="name@example.com">
+                                <input type="text" class="form-control" id="pnum" placeholder="name@example.com" v-model="phone">
                                 <label for="pnum">Phone Number</label>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                     <p class="mb-2 text-dark h6">Delivery Address</p>
                     <div class="mb-3">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="sAddr" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="sAddr" placeholder="name@example.com" v-model="deliveryAddress">
                             <label for="sAddr">Street Address</label>
                         </div>
                     </div>
@@ -102,7 +102,14 @@ export default {
     components: { OrderSummaryCheckout },
     data(){
         return{
-            payMethod: ''
+            data: {
+                firstName:'',
+                lastName:'',
+                email:'',
+                phone:'',
+                deliveryAddress:'',
+                payMethod: ''
+            }
         }
     }
 }

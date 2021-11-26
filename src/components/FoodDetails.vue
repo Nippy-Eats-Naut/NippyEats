@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade" id="FoodDetails" tabindex="-1" aria-labelledby="FoodDetails" aria-hidden="true">
+        <div class="modal fade" :id="`FoodDetails${menu.value.id}`" tabindex="-1" aria-labelledby="FoodDetails" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header p-0">
@@ -39,13 +39,13 @@
                     </div>
                     <div class="d-flex p-3">
                         <div class="input-group me-3">
-                            <button class="btn btn-dark border-end">-</button>
+                            <button class="btn btn-dark border-end" @click="quantity--">-</button>
                             <input class="quantity-input" type="text" v-model="quantity">
-                            <button class="btn btn-dark border-start">+</button>
+                            <button class="btn btn-dark border-start" @click="quantity++">+</button>
                         </div>
-                        <button type="button" class="btn bg--orange w-100 btn lg text-white">
+                        <button type="button" class="btn bg--orange w-100 btn lg text-white" @click="addToBasket()">
                             <i class="bi bi-basket-fill me-1"></i>
-                            Add to Basket ({{menu.value.currency}} {{menu.value.price.toString()}})
+                            Add to Basket ({{menu.value.currency}} {{parseFloat(menu.value.price.toString())}})
                         </button>
                     </div>
                 </div>
@@ -68,6 +68,13 @@ export default {
             quantity: 1,
             reviews: []
         };
+    },
+    methods:{
+        addToBasket(){
+            let quantity = this.quantity;
+            let menu = this.menu
+            this.$store.commit('add_menu', {menu, quantity})
+        }
     },
     components: { Reviews, StarRating },
     /*beforeMount(){

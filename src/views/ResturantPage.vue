@@ -84,25 +84,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="border border-1 rounded border-dark px-2 py-1 mb-5">
-                        <p class="fw-bold text-center fs-6">Basket</p>
-                        <BasketMeal :meals="2"/>
-
-                        <p class="">Order Summary</p>
-                        <div class="d-flex justify-content-between">
-                            <p class="text-secondary">Subtotal</p>
-                            <p>N3,000</p>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="text-secondary">Delivery Fee</p>
-                            <p>N500</p>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="">Total</p>
-                            <p>N3,500</p>
-                        </div>
-                        <router-link to="/checkout/user" class="btn bg--orange text-white w-100 btn-lg">Proceed To Checkout</router-link>
-                    </div>
+                    <BasketMeal />
                 </div>
             </div>
         </div>  
@@ -169,6 +151,10 @@ export default {
         }
     },
     components: { ResturantMeal, BasketMeal, ResturantPageCarousel, Reviews, StarRating },
+    mounted(){
+        var provider = this.provider.name
+        this.$store.commit('fetch_provider', provider)
+    },
     beforeMount(){
         var config = {
             method: 'get',

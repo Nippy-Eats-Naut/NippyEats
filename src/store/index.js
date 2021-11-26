@@ -1,12 +1,15 @@
 import { createStore } from 'vuex'
 
+let basket = window.localStorage.getItem('basket');
 const store = createStore({
     state(){
         return {
             longitude: '',
             latitude: '',
             message: null,
-            success: null
+            success: null,
+            basket: basket ? JSON.parse(basket) : [],
+            provider: ''
         }
     },
 
@@ -27,6 +30,31 @@ const store = createStore({
                 state.success = null;
             }, 10000)
         },
+        add_menu(state, payload){
+            let found = state.basket.find(item => item.value.id == payload.menu.value.id);
+
+            if (found) {
+                found.quantity += payload.quantity;
+            } else {
+                payload.menu.quantity = payload.quantity
+                payload.menu.provider = state.provider
+                state.basket.push(payload.menu)
+            }      
+            this.commit('SAVE_menu');
+        },
+        SAVE_menu(state){
+            window.localStorage.setItem('basket', JSON.stringify(state.basket));
+        },
+        REMOVE_menu(state, menu) {
+            let index = state.basket.indexOf(menu);
+        
+            state.basket.splice(index, 1);
+    
+            this.commit('SAVE_menu');
+        },
+        fetch_provider(state, provider){
+            state.provider = provider
+        }
     },
 
     getters:{
@@ -42,6 +70,13 @@ const store = createStore({
         success: state => {
             return state.success;
         },
+        basket: state => {
+            return state.basket;
+        },
+        provider: state => {
+            return state.provider
+        }
+
         
     }
 

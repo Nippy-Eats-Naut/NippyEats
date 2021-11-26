@@ -35,7 +35,7 @@
                 </div>
                 <router-link to="/basket" class="btn btn-dark rounded">
                     <i class="bi bi-basket-fill me-1"></i>
-                    Basket <i class="bi bi-dot"></i> 2
+                    Basket <i class="bi bi-dot"></i> {{basket.length}}
                 </router-link>
             </div>
             <NavbarMobileRight v-if="!desktop"/>
@@ -47,6 +47,7 @@
 import SidenavLoggedIn from "./SidenavLoggedIn.vue";
 import Notifications from "./Notifications.vue";
 import NavbarMobileRight from "./NavbarMobileRight.vue";
+import {mapGetters} from 'vuex'
 export default{
     inject: ["mq"],
     name: "NavbarLogin",
@@ -59,7 +60,10 @@ export default{
     computed:{
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
-        }
+        },
+        ...mapGetters([
+            'basket'
+        ])
     },
     beforeMount(){
         var config = {
