@@ -8,16 +8,18 @@
                     <div class="ms-3">
                         <p class="mb-1">{{meal.value.title}}</p>
                         <p class="text-secondary small mb-1">{{meal.provider}}</p>
-                        <p class="text-secondary small mb-0">{{meal.quantity}} plate</p>  
+                        <div class="d-flex">
+                            <p class="text-secondary small mb-0 me-2">{{meal.quantity}} plate</p> 
+                            <div class="input-group" v-show="edit == true">
+                                <button class="btn btn-dark btn-sm border-0" @click="meal.quantity--">-</button>
+                                <input class="quantity-input w-25" type="text" v-model="meal.quantity">
+                                <button class="btn btn-dark btn-sm border-0" @click="meal.quantity++">+</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div>
                     <p class="text-dark fw-bold">{{meal.value.currency}} {{parseFloat(meal.value.price.toString())}}</p>
-                    <div class="input-group" v-show="edit == true">
-                        <button class="btn btn-dark btn-sm border-0" @click="meal.quantity--">-</button>
-                        <input class="quantity-input w-25" type="text" v-model="meal.quantity">
-                        <button class="btn btn-dark btn-sm border-0" @click="meal.quantity++">+</button>
-                    </div>
                 </div>
             </div>
             <div class="d-flex justify-content-between">
@@ -64,6 +66,11 @@ export default {
     data(){
         return{
             edit: false
+        }
+    },
+    methods:{
+        removeMenu(meal){
+            this.$store.commit('REMOVE_menu', meal)
         }
     },
     computed: {
