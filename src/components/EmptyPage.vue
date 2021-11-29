@@ -10,7 +10,7 @@
             <p class="h4 text-secondary"></p>
         </div>
         <div>
-            <button class="btn bg--orange text-white"></button>
+            <button class="btn btn-primary text-white"></button>
         </div>
     </div>
 </template>

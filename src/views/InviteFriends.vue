@@ -16,7 +16,7 @@
                     <i class="bi bi-clipboard-check"></i>
                 </button>
             </div>
-            <button class="btn bg--orange text-white">SHARE</button>
+            <button class="btn btn-primary text-white">SHARE</button>
         </div>
     </div>
 </template>

@@ -10,7 +10,7 @@
                     <i class="bi bi-wallet fs-3"></i>
                 </p>
                 <p class="text-secondary">Nothing here yet</p>
-                <button class="btn bg--orange text-white " data-bs-toggle="modal" data-bs-target="#AddCard">
+                <button class="btn btn-primary text-white " data-bs-toggle="modal" data-bs-target="#AddCard">
                     <i class="bi bi-plus"></i>Add a new card
                 </button>
                 <AddCard />

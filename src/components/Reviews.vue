@@ -55,7 +55,7 @@
                                     placeholder="What was your experience like?" v-model="data.comment">
                                 </div>
                                 <Alert :message="message" category="alert" :success="success"/>
-                                <button type="button" class="btn bg--orange w-100 btn lg text-white" @click="shareReview">
+                                <button type="button" class="btn btn-primary w-100 btn lg text-white" @click="shareReview">
                                     Share Review
                                 </button>
                             </div>

@@ -43,7 +43,7 @@
                             <input class="quantity-input" type="text" v-model="quantity">
                             <button class="btn btn-dark border-start" @click="quantity++">+</button>
                         </div>
-                        <button type="button" class="btn bg--orange w-100 btn lg text-white" @click="addToBasket()">
+                        <button type="button" class="btn btn-primary w-100 btn lg text-white" @click="addToBasket()">
                             <i class="bi bi-basket-fill me-1"></i>
                             Add to Basket ({{menu.value.currency}} {{parseFloat(menu.value.price.toString())}})
                         </button>

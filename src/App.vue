@@ -1,8 +1,11 @@
 <template>
-  <NavbarLogin id="navbar" v-if="Login"/>
-  <NavbarNoLogin v-if="NoLogin"/>
+  <NavbarLogin id="navbar" v-if="isLoggedIn"/>
+  <div v-else>
+    <div v-if="auth"></div>
+    <NavbarNoLogin v-else/>
+  </div>
   <router-view></router-view>
-  <Footer />
+  <Footer v-if="!auth"/>
 </template>
 
 <script>
@@ -15,14 +18,14 @@ export default {
   components: {
     NavbarLogin, Footer,NavbarNoLogin
   },
-    computed:{
-      Login(){
-        return localStorage.getItem('nippy.token') !== null && this.$route.meta.class !== 'Auth'
-      },
-      NoLogin(){
-        return localStorage.getItem('nippy.token') === null && this.$route.meta.class !== 'Auth'
-      }
+  computed:{
+    auth(){
+      return this.$route.meta.class === "Auth"
+    },
+    isLoggedIn(){
+      return localStorage.getItem('nippy.token') != null
     }
+  }
 }
 </script>
 

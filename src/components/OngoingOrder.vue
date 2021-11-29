@@ -25,7 +25,7 @@
                     <p class="mb-1 text-center">123456</p>
                 </div>
                 <div class="d-flex" v-if="desktop">
-                    <router-link :to="`/trackorders/${foo.orderId}`" class="btn bg--orange text-white me-2">Track Order</router-link>
+                    <router-link :to="`/trackorders/${foo.orderId}`" class="btn btn-primary text-white me-2">Track Order</router-link>
                     <button class="btn text--orange outline--orange">Cancel Order</button>
                 </div>
             </div>

@@ -10,7 +10,7 @@
                                 <button type="button" class="bg-dark btn text-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                             </div>
                             <div>
-                                <button type="button" class="bg--orange btn text-white">Log Out</button>
+                                <button type="button" class="btn btn-primary text-white" id="logout" @click="Logout">Log Out</button>
                             </div>
                         </div>
                     </div>
@@ -21,6 +21,19 @@
 </template>
 <script>
 export default {
-    name: 'Logout'
+    name: 'Logout',
+    data(){
+        return{
+        }
+    },
+    methods:{
+        Logout(e){
+            e.preventDefault()
+            document.querySelector("button#logout").setAttribute("data-bs-dismiss", "modal");
+            this.$router.push('/')
+            localStorage.removeItem('nippy.user')
+            localStorage.removeItem('nippy.token')
+        }
+    }
 }
 </script>

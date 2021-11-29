@@ -1,22 +1,10 @@
 <template>
     <div class="container" :class="desktop?'mt-5':'mt-3'">
         <div class="d-flex mb-4">
-            <div class="form-check mr-3 p-0">
-                <input type="radio" name="type" class="form-check-input d-none" id="type1"  value="Delivery" v-model="type">
-                <label for="type1" class="form-check-label btn" :class="type=='Delivery'? 'btn-dark text-white': ''">
-                    Delivery
-                </label>
-            </div>
-            <div class="form-check mr-3">
-                <input type="radio" name="type" class="form-check-input d-none" id="type2"  value="Pickup" v-model="type">
-                <label for="type2" class="form-check-label btn" :class="type=='Pickup'? 'btn-dark text-white': ''">
-                    Pickup
-                </label>
-            </div>
-            <div class="form-check mr-3">
-                <input type="radio" name="type" class="form-check-input d-none" id="type3"  value="Dine-in" v-model="type">
-                <label for="type3" class="form-check-label btn" :class="type=='Dine-in'? 'btn-dark text-white': ''">
-                    Dine-in
+            <div class="form-check mr-3 p-0" v-for="modes,index in deliveryModes" :key="index">
+                <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="type">
+                <label :for="`type${index}`" @click="deliveryHandler" class="form-check-label btn" :class="type == modes? 'btn-dark text-white': ''">
+                    {{modes}}
                 </label>
             </div>
         </div>
@@ -25,14 +13,18 @@
                 <p class="fs-5 fw-bold">Popular Near You</p>
                 <router-link to="/resturants" class="text-dark small text-decoration-none">See All</router-link>
             </div>
-            <ResturantCard :providers="resturants.slice(0,4)"/>
+            <ResturantCard :providers="returantsFiltered.resturants"/>
         </div>
         <div class="mb-5">
-            <p class="fs-5 fw-bold">Dishes we Recommend</p>
-            <RecommendationCard :meals="recommended"/>
+            <p class="fs-5 fw-bold">New vendors</p>
+            <NewResturants :resturants="returantsFiltered.newProviders" />
         </div>
         <div class="mb-5">
-            <p class="fs-5 fw-bold">Browse By Food</p>
+            <p class="fs-5 fw-bold">Recommended vendors</p>
+            <RecommendationCard :meals="returantsFiltered.recommended"/>
+        </div>
+        <div class="mb-5">
+            <p class="fs-5 fw-bold">Fast food</p>
             <BrowseCard :meals="3" />
         </div>
     </div>
@@ -42,25 +34,64 @@ import {mapGetters} from 'vuex'
 import ResturantCard from "../components/ResturantCard.vue"
 import BrowseCard from "../components/BrowseCard.vue";
 import RecommendationCard from '../components/RecommendationCard.vue';
+import NewResturants from '../components/NewResturants.vue';
+import moment from 'moment';
 export default {
     name: "HomePageAfterLogin",
     data() {
         return {
             type: "Delivery",
+            deliveryModes: ["Delivery", "Pickup", "Dine-in"],
             resturants: [],
-            recommended: []
+            newProviders: [],
+            recommended: [],
+            fastFood:[],
+            date: moment("2021-11-19T18:21:28.000Z").format("DD/MM/YYYY")
         };
     },
     inject: ['mq'],
+    methods:{
+        deliveryHandler(){
+            var mode;
+            if (this.type == 'Delivery') mode = 'delivery'
+            else if (this.type == 'Dine-in') mode = 'dine_in'
+            else mode = 'pick_up'
+
+            var resturants = this.resturants.filter(a => {
+                var modes = a.orderInformation.deliveryModes.find((modes) => modes === mode);
+                return modes
+            }).slice(0, 4);
+
+            var newProviders = this.newProviders.filter(a => {
+                var modes = a.orderInformation.deliveryModes.find((modes) => modes === mode);
+                return modes
+            }).slice(0, 4);
+
+            var recommended = this.recommended.filter(a => {
+                var modes = a.orderInformation.deliveryModes.find((modes) => modes === mode);
+                return modes
+            }).slice(0, 4);
+
+            const data ={
+                resturants: resturants,
+                newProviders: newProviders,
+                recommended: recommended,
+            }
+            return data;
+        }
+    },
     computed: {
         ...mapGetters([
             'longitude','latitude'
         ]),
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        },
+        returantsFiltered(){
+            return this.deliveryHandler()
         }
     },
-    components: { ResturantCard, BrowseCard, RecommendationCard },
+    components: { ResturantCard, BrowseCard, RecommendationCard, NewResturants },
     beforeMount(){
         var config = {
             method: 'get',
@@ -70,6 +101,12 @@ export default {
          var config2 = {
             method: 'get',
             url: `https://api.nippyeats.com/v1/foodies/providers/featured-and-recommended`,
+            headers: { }
+        };
+        
+        var config3 = {
+            method: "get",
+            url: "https://api.nippyeats.com/v1/foodies/explore",
             headers: { }
         };
         /*if (localStorage.getItem('nippy.token') === null){  
@@ -85,13 +122,32 @@ export default {
             localStorage.getItem('nippy.user.location') */
             this.axios(config)
             .then((response) => {
-                this.resturants = response.data.data.data
-            });this.axios(config2)
+                let data = response.data.data.data
+                this.resturants = data
+                let fooData =  data.sort(function(a, b){
+                    var foo = moment(a.updatedAt).format('DD/MM/YYYY');
+                    var bar = moment(b.updatedAt).format('DD/MM/YYYY');
+
+                    return bar.diff(foo)
+                })
+                this.newProviders = fooData;
+            });
+
+            this.axios(config2)
             .then((response) => {
                 this.recommended = response.data.data.recommended
             });
+
+            this.axios(config3)
+            .then(response => {
+                let data = response.data.data;
+                let __data = data.filter(a => {
+                    var name = a.category == "menu"
+                    return name;
+                });
+                this.fastFood = __data;
+            });
         //}
-        
     }
 }
 </script>

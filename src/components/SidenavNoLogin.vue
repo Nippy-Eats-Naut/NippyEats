@@ -4,7 +4,7 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body position-relative">   
-            <router-link to="/login" class="btn text-white mt-5" :class="desktop?'ps-5':'ps-3'">Login/Sign Up</router-link>
+            <router-link to="/login" class="btn text-white mt-5 d-flex justify-content-center">Login/Sign Up</router-link>
             <div class="position-absolute bottom-0 ps-5">
                 <img src="@/assets/images/logo.png" alt="Nippyeats logo" width="230" height="50">
                 <div class="d-flex my-3">

@@ -27,7 +27,13 @@
                     <router-link to="" class="text--orange text-decoration-underline">Forgot Password</router-link>
                 </div>
                 <div class="mb-4">
-                    <button class="btn bg--orange btn-lg w-100 text-white" @click="Login">Login</button>
+                    <button class="btn btn-primary btn-lg w-100" type="button" disabled v-if="spin">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="visually-hidden">Loading...</span>
+                    </button>
+                    <button class="btn btn-primary btn-lg w-100 text-white" @click="Login" v-else>
+                        Login
+                    </button>
                 </div>
                 <div class="mb-3 d-flex justify-content-center">
                     <p>Don't have an account? </p>
@@ -45,6 +51,7 @@ export default {
     inject: ["mq"],
     data() {
         return {
+            spin: false,
             data: {
                 email: null,
                 password: null
@@ -65,6 +72,7 @@ export default {
                 this.errors.push("Valid email required.");
             }
             else {
+                this.spin = true
                 var config = {
                     method: "post",
                     url: "https://api.nippyeats.com/v1/foodies/login",
@@ -89,6 +97,7 @@ export default {
                 })
                 .catch(err => {
                     this.errors.push(err.response.data.message);
+                    this.spin = false
                 })
             }
             setTimeout(() => {

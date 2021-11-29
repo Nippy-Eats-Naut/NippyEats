@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="d-grid justify-content-center">
-                            <button class="btn bg--orange text-white mb-3">Add card</button>
+                            <button class="btn btn-primary text-white mb-3">Add card</button>
                             <button type="button" class="btn text--orange" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                         </div>
                     </div>

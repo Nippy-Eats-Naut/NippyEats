@@ -11,7 +11,7 @@
                 </router-link>
             </div>
             <div class="nav-item">
-                <router-link to="/login" class="btn bg--orange text-white">
+                <router-link to="/login" class="btn btn-primary text-white">
                     <i class="bi bi-person" v-if="!desktop"></i>Login/Sign Up
                 </router-link>
             </div>

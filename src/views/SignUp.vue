@@ -36,7 +36,7 @@
                     </label>
                 </div>
                 <div class="mb-4">
-                    <button class="btn bg--orange btn-lg w-100 text-white" @click="SignUp">SignUp</button>
+                    <button class="btn btn-primary btn-lg w-100 text-white" @click="SignUp">SignUp</button>
                 </div>
                 <div class="mb-3 d-flex justify-content-center">
                     <p>Already have an account? </p>

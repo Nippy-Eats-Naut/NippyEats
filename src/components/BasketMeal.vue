@@ -47,8 +47,8 @@
                 <p class="h6">NGN {{subTotal+500}}</p>
             </div>
             <div>
-                <router-link to="/checkout/user" v-if="id != null" class="btn bg--orange text-white w-100 btn-lg">Proceed To Checkout</router-link>
-                <router-link to="/checkout/guest" v-else class="btn bg--orange text-white w-100 btn-lg">Proceed To Checkout</router-link>
+                <router-link to="/checkout/user" v-if="id != null" class="btn btn-primary text-white w-100 btn-lg">Proceed To Checkout</router-link>
+                <router-link to="/checkout/guest" v-else class="btn btn-primary text-white w-100 btn-lg">Proceed To Checkout</router-link>
             </div>
             
         </div>
