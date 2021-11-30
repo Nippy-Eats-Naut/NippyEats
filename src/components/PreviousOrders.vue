@@ -2,7 +2,7 @@
     <div>
         <div v-if="data.length == 0" class="--empty w-100">
             <p class="text-secondary">
-                <i class="bi bi-cliboard-x fs-3"></i>
+                <i class="bi bi-clipboard-x fs-3"></i>
             </p>
             <p class="text-secondary">Nothing here yet</p>
             <router-link to="/home" class="btn text--orange cs">

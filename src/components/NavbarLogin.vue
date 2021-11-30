@@ -15,11 +15,11 @@
                     <i class="bi bi-geo-alt-fill me-2"></i>
                     <p class="navbar-text mb-0 me-2 text-truncate">{{user.deliveryAddresses}}</p>
                 </div>
-                <div class="input-group has-icon">
+                <div class="input-group has-icon" v-if="$route.path !='/search'">
                     <span class="form-control-feedback">
                         <i class="bi bi-search text-secondary opacity-25"></i>
                     </span>
-                    <input type="text" placeholder="Search food or resturants" class="bg-light form-control rounded searchbar">
+                    <input type="text" placeholder="Search food or resturants" class="bg-light form-control rounded searchbar" @click="$router.push('/search')">
                 </div>
             </div>
             <div class="nav-item" v-if="desktop">

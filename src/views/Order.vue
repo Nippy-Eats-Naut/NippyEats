@@ -12,8 +12,8 @@
             </button>
         </div>
         <div>
-            <OngoingOrder :data="Ongoing" v-show="tab=='Ongoing'"/>
-            <PreviousOrders :data="Previous" v-show="tab=='Previous'" />
+            <OngoingOrder :data="data" v-show="tab=='Ongoing'"/>
+            <PreviousOrders :data="data" v-show="tab=='Previous'" />
         </div>
     </div>
 </template>
@@ -26,7 +26,8 @@ export default {
         return {
             tab: "Ongoing",
             Ongoing: [],
-            Previous: []
+            Previous: [],
+            data: []
         };
     },
     methods: {
@@ -47,8 +48,9 @@ export default {
 
         this.axios(config)
         .then(response => {
-            this.Ongoing = response.data.data.ongoing
-            this.Previous = response.data.data.previous
+            this.data = response.data.data.data
+            this.Ongoing = response.data.data.data.ongoing
+            this.Previous = response.data.data.data.previous
         })
         .catch(function (error) {
             console.log(error);

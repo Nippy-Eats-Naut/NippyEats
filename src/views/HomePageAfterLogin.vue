@@ -11,7 +11,7 @@
         <div class="mb-5">
             <div class="d-flex justify-content-between align-items-baseline">
                 <p class="fs-5 fw-bold">Popular Near You</p>
-                <router-link to="/resturants" class="text-dark small text-decoration-none">See All</router-link>
+                <router-link to="/resturants/all" class="text-dark small text-decoration-none">See All</router-link>
             </div>
             <ResturantCard :providers="returantsFiltered.resturants"/>
         </div>

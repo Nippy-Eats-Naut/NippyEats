@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="providers.length ==0">
-            <div class="row"  :class="desktop?'':'hr-scroll'">
+            <div class="row hr-scroll">
                 <div v-for="n,index in 4" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
                     <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
                         <span class="visually-hidden">Loading...</span>
@@ -10,7 +10,7 @@
             </div>
         </div>
         <div v-else>
-            <div class="row"  :class="desktop?'':'hr-scroll'">
+            <div class="row hr-scroll" :class="$route.path =='/search' || $route.path =='/resturants/all'? 'flex-wrap':'flex-nowrap'">
                 <div v-for="provider,index in providers" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
                     <div class="card-img-overlay">
                         <button class="bg--grey btn rounded-circle" @click="Fav(provider.id)">
@@ -95,4 +95,9 @@ export default {
     img.card-img{
         border-radius: 6.29213px;
     }
+    @media only screen and (min-width: 768px) {
+    .hr-scroll{
+        all:unset;
+    }
+  }
 </style>

@@ -18,6 +18,7 @@ import Login from "../views/Login.vue"
 import Order from "../views/Order.vue"
 import OrderSuccess from "../views/OrderSuccess.vue"
 import Resturants from "../views/Resturants.vue"
+import AllResturants from "../views/AllResturants.vue"
 import ResturantPage from "../views/ResturantPage.vue"
 import SignUp from "../views/SignUp.vue"
 import TermsAndConditions from "../views/TermsAndConditions.vue"
@@ -208,6 +209,11 @@ const routes = [
         meta: {
             requireAuth: true
         }
+    },
+    {
+        path: '/resturants/all',
+        name: 'AllResturants',
+        component: AllResturants,
     },
     
 ]

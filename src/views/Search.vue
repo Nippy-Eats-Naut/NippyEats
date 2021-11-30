@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="d-flex mt-2 mx-2 align-items-baseline" :class="desktop?'px--16':''">
-            <div class="input-group has-icon">
+            <div class="input-group has-icon me-3">
                 <span class="form-control-feedback">
                     <i class="bi bi-search text-secondary opacity-25"></i>
                 </span>
                 <input type="text" placeholder="Search food or resturants" class="bg-light form-control rounded searchbar" v-model="search" @keyup="getSearch">
             </div>
-            <a class="text--dark font-bold text-decoration-none" @click="goBack" v-if="!desktop">Cancel</a>
+            <a class="h6 text-dark text-decoration-none" @click="goBack" v-if="!desktop">Cancel</a>
         </div>
         <div class="container">
             <div v-if="search == ''" class="--empty vh-100 w-100">
@@ -16,21 +16,18 @@
                 </p>
                 <p class="text-secondary">Nothing here yet</p>
             </div>
-            <div class="mt-3">
-                <div class="mb-3">
-                    <ResturantMeal title="Menu" col="col-md-4" />
-                    <button class="text-dark h6 btn" @click.prevent="LoadMore(4, 'menu')">View More</button>
-                </div>
+            <div class="my-3">
                 <div>
-                    <ResturantCard />
-                    <button class="text-dark h6 btn" @click.prevent="LoadMore(4, 'provider')">View More</button>
+                    <ResturantCard :providers="result"/>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn-primary btn" @click.prevent="pagProvider += 4">View More</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-import ResturantMeal from "../components/ResturantMeal.vue";
 import ResturantCard from "../components/ResturantCard.vue";
 export default {
     name: "Search",
@@ -38,47 +35,36 @@ export default {
     data() {
         return {
             search: '',
-            pagMenu: 4,
             pagProvider: 4,
-            data: [],
-            menus: []
+            providers:[],
+            result:[]
         };
     },
     methods: {
         goBack() {
             window.history.back();
         },
-        LoadMore(n, channel) {
-            channel === "menu" ? this.pagMenu += n : this.pagProvider += n;
-        },
         getSearch(){
-            this.menus = this.data.filter(a => {
-                if (a.category == "menu") {
-                    var name = a.value.name.toLowerCase().includes(this.search.toLowerCase());
-                    return name;
-                }
-            }).slice(0, this.pagMenu);
-
+            this.result = this.providers.filter(a => {
+                var name = a.name.toLowerCase().includes(this.search.toLowerCase());
+                return name;
+            }).slice(0, this.pagProvider);
         }
     },
     computed: {
         desktop() {
             return this.mq.current !== "xs" && this.mq.current !== "sm";
-        },
-        //filterMenu() {
-        //},
-        //filterProvider(){
-        //}
+        }
     },
     beforeMount() {
         var config = {
             method: "get",
-            url: "https://api.nippyeats.com/v1/foodies/explore",
+            url: "https://api.nippyeats.com/v1/foodies/providers",
             headers: {}
         };
         this.axios(config)
             .then(response => {
-            this.data = response.data.data;
+            this.providers = response.data.data.data;
         });
     },
     created() {
@@ -91,7 +77,7 @@ export default {
             document.querySelector("#navbar").setAttribute("style", "display: flex;");
         }
     },
-    components: { ResturantMeal, ResturantCard }
+    components: { ResturantCard }
 }
 </script>
 

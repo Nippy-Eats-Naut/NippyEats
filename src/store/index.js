@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 
 let basket = window.localStorage.getItem('basket');
+let isLoggedIn = window.localStorage.getItem('nippy.token')
 const store = createStore({
     state(){
         return {
@@ -11,7 +12,7 @@ const store = createStore({
             basket: basket ? JSON.parse(basket) : [],
             provider: '',
             overlay: false,
-            isLoggedIn: localStorage.getItem('nippy.token') != null
+            isLoggedIn: isLoggedIn ? true : false,
         }
     },
 
