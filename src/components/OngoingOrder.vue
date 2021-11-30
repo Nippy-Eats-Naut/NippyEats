@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="d-flex"  v-if="!desktop">
-                <router-link :to="`/trackorders/${foo.orderId}`" class="btn w-100 bg--orange text-white me-2">Track Order</router-link>
+                <router-link :to="`/trackorders/${foo.orderId}`" class="btn w-100 btn-primary text-white me-2">Track Order</router-link>
                 <button class="btn text--orange w-100 outline--orange">Cancel Order</button>
             </div>
         </div>

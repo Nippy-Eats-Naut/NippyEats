@@ -31,7 +31,7 @@
                 Velit officia consequat duis enim velit mollit. 
                 Exercitation veniam consequat sunt nostrud amet.
             </p>
-            <router-link to="/what-we-do" class="rounded-circle bg--orange btn">
+            <router-link to="/what-we-do" class="rounded-circle btn-primary  btn">
                 <i class="bi bi-arrow-right-short"></i>
             </router-link>
         </div>

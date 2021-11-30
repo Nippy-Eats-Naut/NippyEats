@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="modal fade" id="Logout" tabindex="-1" aria-labelledby="Logout" aria-hidden="true">
+        <div class="modal fade" id="Logout" tabindex="-1" :class="mOpen == true ? 'show d-block':''">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body p-3">
                         <p class="text-center">Are you sure you want to log out?</p>
                         <div class="d-flex justify-content-evenly">
                             <div class="">
-                                <button type="button" class="bg-dark btn text-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                <button type="button" class="bg-dark btn text-white" @click="handleClick">Cancel</button>
                             </div>
                             <div>
                                 <button type="button" class="btn btn-primary text-white" id="logout" @click="Logout">Log Out</button>
@@ -22,14 +22,25 @@
 <script>
 export default {
     name: 'Logout',
+    props: {
+        mOpen: {
+            type: Boolean
+        }
+    },
     data(){
         return{
+            barOpen: false
         }
     },
     methods:{
+        handleClick(){
+            this.$emit("update:parent", this.barOpen);
+            this.$store.commit('activate_overlay', false)
+        },
         Logout(e){
             e.preventDefault()
-            document.querySelector("button#logout").setAttribute("data-bs-dismiss", "modal");
+            this.$emit("update:parent", this.barOpen);
+            this.$store.commit('activate_overlay', false)
             this.$router.push('/')
             localStorage.removeItem('nippy.user')
             localStorage.removeItem('nippy.token')

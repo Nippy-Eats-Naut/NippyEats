@@ -67,24 +67,13 @@
                 </div>
                 <div>
                     <p class="mb-2 text-dark h6">Payment Method</p>
-                    <div class="row mb-3">
-                        <div class="col-md-6 mb-3">
-                            <div class="px-3 border py-2 rounded form-check d-flex justify-content-between" :class="payMethod == 'Flutterwave'? 'border-primary' : ''">
-                                <label class="form-check-label" for="flutterradio">
-                                    <img src="@/assets/images/flutterwave.svg" alt="" width="16" height="16" class="me-1">
-                                    Flutterwave
-                                </label>
-                                <input class="form-check-input"  type="radio" name="flutterradio" id="flutterradio" value="Flutterwave" v-model="payMethod">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check px-3 border py-2 rounded d-flex justify-content-between" :class="payMethod == 'Cash'? 'border-primary' : ''">
-                                <label class="form-check-label" for="cashradio">
-                                    <i class="bi bi-cash me-1"></i>
-                                    Cash
-                                </label>
-                                <input class="form-check-input"  type="radio" name="cashradio" id="cashradio" value="Cash" v-model="payMethod">
-                            </div>
+                    <div class="mb-3">
+                        <div class="px-3 border py-2 rounded form-check d-flex justify-content-between" :class="payMethod == 'Flutterwave'? 'border-primary' : ''">
+                            <label class="form-check-label" for="flutterradio">
+                                <img src="@/assets/images/flutterwave.svg" alt="" width="16" height="16" class="me-1">
+                                Flutterwave
+                            </label>
+                            <input class="form-check-input"  type="radio" name="flutterradio" id="flutterradio" value="Flutterwave" v-model="payMethod">
                         </div>
                     </div>
                 </div>

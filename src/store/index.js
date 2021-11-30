@@ -9,7 +9,9 @@ const store = createStore({
             message: null,
             success: null,
             basket: basket ? JSON.parse(basket) : [],
-            provider: ''
+            provider: '',
+            overlay: false,
+            isLoggedIn: localStorage.getItem('nippy.token') != null
         }
     },
 
@@ -54,6 +56,9 @@ const store = createStore({
         },
         fetch_provider(state, provider){
             state.provider = provider
+        },
+        activate_overlay(state,overlay){
+            state.overlay = overlay
         }
     },
 
@@ -75,9 +80,13 @@ const store = createStore({
         },
         provider: state => {
             return state.provider
+        },
+        overlay: state => {
+            return state.overlay
+        }        ,
+        isLoggedIn: state =>{
+            return state.isLoggedIn
         }
-
-        
     }
 
 })

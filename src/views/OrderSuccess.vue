@@ -10,7 +10,7 @@
             <p class="mb-0 text-secondary text-center w-75">Your order has been processed  successfully. Your food will arrive in 30 Minutes!</p>
         </div>
         <div class="mb-2">
-            <router-link class="text-white bg--orange btn" to="/trackorders">Track Order</router-link>
+            <router-link class="text-white btn-primary btn" to="/trackorders">Track Order</router-link>
         </div>
         <div class="">
             <router-link class="text--orange btn" to="/orders">Edit Order</router-link>

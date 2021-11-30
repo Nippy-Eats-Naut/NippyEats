@@ -24,7 +24,7 @@
                 <input type="text" class="form-control" id="email" placeholder="name@example.com">
                 <label for="email">Email Address</label>
             </div>
-            <button class="btn btn-lg w-100 bg--orange text-white">Proceed with next step</button>
+            <button class="btn btn-lg w-100 btn-primary  text-white">Proceed with next step</button>
         </div>
     </div>
 </template>

@@ -46,7 +46,7 @@
         </div>
         <div class="container d-flex mb-3">
             <button class="btn btn-lg w-100 text-white btn-dark me-3">Cancel Order</button>
-            <button class="btn btn-lg w-100 text-white bg--orange">Confirm Delivery</button>
+            <button class="btn btn-lg w-100 text-white btn-primary ">Confirm Delivery</button>
         </div>
     </div>
 </template>
@@ -62,7 +62,7 @@ export default {
                     sub_title: 'We have received your order',
                     time: '10:15 am',
                     icon: 'bi bi-clipboard',
-                    color: 'bg--orange',
+                    color: 'btn-primary ',
                     text: 'text-dark'
                 },
                 {
@@ -70,7 +70,7 @@ export default {
                     sub_title: 'Your order has been confirmed',
                     time: '10:17 am',
                     icon: 'bi bi-clipboard-check',
-                    color: 'bg--orange',
+                    color: 'btn-primary ',
                     text: 'text-dark'
                 },
                 {

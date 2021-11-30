@@ -1,26 +1,37 @@
 <template>
     <div>
-        <div class="row"  :class="desktop?'':'hr-scroll'">
-            <div v-for="provider,index in providers" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
-                <div class="card-img-overlay">
-                     <button class="bg--grey btn rounded-circle" @click="Fav(provider.id)">
-                        <i class="bi bi-heart-fill text-white"></i>
-                    </button>
+        <div v-if="providers.length ==0">
+            <div class="row"  :class="desktop?'':'hr-scroll'">
+                <div v-for="n,index in 4" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
+                    <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
-                <router-link :to="`/resturant/${provider.id}`" class="text-decoration-none text-dark">
-                    <div class="image-div">
-                        <img :src="provider.logo != null ? provider.logo.fileUrl : ''" class="card-img" height="172">
+            </div>
+        </div>
+        <div v-else>
+            <div class="row"  :class="desktop?'':'hr-scroll'">
+                <div v-for="provider,index in providers" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
+                    <div class="card-img-overlay">
+                        <button class="bg--grey btn rounded-circle" @click="Fav(provider.id)">
+                            <i class="bi bi-heart-fill text-white"></i>
+                        </button>
                     </div>
-                    <div class="d-flex justify-content-between py-2 card-body px-1">
-                        <div>
-                            <p class="card-title fw-bold">{{provider.name}}</p>
-                            <p class="card-text small text-secondary">N{{provider.orderInformation.minimumOrderAmount}} Delivery Fee <i class="bi bi-dot"></i>{{provider.orderInformation.averageFoodTimes}}</p>
+                    <router-link :to="`/resturant/${provider.id}`" class="text-decoration-none text-dark">
+                        <div class="image-div">
+                            <img :src="provider.logo != null ? provider.logo.fileUrl : ''" class="card-img" height="172">
                         </div>
-                        <div>
-                            <p class="small d-flex"><i class="bi bi-star-fill text--orange me-1"></i>{{provider.rating}}</p>
+                        <div class="d-flex justify-content-between py-2 card-body px-1">
+                            <div>
+                                <p class="card-title fw-bold">{{provider.name}}</p>
+                                <p class="card-text small text-secondary">N{{provider.orderInformation.minimumOrderAmount}} Delivery Fee <i class="bi bi-dot"></i>{{provider.orderInformation.averageFoodTimes}}</p>
+                            </div>
+                            <div>
+                                <p class="small d-flex"><i class="bi bi-star-fill text--orange me-1"></i>{{provider.rating}}</p>
+                            </div>
                         </div>
-                    </div>
-                </router-link>
+                    </router-link>
+                </div>
             </div>
         </div>
     </div>

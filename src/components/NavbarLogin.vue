@@ -2,10 +2,10 @@
     <nav class="navbar">
         <div class="container-fluid">
             <div class="nav-item">
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                    <i class="bi bi-justify"></i>
+                <button class="navbar-toggler" type="button" @click="overlay">
+                    <i class="bi bi-justify text-dark"></i>
                 </button>
-                <SidenavLoggedIn :user="user" />
+                <SidenavLoggedIn :user="user" :open="openCanvas" @update:parent="openCanvas = $event" />
                 <router-link to="/home" class="navbar-brand">
                     <img src="@/assets/images/logo.png" alt="Nippyeats logo" :width="desktop ?180:90" :height="desktop ?39:30">
                 </router-link>
@@ -53,10 +53,17 @@ export default{
     name: "NavbarLogin",
     data(){
         return{
-            user: {}
+            user: {},
+            openCanvas: false
         }
     },
     components: { SidenavLoggedIn, Notifications, NavbarMobileRight },
+    methods:{
+        overlay(){
+            this.openCanvas = true
+            this.$store.commit('activate_overlay', true)
+        },
+    },
     computed:{
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'

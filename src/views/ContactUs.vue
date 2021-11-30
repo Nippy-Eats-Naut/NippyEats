@@ -20,7 +20,7 @@
                     <textarea class="form-control h--100" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                     <label for="floatingTextarea">Message</label>
                 </div>
-                <button class="btn btn-lg w-100 bg--orange text-white">Send Message</button>
+                <button class="btn btn-lg w-100 btn-primary  text-white">Send Message</button>
             </div>
         </div>
     </div>

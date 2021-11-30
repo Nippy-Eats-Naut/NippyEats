@@ -90,12 +90,6 @@
                         </label>
                         <input class="form-check-input"  type="radio" name="walletradio" id="walletradio" value="Wallet">
                     </div>
-                    <div class="form-check mb-2">
-                        <label class="form-check-label text-dark" for="cashradio">
-                            Cash
-                        </label>
-                        <input class="form-check-input"  type="radio" name="cashradio" id="cashradio" value="Cash">
-                    </div>
                 </div>
             </div>
             <div class="col-md-4">

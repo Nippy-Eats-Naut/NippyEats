@@ -5,14 +5,16 @@
         </div>
         <div class="offcanvas-body position-relative">   
             <router-link to="/login" class="btn text-white mt-5 d-flex justify-content-center">Login/Sign Up</router-link>
-            <div class="position-absolute bottom-0 ps-5">
-                <img src="@/assets/images/logo.png" alt="Nippyeats logo" width="230" height="50">
-                <div class="d-flex my-3">
-                    <a href="" class="me-3">
-                        <img src="@/assets/images/google.png" alt="Get on google play" width="100" height="30">
+            <div class="position-absolute bottom-0">
+                <div class="row">
+                    <img src="@/assets/images/logo.png" alt="Nippyeats logo" class="auto-img">
+                </div>
+                <div class="row my-3">
+                    <a href="" class="col-md-6 col-6">
+                        <img src="@/assets/images/google.png" alt="Get on google play" class="auto-img">
                     </a>
-                    <a href="">
-                        <img src="@/assets/images/apple.png" alt="Get on apple store" width="100" height="30">
+                    <a href="" class="col-md-6 col-6">
+                        <img src="@/assets/images/apple.png" alt="Get on apple store" class="auto-img">
                     </a>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <template>
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas offcanvas-start" tabindex="-1"  :class="open == true? 'show visible':'invisible'">
         <div class="offcanvas-header justify-content-end">
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close text-reset" @click="handleClick" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body position-relative">   
             <div class="d-flex justify-content-center mb-3">
@@ -17,56 +17,58 @@
             </div>
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" :class="desktop?'ps-5':'ps-3'">
                 <li class="nav-item">
-                    <router-link to="/home" class="nav-link">
+                    <router-link to="/home" class="nav-link" @click="handleClick">
                         <i class="bi bi-columns-gap me-3"></i>
                         <p class="mb-0">Home</p>
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/orders" class="nav-link">
+                    <router-link to="/orders" class="nav-link" @click="handleClick">
                         <i class="bi bi-journal-check me-3"></i>
                         <p class="mb-0">My Order</p>
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/favourites" class="nav-link">
+                    <router-link to="/favourites" class="nav-link" @click="handleClick">
                         <i class="bi bi-heart me-3"></i>
                         <p class="mb-0">Favourites</p>
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/wallet" class="nav-link">
+                    <router-link to="/wallet" class="nav-link" @click="handleClick">
                         <i class="bi bi-wallet me-3"></i>
                         <p class="mb-0">Wallet</p>
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/invite-friends" class="nav-link">
+                    <router-link to="/invite-friends" class="nav-link" @click="handleClick">
                         <i class="bi bi-gift me-3"></i>
                         <p class="mb-0">Invites Friends</p>
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#Logout">
+                    <a class="nav-link" @click="Logout">
                         <i class="bi bi-box-arrow-right me-3"></i>
                         <p class="mb-0">Log Out</p>
                     </a>
                 </li>
             </ul>
-            <div class="position-absolute bottom-0 ps-5">
-                <img src="@/assets/images/logo.png" alt="Nippyeats logo" width="230" height="50">
-                <div class="d-flex my-3">
-                    <a href="" class="me-3">
-                        <img src="@/assets/images/google.png" alt="Get on google play" width="100" height="30">
+            <div class="position-absolute bottom-0">
+                <div class="row">
+                    <img src="@/assets/images/logo.png" alt="Nippyeats logo" class="auto-img">
+                </div>
+                <div class="row my-3">
+                    <a href="" class="col-md-6 col-6">
+                        <img src="@/assets/images/google.png" alt="Get on google play" class="auto-img">
                     </a>
-                    <a href="">
-                        <img src="@/assets/images/apple.png" alt="Get on apple store" width="100" height="30">
+                    <a href="" class="col-md-6 col-6">
+                        <img src="@/assets/images/apple.png" alt="Get on apple store" class="auto-img">
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    <Logout />
+    <Logout  :mOpen="openModal" @update:parent="openModal = $event"/>
 </template>
 <script>
 import Logout from "./Logout.vue"
@@ -76,12 +78,32 @@ export default {
     props: {
         user: {
             type: Object,
+        },
+        open: {
+            type: Boolean
+        }
+    },
+    data(){
+        return{
+            fooOpen: false,
+            openModal: false
         }
     },
     components: { Logout },
     computed:{
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
+    },
+    methods: {
+        handleClick(){
+            this.$emit("update:parent", this.fooOpen);
+            this.$store.commit('activate_overlay', false)
+        },
+        Logout(){
+            this.$emit("update:parent", this.fooOpen);
+            //this.$store.commit('activate_overlay', false)
+            this.openModal = true
         }
     }
 }
