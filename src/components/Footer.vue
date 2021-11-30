@@ -4,7 +4,7 @@
             <div class="row py-5">
                 <div class="col-md-4 pe-5">
                     <img src="@/assets/images/Frame.png" alt="Nippyeats logo" class="mb-2"/>
-                    <p class="text-white">Make meals more accessible on your fingertips</p>
+                    <p class="text-white">Eat anywhere !</p>
                 </div>
                 <div class="col-md-3">
                     <p class="fw-bold text-white">Company</p>
