@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="d-flex justify-content-between mb-4">  
+        <div v-if="link" class="d-flex justify-content-between mb-4">  
             <p class="h4 mb-0">{{menus.title}}</p>
-            <router-link to=""> see all</router-link> 
+            <router-link :to="`/category/${menus.providerId}/${menus.slug}`">see more</router-link> 
         </div>
         <div class="row">
-            <div class="card border-0 mb-4" v-for="meal,index in menus.menus.slice(0,4)" :key="index" :class="col">
+            <div class="card border-0 mb-3" v-for="meal,index in menus.menus.slice(0,pagMenu)" :key="index" :class="col">
                 <a class="row text-decoration-none text-dark" data-bs-toggle="modal" :data-bs-target="`#FoodDetails${meal.id}`">
                     <div class="col-md-6 col-6">
                         <div class="card-img-overlay">
@@ -19,11 +19,14 @@
                         <p class="fw-bold mb-1">{{meal.title}}</p>
                         <p class="text-secondary small mb-2 text-truncate" :title="meal.description">{{meal.description}}</p>
                         <p class="text-secondary mb-1 fw-bold">{{meal.currency}} {{parseFloat(meal.price.toString())}}</p>
-                        <p class="text-secondary small mb-0">Average delivery time <i class="bi bi-dot"></i>30-40 min</p>
+                        <p class="text-secondary small mb-0">Avg. delivery time <i class="bi bi-dot"></i>30-40 min</p>
                     </div>
                 </a>
                 <FoodDetails :menu="meal"/>
             </div>
+        </div>
+        <div class="d-flex justify-content-center mb-4" v-if="!link">
+            <button class="btn btn-primary" @click="pagMenu += 4">View more</button>
         </div>
     </div>
 </template>
@@ -32,6 +35,11 @@ import FoodDetails from "./FoodDetails.vue"
 export default {
     name: 'ResturantMeal',
     components: {FoodDetails},
+    data(){
+        return{
+            pagMenu: this.link ? 4:6
+        }
+    },
     props:{
         title:{
             type: String
@@ -41,6 +49,9 @@ export default {
         },
         col:{
             type: String
+        },
+        link:{
+            type: Boolean
         }
     },
 }

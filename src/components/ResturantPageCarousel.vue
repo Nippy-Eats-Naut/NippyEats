@@ -6,7 +6,7 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img :src="banner" class="d-block w--100" alt="...">
+                    <img :src="banner.banner == null ? '@/assets/images/banner.png': banner.banner.fileUrl" class="d-block w--100" alt="...">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -25,7 +25,7 @@ export default {
     name: 'ResturantPageCarousel',
     props:{
         banner:{
-            type: String
+            type: Object
         }
     }
 }

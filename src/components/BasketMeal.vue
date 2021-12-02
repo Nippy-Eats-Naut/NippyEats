@@ -18,7 +18,7 @@
                     <img :src="meal.img != null ? meal.img : require('@/assets/images/2logo.png')" class="rounded" height="60" width="60">
                 </div>
                 <div class="me-1">
-                    <p class="small mb-1">{{meal.title}}</p>
+                    <p class="small mb-1 text-truncate w-75">{{meal.title}}</p>
                     <p class="small text-secondary">{{provider}}</p>
                     <div class="">
                         <div class="input-group">

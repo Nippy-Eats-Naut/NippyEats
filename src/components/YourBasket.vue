@@ -7,7 +7,7 @@
             </button>
         </div>
         <div class="me-3">
-            <img :src="meal.img.fileUrl" class="rounded" :height="desktop?120:84">
+            <img :src="meal.img != null ? meal.img : require('@/assets/images/2logo.png')" class="rounded" :height="desktop?120:84">
         </div>
         <div class="me-3">
             <p class="mb-1 h5">{{meal.title}}</p>

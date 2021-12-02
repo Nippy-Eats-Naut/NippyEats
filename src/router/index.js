@@ -85,7 +85,7 @@ const routes = [
         }
     },
     {
-        path: '/category/:id',
+        path: '/category/:id/:slug',
         name: 'FoodCategory',
         component: FoodCategory
     },

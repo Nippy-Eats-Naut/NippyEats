@@ -1,31 +1,11 @@
 <template>
     <div class="mt-5 container">
         <div>
-            <p class="fs-5 fw-bold mb-2">Noodles</p>
-            <p>8 Items</p>
-        </div>
-        <div class="d-flex mb-5">
-            <div class="form-check mr-3 p-0">
-                <input type="radio" name="type" class="form-check-input d-none" id="type1"  value="Delivery" v-model="type">
-                <label for="type1" class="form-check-label btn" :class="type=='Delivery'? 'btn-dark text-white': ''">
-                    Delivery
-                </label>
-            </div>
-            <div class="form-check mr-3">
-                <input type="radio" name="type" class="form-check-input d-none" id="type2"  value="Pickup" v-model="type">
-                <label for="type2" class="form-check-label btn" :class="type=='Pickup'? 'btn-dark text-white': ''">
-                    Pickup
-                </label>
-            </div>
-            <div class="form-check mr-3">
-                <input type="radio" name="type" class="form-check-input d-none" id="type3"  value="Dine-in" v-model="type">
-                <label for="type3" class="form-check-label btn" :class="type=='Dine-in'? 'btn-dark text-white': ''">
-                    Dine-in
-                </label>
-            </div>
+            <p class="h3 mb-2">{{allMenus.title}}</p>
+            <p>{{allMenus.menus.length}} Items</p>
         </div>
         <div class="mb-5">
-            <ResturantMeal :meals="8" col="col-md-4" />
+            <ResturantMeal :link="false" :menus="allMenus" col="col-md-4" />
         </div>
     </div>
 </template>
@@ -35,9 +15,29 @@ export default {
     name: "FoodCategory",
     data() {
         return {
-            type: "Delivery"
+            menus: [],
         };
     },
-    components: { ResturantMeal }
+    computed:{
+        allMenus(){
+            let _menus = this.menus.find(menu=> {
+                return menu.slug == this.$route.params.slug
+            });
+            return _menus
+        }
+    },
+    components: { ResturantMeal },
+    beforeMount(){
+        var config3 = {
+            method: "get",
+            url: `https://api.nippyeats.com/v1/foodies/providers/${this.$route.params.id}/categories`,
+            headers: { }
+        };
+
+        this.axios(config3)
+            .then(response => {
+                this.menus = response.data.data
+        });  
+    }
 }
 </script>

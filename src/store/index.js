@@ -10,7 +10,7 @@ const store = createStore({
             message: null,
             success: null,
             basket: basket ? JSON.parse(basket) : [],
-            provider: '',
+            provider: null,
             overlay: false,
             isLoggedIn: isLoggedIn ? true : false,
         }
@@ -34,10 +34,10 @@ const store = createStore({
             }, 10000)
         },
         add_menu(state, payload){
-            let found = state.basket.find(item => item.value.id == payload.menu.value.id);
+            let found = state.basket.find(item => item.id == payload.menu.id);
 
             if (found) {
-                found.quantity += payload.quantity;
+                found.quantity = payload.quantity;
             } else {
                 payload.menu.quantity = payload.quantity
                 payload.menu.provider = state.provider

@@ -1,6 +1,6 @@
 <template>
         <div>
-            <ResturantPageCarousel :banner="provider.banner == null ? '@/assets/images/banner.png': provider.banner.fileUrl"/>
+            <ResturantPageCarousel :banner="provider"/>
         </div>
     <div class="container">
         <div class="mt-3">
@@ -42,11 +42,17 @@
                     </div>
                 </div>
             </div>
-            <div v-if="!desktop" class="mb-4">
+            <div v-if="!desktop" class="mb-5">
                 <div class="d-flex mb-3 tab border-bottom">
-                    <div class="form-check" v-for="_time,index in Time" :key="index">
+                    <div class="form-check ps-0">
+                        <input type="radio" name="all" class="form-check-input d-none" id="all" value="All" v-model="selectedTime">
+                        <label for="all" class="form-check-label btn" :class="selectedTime == 'All'? 'text--orange': ''">
+                            All
+                        </label>
+                    </div>
+                    <div class="form-check ps-1" v-for="_time,index in category" :key="index">
                         <input type="radio" name="time" class="form-check-input d-none" :id="`time${index}`" :value="_time" v-model="selectedTime">
-                        <label :for="`time${index}`" class="form-check-label btn" :class="selectedTime == _time? 'text--orange': ''">
+                        <label :for="`time${index}`" class="form-check-label btn-sm" :class="selectedTime == _time? 'text--orange': ''">
                             {{_time}}
                         </label>
                     </div>
@@ -54,7 +60,7 @@
                 <div class="d-flex">
                     <div class="form-check mr-3 p-0" v-for="modes,index in deliveryModes" :key="index">
                         <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="type">
-                        <label :for="`type${index}`" class="form-check-label btn" :class="type == modes? 'btn-dark text-white': ''">
+                        <label :for="`type${index}`" class="form-check-label btn-sm" :class="type == modes? 'btn-dark text-white': ''">
                             {{modes}}
                         </label>
                     </div>
@@ -62,16 +68,28 @@
             </div>
             <div class="row">
                 <div class="col-md-8">
-                    <div class="d-flex justify-content-evenly mb-3" v-if="desktop">
-                        <div class="form-check" v-for="_time,index in Time" :key="index">
+                    <div class="d-flex overflow-auto text-nowrap align-items-baseline mb-5" v-if="desktop">
+                        <div class="form-check ps-0">
+                            <input type="radio" name="all" class="form-check-input d-none" id="all" value="All" v-model="selectedTime">
+                            <label for="all" class="form-check-label btn-sm" :class="selectedTime == 'All'? 'text--orange': ''">
+                                All
+                            </label>
+                        </div>
+                        <div class="form-check ps-1" v-for="_time,index in category" :key="index">
                             <input type="radio" name="time" class="form-check-input d-none" :id="`time${index}`" :value="_time" v-model="selectedTime">
-                            <label :for="`time${index}`" class="form-check-label btn" :class="selectedTime == _time? 'text--orange': ''">
+                            <label :for="`time${index}`" class="form-check-label btn-sm" :class="selectedTime == _time? 'text--orange': ''">
                                 {{_time}}
                             </label>
                         </div>
                     </div>
-                    <div class="mb-5"  v-for="meal,index in menus" :key="index">
-                        <ResturantMeal :menus="meal" col="col-md-6" />
+                    <div class="mb-5" v-for="meal,index in paginatedMenu" :key="index">
+                        <ResturantMeal :link="true" :menus="meal" col="col-md-6" />
+                    </div>
+                    <div class="d-flex justify-content-center mb-5">
+                        <button class="btn btn-primary" @click="pagMenu += 4">View more</button>
+                    </div>
+                    <div v-if="!desktop">
+                        <hr>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -91,12 +109,12 @@ export default {
     name: "Resturant",
     data() {
         return {
-            type: "Delivery",
+            type: "Pick up",
             provider: null,
             reviews:[],
             menus: [],
-            Time: ["All", "Breakfast", "Lunch", "Dinner", "Brunch", "Late Night"],
-            selectedTime: "All"
+            pagMenu: 4,
+            selectedTime: "All",
         };
     },
     inject: ["mq"],
@@ -139,6 +157,24 @@ export default {
                 })
                 return fooDays;
             }
+        },
+        paginatedMenu(){
+            var menus = this.menus
+            if (this.selectedTime == "All")
+                return menus.slice(0, this.pagMenu);
+            else{  
+                let _menus = menus.find(menu=> {
+                    return menu.title == this.selectedTime 
+                });
+                var meals = [];
+                meals.push(_menus);
+                return meals
+            }
+        },
+        category(){
+            return this.menus.map(menu=> {
+                return menu.title
+            });
         }
     },
     components: { ResturantMeal, BasketMeal, ResturantPageCarousel, Reviews, StarRating },
@@ -174,22 +210,18 @@ export default {
 
         this.axios(config3)
             .then(response => {
-                this.menus = response.data.data;
-            // let data = response.data.data;
-            // let __data = data.filter(a => {
-            //     if (a.category == "menu") {
-            //         var name = a.value.providerId.toLowerCase().includes(this.$route.params.id.toLowerCase());
-            //         return name;
-            //     }
-            // }).slice(0, 16);
-            // this.menus = __data;
-        });
-        
+                this.menus = response.data.data
+        });  
     }
 }
 </script>
 <style scoped>
     .d-flex.tab{
         overflow-x: auto;
+        white-space: nowrap;
+         align-items: baseline;
+    }
+    .btn:hover {
+        color: unset;
     }
 </style>
