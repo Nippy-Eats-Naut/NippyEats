@@ -1,6 +1,6 @@
 <template>
         <div>
-            <ResturantPageCarousel :banner="provider.banner != null ? provider.banner.fileUrl : ''"/>
+            <ResturantPageCarousel :banner="provider.banner == null ? '@/assets/images/banner.png': provider.banner.fileUrl"/>
         </div>
     <div class="container">
         <div class="mt-3">
@@ -70,17 +70,8 @@
                             </label>
                         </div>
                     </div>
-                    <div class="mb-5" v-if="selectedTime= 'All' || 'Breakfast'">
-                        <ResturantMeal title="Breakfast" :meals="menus.slice(0,4)" col="col-md-6" />
-                    </div>
-                    <div class="mb-5">
-                        <ResturantMeal title="Lunch" :meals="menus.slice(4,8)" col="col-md-6" />
-                    </div>
-                    <div class="mb-5">
-                        <ResturantMeal title="Dinner" :meals="menus.slice(8,12)" col="col-md-6" />
-                    </div>
-                    <div class="mb-5">
-                        <ResturantMeal title="Brunch" :meals="menus.slice(12,16)" col="col-md-6" />
+                    <div class="mb-5"  v-for="meal,index in menus" :key="index">
+                        <ResturantMeal :menus="meal" col="col-md-6" />
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -168,7 +159,7 @@ export default {
         };
         var config3 = {
             method: "get",
-            url: "https://api.nippyeats.com/v1/foodies/explore",
+            url: `https://api.nippyeats.com/v1/foodies/providers/${this.$route.params.id}/categories`,
             headers: { }
         };
         this.axios(config)
@@ -183,14 +174,15 @@ export default {
 
         this.axios(config3)
             .then(response => {
-            let data = response.data.data;
-            let __data = data.filter(a => {
-                if (a.category == "menu") {
-                    var name = a.value.providerId.toLowerCase().includes(this.$route.params.id.toLowerCase());
-                    return name;
-                }
-            }).slice(0, 16);
-            this.menus = __data;
+                this.menus = response.data.data;
+            // let data = response.data.data;
+            // let __data = data.filter(a => {
+            //     if (a.category == "menu") {
+            //         var name = a.value.providerId.toLowerCase().includes(this.$route.params.id.toLowerCase());
+            //         return name;
+            //     }
+            // }).slice(0, 16);
+            // this.menus = __data;
         });
         
     }
