@@ -35,7 +35,6 @@ import ResturantCard from "../components/ResturantCard.vue"
 import BrowseCard from "../components/BrowseCard.vue";
 import RecommendationCard from '../components/RecommendationCard.vue';
 import NewResturants from '../components/NewResturants.vue';
-import moment from 'moment';
 export default {
     name: "HomePageAfterLogin",
     data() {
@@ -46,7 +45,6 @@ export default {
             newProviders: [],
             recommended: [],
             fastFood:[],
-            date: moment("2021-11-19T18:21:28.000Z").format("DD/MM/YYYY")
         };
     },
     inject: ['mq'],
@@ -125,10 +123,9 @@ export default {
                 let data = response.data.data.data
                 this.resturants = data
                 let fooData =  data.sort(function(a, b){
-                    var foo = moment(a.updatedAt).format('DD/MM/YYYY');
-                    var bar = moment(b.updatedAt).format('DD/MM/YYYY');
-
-                    return bar.diff(foo)
+                    var foo = a.updatedAt;
+                    var bar = b.updatedAt;
+                    return new Date( bar ) - new Date( foo )
                 })
                 this.newProviders = fooData;
             });

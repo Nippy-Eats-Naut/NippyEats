@@ -15,10 +15,10 @@
                     </button>
                 </div>
                 <div class="me-2">
-                    <img :src="meal.value.img.fileUrl" class="rounded" height="60" width="60">
+                    <img :src="meal.img != null ? meal.img : require('@/assets/images/2logo.png')" class="rounded" height="60" width="60">
                 </div>
                 <div class="me-1">
-                    <p class="small mb-1">{{meal.value.title}}</p>
+                    <p class="small mb-1">{{meal.title}}</p>
                     <p class="small text-secondary">{{provider}}</p>
                     <div class="">
                         <div class="input-group">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="position-absolute end-0 me-1">
-                    <p class="small fw-bold">{{meal.value.currency}} {{parseFloat(meal.value.price.toString())}}</p>
+                    <p class="small fw-bold">{{meal.currency}} {{parseFloat(meal.price.toString())}}</p>
                 </div>
             </div>
 
@@ -74,7 +74,7 @@ export default {
         ]),
         subTotal(){
             var totalSum = this.basket.reduce(function(res, meal){
-                var mp = meal.value.price;
+                var mp = meal.price;
                return res + (mp * meal.quantity);
            }, 0);
            return totalSum;

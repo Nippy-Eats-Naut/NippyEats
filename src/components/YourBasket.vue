@@ -7,10 +7,10 @@
             </button>
         </div>
         <div class="me-3">
-            <img :src="meal.value.img.fileUrl" class="rounded" :height="desktop?120:84">
+            <img :src="meal.img.fileUrl" class="rounded" :height="desktop?120:84">
         </div>
         <div class="me-3">
-            <p class="mb-1 h5">{{meal.value.title}}</p>
+            <p class="mb-1 h5">{{meal.title}}</p>
             <p class="text-secondary">{{meal.provider}}</p>
             <div class="input-group" v-if="!desktop">
                 <button class="btn btn-dark btn-sm border-0" @click="meal.quantity--">-</button>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="">
-            <p class="fw-bold">{{meal.value.currency}} {{parseFloat(meal.value.price.toString())}}</p>
+            <p class="fw-bold">{{meal.currency}} {{parseFloat(meal.price.toString())}}</p>
         </div>
     </div>
 </template>

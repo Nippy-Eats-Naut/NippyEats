@@ -41,9 +41,8 @@ export default {
             e.preventDefault()
             this.$emit("update:parent", this.barOpen);
             this.$store.commit('activate_overlay', false)
+            this.$store.commit('logout')
             this.$router.push('/')
-            localStorage.removeItem('nippy.user')
-            localStorage.removeItem('nippy.token')
         }
     }
 }

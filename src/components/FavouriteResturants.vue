@@ -17,10 +17,12 @@
                 </div>
                 <div>
                     <p class="mb-1 fw-bold">{{_data.name}}</p>
-                    <star-rating class="justify-content-center mr-1"
+                    <div class="d-flex align-items-center">
+                        <star-rating class="me-2"
                         :rating="_data.rating" :read-only="true" 
                         :increment="0.5" :star-size="20">
-                    </star-rating>()
+                        </star-rating>()
+                    </div>
                     <p class="mb-0">
                         <i class="bi bi-geo-alt-fill me-1"></i>
                         {{_data.contactInformation.address}}

@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 
-let basket = window.localStorage.getItem('basket');
-let isLoggedIn = window.localStorage.getItem('nippy.token')
+let basket = localStorage.getItem('basket');
+let isLoggedIn = localStorage.getItem('nippy.token')
 const store = createStore({
     state(){
         return {
@@ -46,7 +46,7 @@ const store = createStore({
             this.commit('SAVE_menu');
         },
         SAVE_menu(state){
-            window.localStorage.setItem('basket', JSON.stringify(state.basket));
+            localStorage.setItem('basket', JSON.stringify(state.basket));
         },
         REMOVE_menu(state, menu) {
             let index = state.basket.indexOf(menu);
@@ -60,6 +60,14 @@ const store = createStore({
         },
         activate_overlay(state,overlay){
             state.overlay = overlay
+        },
+        login(payload){
+            localStorage.setItem('nippy.user', payload.user)
+            localStorage.setItem('nippy.token', payload.token)
+        },
+        logout(){
+            localStorage.removeItem('nippy.user')
+            localStorage.removeItem('nippy.token')
         }
     },
 

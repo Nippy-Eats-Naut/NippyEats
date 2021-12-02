@@ -85,7 +85,6 @@
 import data from '@/assets/db.json'
 import BrowseCard from '../components/BrowseCard.vue'
 import NewResturants from '../components/NewResturants.vue';
-import moment from 'moment'
 export default {
     name: "HomePage",
     inject: ["mq"],
@@ -126,9 +125,8 @@ export default {
         .then(response => {
             let data = response.data.data.data
             let fooData =  data.sort(function(a, b){
-                var foo = moment(a.updatedAt, "DD/MM/YYYY").format();
-                var bar = moment(b.updatedAt, "DD/MM/YYYY").format();
-
+                var foo = a.updatedAt;
+                var bar = b.updatedAt;
                 return new Date( bar ) - new Date( foo )
             }).slice(0,6);
             this.newProviders = fooData;

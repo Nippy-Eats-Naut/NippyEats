@@ -48,7 +48,7 @@ export default {
         ]),
         subTotal(){
             var totalSum = this.basket.reduce(function(res, meal){
-                var mp = meal.value.price;
+                var mp = meal.price;
                return res + (mp * meal.quantity);
            }, 0);
            return totalSum;

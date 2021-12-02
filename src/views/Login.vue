@@ -83,8 +83,9 @@ export default {
                 };
                 this.axios(config)
                 .then((response) => {
-                    localStorage.setItem('nippy.user', JSON.stringify(response.data.data.foodie))
-                    localStorage.setItem('nippy.token', response.data.data.authorization.token)
+                    let user = JSON.stringify(response.data.data.foodie)
+                    let token = response.data.data.authorization.token
+                    this.$store.commit('login', {user, token})
 
                     if (localStorage.getItem('nippy.token') != null) {
                         this.$emit('loggedIn')

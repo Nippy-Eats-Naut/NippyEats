@@ -95,8 +95,9 @@ export default {
                     .then((response) => {
                     this.message = response.data.message;
                     this.success = response.data.success;
-                    localStorage.setItem("nippy.user", JSON.stringify(response.data.data.foodie));
-                    localStorage.setItem("nippy.token", response.data.data.authorization.token);
+                    let user = JSON.stringify(response.data.data.foodie)
+                    let token = response.data.data.authorization.token
+                    this.$store.commit('login', {user, token});
                 })
                     .catch(err => {
                     this.message = err.response.data.message;

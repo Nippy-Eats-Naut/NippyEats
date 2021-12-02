@@ -24,7 +24,7 @@
                         <div class="d-flex justify-content-between py-2 card-body px-1">
                             <div>
                                 <p class="card-title fw-bold">{{provider.name}}</p>
-                                <p class="card-text small text-secondary">N{{provider.orderInformation.minimumOrderAmount}} Delivery Fee <i class="bi bi-dot"></i>{{provider.orderInformation.averageFoodTimes}}</p>
+                                <p class="card-text small text-secondary">Avg. food time {{provider.orderInformation.averageFoodTime}}</p>
                             </div>
                             <div>
                                 <p class="small d-flex"><i class="bi bi-star-fill text--orange me-1"></i>{{provider.rating}}</p>
@@ -96,8 +96,9 @@ export default {
         border-radius: 6.29213px;
     }
     @media only screen and (min-width: 768px) {
-    .hr-scroll{
-        all:unset;
+        .hr-scroll{
+            overflow:unset;
+            flex-wrap: wrap;
+        }
     }
-  }
 </style>
