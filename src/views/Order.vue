@@ -20,6 +20,7 @@
 <script>
 import PreviousOrders from "../components/PreviousOrders.vue"
 import OngoingOrder from "../components/OngoingOrder.vue";
+import authHeader from '../services/auth-header';
 export default {
     name: "Order",
     data() {
@@ -40,10 +41,7 @@ export default {
         var config = {
             method: 'get',
             url: `https://api.nippyeats.com/v1/foodies/orders`,
-            headers: { 
-                'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`, 
-                'Content-Type': 'application/json'
-            },
+            headers: authHeader(),
         };
 
         this.axios(config)

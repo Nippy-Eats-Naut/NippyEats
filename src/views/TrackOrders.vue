@@ -51,6 +51,7 @@
     </div>
 </template>
 <script>
+//import authHeader from '../services/auth-header';
 export default {
     name: 'TrackOrders',
     data(){
@@ -96,10 +97,7 @@ export default {
         var config = {
             method: 'get',
             url: `https://api.nippyeats.com/v1/foodies/orders/${this.$route.params.id}`,
-            headers: { 
-                'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`, 
-                'Content-Type': 'application/json'
-            },
+            headers: authHeader(),
         };
 
         this.axios(config)

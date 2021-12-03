@@ -23,13 +23,17 @@
                 </router-link>
             </div>
         </div>
-        <div class="card-img-overlay d-flex justify-content-between align-items-center" v-if="desktop">
-            <button class="btn bg-light text--orange rounded-circle" @click="scroll_left">
-                <i class="bi bi-arrow-left"></i>
-            </button>
-            <button class="btn bg-light text--orange rounded-circle" @click="scroll_right">
-                <i class="bi bi-arrow-right"></i>
-            </button>
+        <div v-if="desktop">
+            <div class="card-img-overlay --left">
+                <button class="shadow btn bg-light text--orange rounded-circle" @click="scroll_left">
+                    <i class="bi bi-arrow-left"></i>
+                </button>
+            </div>
+            <div class="card-img-overlay --right">
+                <button class="shadow btn bg-light text--orange rounded-circle" @click="scroll_right">
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -71,6 +75,19 @@ export default {
     }
     .card-img-overlay.--a{
         left: unset;
+    }
+    
+    .card-img-overlay.--left{
+        left: 0;
+        right: unset;
+        top: unset;
+        bottom: 50%;
+    }
+    .card-img-overlay.--right{
+        right: 0;
+        left: unset;
+        top: unset;
+        bottom: 50%;
     }
     .row{
         overflow-x: auto;

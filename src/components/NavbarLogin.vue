@@ -6,7 +6,7 @@
                     <i class="bi bi-justify text-dark"></i>
                 </button>
                 <SidenavLoggedIn :user="user" :open="openCanvas" @update:parent="openCanvas = $event" />
-                <router-link to="/home" class="navbar-brand">
+                <router-link to="/" class="navbar-brand">
                     <img src="@/assets/images/logo.png" alt="Nippyeats logo" :width="desktop ?180:90" :height="desktop ?39:30">
                 </router-link>
             </div>
@@ -48,6 +48,7 @@ import SidenavLoggedIn from "./SidenavLoggedIn.vue";
 import Notifications from "./Notifications.vue";
 import NavbarMobileRight from "./NavbarMobileRight.vue";
 import {mapGetters} from 'vuex'
+import authHeader from '../services/auth-header';
 export default{
     inject: ["mq"],
     name: "NavbarLogin",
@@ -76,10 +77,7 @@ export default{
         var config = {
             method: 'get',
             url: 'https://api.nippyeats.com/v1/foodies/',
-            headers: { 
-                'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`,
-                'Content-Type': 'application/json'
-            }
+            headers: authHeader()
         };
 
         this.axios(config)

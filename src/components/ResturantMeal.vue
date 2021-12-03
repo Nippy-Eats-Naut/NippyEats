@@ -5,7 +5,7 @@
             <router-link :to="`/category/${menus.providerId}/${menus.slug}`">see more</router-link> 
         </div>
         <div class="row">
-            <div class="card border-0 mb-3" v-for="meal,index in menus.menus.slice(0,pagMenu)" :key="index" :class="col">
+            <div class="card shadow-sm py-2 border-0 mb-3" v-for="meal,index in menus.menus.slice(0,pagMenu)" :key="index" :class="col">
                 <a class="row text-decoration-none text-dark" data-bs-toggle="modal" :data-bs-target="`#FoodDetails${meal.id}`">
                     <div class="col-md-6 col-6">
                         <div class="card-img-overlay">
@@ -13,7 +13,7 @@
                                 <i class="bi bi-heart text-dark"></i>
                             </button>
                         </div>
-                        <img :src="meal.img != null ? meal.img : require('@/assets/images/2logo.png')" class="auto-img w-100">
+                        <img :src="meal.img != null ? meal.img : require('@/assets/images/2logo.png')" :class="desktop?'auto-img':'mobile-img'">
                     </div>
                     <div class="col-md-6 col-6">
                         <p class="fw-bold mb-1">{{meal.title}}</p>
@@ -35,6 +35,7 @@ import FoodDetails from "./FoodDetails.vue"
 export default {
     name: 'ResturantMeal',
     components: {FoodDetails},
+    inject: ['mq'],
     data(){
         return{
             pagMenu: this.link ? 4:6
@@ -54,7 +55,17 @@ export default {
             type: Boolean
         }
     },
+    computed: {
+        desktop(){
+            return this.mq.current !== 'xs' && this.mq.current !== 'sm'
+        }
+    },
 }
 </script>
 <style scoped>
+    .mobile-img{
+        aspect-ratio: 2/1;
+        height: 100%;
+        width: 100%
+    }
 </style>

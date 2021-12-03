@@ -69,6 +69,7 @@
 <script>
 import Alert from './Alert.vue';
 import StarRating from 'vue-star-rating'
+import authHeader from '../services/auth-header';
 export default {
     name: 'Reviews',
     components: { Alert, StarRating },
@@ -94,10 +95,7 @@ export default {
             var config = {
                 method: 'post',
                url: `https://api.nippyeats.com/v1/foodies/menus/${this.menuId}/comment`,
-                headers: { 
-                    'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`, 
-                    'Content-Type': 'application/json'
-                },
+                headers: authHeader(),
                 data : JSON.stringify(this.data)
             };
 

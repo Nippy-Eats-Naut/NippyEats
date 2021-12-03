@@ -1,5 +1,5 @@
 <template>
-  <NavbarLogin id="navbar" v-if="isLoggedIn"/>
+  <NavbarLogin id="navbar" v-if="loggedIn"/>
   <div v-else>
     <div v-if="auth"></div>
     <NavbarNoLogin v-else/>
@@ -20,7 +20,8 @@ export default {
     NavbarLogin, Footer,NavbarNoLogin
   },
   computed:{
-    ...mapGetters(['overlay', 'isLoggedIn']),
+    ...mapGetters([ 'overlay' ]),
+    ...mapGetters('auth', ['loggedIn']),
     auth(){
       return this.$route.meta.class === "Auth"
     },

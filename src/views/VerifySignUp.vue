@@ -15,11 +15,13 @@
                     <input type="text" placeholder="code" class="form-control" v-model="data.code">
                 </div>
                 <div class="mb-4">
-                    <button class="btn btn-primary btn-lg w-100 text-white" @click="Verify">Verify</button>
-                </div>
-                <div class="mb-3 d-flex justify-content-center">
-                    <p>Already have an account? </p>
-                    <router-link to="/login" class="text--orange ms-1"> Login</router-link>
+                    <button class="btn btn-primary btn-lg w-100 text-white" @click="Verify" :disabled="loading">
+                        <span
+                            v-show="loading"
+                            class="spinner-border spinner-border-sm"
+                            role="status" aria-hidden="true"
+                            ></span>Verify
+                    </button>
                 </div>
             </div>
         </div>
@@ -27,6 +29,7 @@
 </template>
 <script>
 import Alert from "../components/Alert.vue";
+import {mapGetters} from 'vuex'
 export default {
     name: "VerifySignUp",
     inject: ["mq"],
@@ -45,37 +48,37 @@ export default {
         },
         Verify() {
             if (!this.data.code) {
-                this.errors.push("Field cannot be empty");
+                this.success = false;
+                this.message = "Field cannot be empty";
             }
             else {
-                var config = {
-                    method: "post",
-                    url: "https://api.nippyeats.com/v1/foodies/signup/verify",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    data: JSON.stringify(this.data)
-                };
-                this.axios(config)
-                    .then((response) => {
-                    this.success = response.data.success;
-                    localStorage.setItem("nippy.user", JSON.stringify(response.data.data.foodie));
-                    localStorage.setItem("nippy.token", response.data.data.authorization.token);
-                    if (localStorage.getItem("nippy.token") != null) {
-                        this.$emit("loggedIn");
+                this.loading = true
+                var data = this.data
+                this.$store.dispatch("auth/verifySignup", data)
+                .then(() => {
                         if (this.$route.query.redirect != null) {
                             this.$router.push(this.$route.query.redirect);
                         }
                         else {
                             this.$router.push("/home");
                         }
+                    },
+                    (error) => {
+                        this.loading = false;
+                        this.message = error.response.data.message;
+                        this.success = error.response.data.success;
                     }
-                })
-                    .catch(err => {
-                    this.message = err.response.data.message;
-                });
+                );
             }
         },
+    },
+    computed: {
+        ...mapGetters('auth',['loggedIn']),
+    },
+    mounted() {
+        if (this.loggedIn) {
+        this.$router.push("/home");
+        }
     },
     components: { Alert }
 }

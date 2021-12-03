@@ -36,7 +36,13 @@
                     </label>
                 </div>
                 <div class="mb-4">
-                    <button class="btn btn-primary btn-lg w-100 text-white" @click="SignUp">SignUp</button>
+                    <button class="btn btn-primary btn-lg w-100 text-white" @click="SignUp" :disabled="loading">
+                        <span
+                            v-show="loading"
+                            class="spinner-border spinner-border-sm"
+                            role="status" aria-hidden="true"
+                            ></span>SignUp
+                    </button>
                 </div>
                 <div class="mb-3 d-flex justify-content-center">
                     <p>Already have an account? </p>
@@ -48,12 +54,13 @@
 </template>
 <script>
 import Alert from "../components/Alert.vue";
-
+import {mapGetters} from 'vuex'
 export default {
     name: "SignUp",
     inject: ["mq"],
     data() {
         return {
+            loading: false,
             data: {
                 firstname: null,
                 lastname: null,
@@ -75,39 +82,46 @@ export default {
         SignUp() {
             if (!this.data.email || !this.data.password || !this.data.firstname || !this.data.lastname || !this.data.location) {
                 this.message = "Field cannot be empty";
+                this.success = false;
             }
             else if (!this.validEmail(this.data.email)) {
                 this.message = "Valid email required.";
+                this.success = false;
             }
             else if (!this.tncbx) {
                 this.message = "Agreement needs to be checked";
+                this.success = false;
             }
             else {
-                var config = {
-                    method: "post",
-                    url: "https://api.nippyeats.com/v1/foodies/signup",
-                    headers: {
-                        "Content-Type": "application/json"
+                this.loading = true
+                var _data = this.data
+                this.$store.dispatch("auth/register", _data)
+                .then(
+                    (data) => {
+                        this.message = data.message;
+                        this.success = data.success;
+                        this.loading = false;
                     },
-                    data: JSON.stringify(this.data)
-                };
-                this.axios(config)
-                    .then((response) => {
-                    this.message = response.data.message;
-                    this.success = response.data.success;
-                    let user = JSON.stringify(response.data.data.foodie)
-                    let token = response.data.data.authorization.token
-                    this.$store.commit('login', {user, token});
-                })
-                    .catch(err => {
-                    this.message = err.response.data.message;
-                });
+                    (error) => {
+                    this.message = error.response.data.message;
+                    this.success = error.response.data.success;
+                    this.loading = false;
+                    }
+                );
             }
         },
         validEmail: function (email) {
             var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
         },
+    },
+    computed: {
+        ...mapGetters('auth',['loggedIn']),
+    },
+    mounted() {
+        if (this.loggedIn) {
+        this.$router.push("/home");
+        }
     },
     components: { Alert }
 }

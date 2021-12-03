@@ -30,6 +30,7 @@
     </div>
 </template>
 <script>
+import authHeader from '../services/auth-header';
 export default {
     name: 'FavoruiteFood',
     props: {
@@ -46,10 +47,7 @@ export default {
             var config = {
                 method: 'post',
                 url: 'https://api.nippyeats.com/v1/foodies/providers/favorite',
-                headers: { 
-                    'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`,
-                    'Content-Type': 'application/json'
-                },
+                headers: authHeader(),
                 data : JSON.stringify({"providerId": id})
             };
 

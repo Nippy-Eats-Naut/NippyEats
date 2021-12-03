@@ -18,7 +18,7 @@
         <p class="fs-4 text-center fw-bold">Our Top Recommendatons</p>
         <p class="text-center">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
         <div class="mt-3">
-            <BrowseCard :meals="4" />
+            <BrowseCard :menus="recommended" />
         </div>
     </div>
     <div class="container mb-5">
@@ -82,7 +82,6 @@
     </div>
 </template>
 <script>
-import data from '@/assets/db.json'
 import BrowseCard from '../components/BrowseCard.vue'
 import NewResturants from '../components/NewResturants.vue';
 export default {
@@ -91,7 +90,8 @@ export default {
     data() {
         return {
             addr: null,
-            newProviders: []
+            newProviders: [],
+            recommended: []
         };
     },
     methods:{
@@ -106,9 +106,6 @@ export default {
         }
     },
     computed: {
-        meals() {
-            return data[0].meals;
-        },
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         }
@@ -118,6 +115,11 @@ export default {
         var config = {
             method: 'get',
             url: 'https://api.nippyeats.com/v1/foodies/providers',
+            headers: { }
+        };
+         var config2 = {
+            method: 'get',
+            url: `https://api.nippyeats.com/v1/foodies/providers/featured-and-recommended`,
             headers: { }
         };
 
@@ -131,6 +133,11 @@ export default {
             }).slice(0,6);
             this.newProviders = fooData;
         })
+
+        this.axios(config2)
+        .then((response) => {
+            this.recommended = response.data.data.recommended
+        });
     }
 }
 </script>

@@ -22,6 +22,7 @@
 import FavouriteResturants from "../components/FavouriteResturants.vue";
 import FavouriteFood from "../components/FavouriteFood.vue";
 import Alert from "../components/Alert.vue";
+import authHeader from '../services/auth-header';
 import {mapGetters} from 'vuex'
 export default {
     name: "Favourites",
@@ -47,10 +48,7 @@ export default {
         var config = {
             method: 'get',
             url: `https://api.nippyeats.com/v1/foodies/`,
-            headers: { 
-                'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`, 
-                'Content-Type': 'application/json'
-            },
+            headers: authHeader(),
         };
 
         this.axios(config)

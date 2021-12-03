@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '../store'
+// import store from '../store'
 
 import Homepage from "../views/HomePage.vue";
 import AboutUs from "../views/AboutUs.vue"
@@ -224,8 +224,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    const loggedIn = localStorage.getItem('user');
     if (to.matched.some(record => record.meta.requireAuth)){
-        if (localStorage.getItem('nippy.token') == null){
+        if (!loggedIn){
             next({
                 path:'/login',
                 query: { redirect: to.fullPath }
@@ -235,17 +236,17 @@ router.beforeEach((to, from, next) => {
           next()
         }
     }
-    else if (to.matched.some(record => record.meta.requirePermission)){
-        if (localStorage.getItem('nippy.token') == null && store.state.longitude == ""){
-            next({
-                path:'/login',
-                query: { redirect: to.fullPath }
-            })
-        }
-        else{
-          next()
-        }
-    }
+    // else if (to.matched.some(record => record.meta.requirePermission)){
+    //     if (localStorage.getItem('nippy.token') == null && store.state.longitude == ""){
+    //         next({
+    //             path:'/login',
+    //             query: { redirect: to.fullPath }
+    //         })
+    //     }
+    //     else{
+    //       next()
+    //     }
+    // }
     else {
       next()
     }

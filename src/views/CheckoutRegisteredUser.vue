@@ -100,6 +100,7 @@
 </template>
 <script>
 import OrderSummaryCheckout from "@/components/OrderSummaryCheckout.vue";
+import authHeader from '../services/auth-header';
 export default {
     name: "CheckoutRegisteredUser",
     components: { OrderSummaryCheckout },
@@ -112,10 +113,7 @@ export default {
         var config = {
             method: 'get',
             url: 'https://api.nippyeats.com/v1/foodies/',
-            headers: { 
-                'Authorization': `Bearer ${localStorage.getItem('nippy.token')}`,
-                'Content-Type': 'application/json'
-            }
+            headers: authHeader()
         };
 
         this.axios(config)

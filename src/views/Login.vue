@@ -24,15 +24,15 @@
                         </label>
                         <input class="form-check-input"  type="checkbox" name="remember_me" id="remember_me" value="Remeber me">
                     </div>
-                    <router-link to="" class="text--orange text-decoration-underline">Forgot Password</router-link>
+                    <router-link to="/password-reset" class="text--orange text-decoration-underline">Forgot Password</router-link>
                 </div>
                 <div class="mb-4">
-                    <button class="btn btn-primary btn-lg w-100" type="button" disabled v-if="spin">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        <span class="visually-hidden">Loading...</span>
-                    </button>
-                    <button class="btn btn-primary btn-lg w-100 text-white" @click="Login" v-else>
-                        Login
+                    <button class="btn btn-primary btn-lg w-100 text-white" @click="Login" :disabled="loading">
+                        <span
+                            v-show="loading"
+                            class="spinner-border spinner-border-sm"
+                            role="status" aria-hidden="true"
+                            ></span>Login
                     </button>
                 </div>
                 <div class="mb-3 d-flex justify-content-center">
@@ -46,18 +46,27 @@
 </template>
 <script>
 import Alert from "../components/Alert.vue";
+import {mapGetters} from 'vuex'
 export default {
     name: "Login",
     inject: ["mq"],
     data() {
         return {
-            spin: false,
+            loading: false,
             data: {
                 email: null,
                 password: null
             },
             errors: []
         };
+    },
+    computed: {
+        ...mapGetters('auth',['loggedIn']),
+    },
+    created() {
+        if (this.loggedIn) {
+            this.$router.push("/home");
+        }
     },
     methods: {
         goBack(){
@@ -72,34 +81,17 @@ export default {
                 this.errors.push("Valid email required.");
             }
             else {
-                this.spin = true
-                var config = {
-                    method: "post",
-                    url: "https://api.nippyeats.com/v1/foodies/login",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    data: JSON.stringify(this.data)
-                };
-                this.axios(config)
-                .then((response) => {
-                    let user = JSON.stringify(response.data.data.foodie)
-                    let token = response.data.data.authorization.token
-                    this.$store.commit('login', {user, token})
-
-                    if (localStorage.getItem('nippy.token') != null) {
-                        this.$emit('loggedIn')
-                        if (this.$route.query.redirect != null) {
-                            this.$router.push(this.$route.query.redirect)
-                        } else {
-                            this.$router.push('/home')
-                        }
+                this.loading = true
+                var data = this.data
+                this.$store.dispatch("auth/login", data)
+                .then(() => {
+                    this.$router.push("/home");
+                },
+                    (error) => {
+                        this.loading = false;
+                        this.errors.push(error.response.data.message)
                     }
-                })
-                .catch(err => {
-                    this.errors.push(err.response.data.message);
-                    this.spin = false
-                })
+                );
             }
             setTimeout(() => {
                 this.errors = [];

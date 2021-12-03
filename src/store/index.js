@@ -1,8 +1,9 @@
 import { createStore } from 'vuex'
+import { auth } from "./auth.module";
 
 let basket = localStorage.getItem('basket');
-let isLoggedIn = localStorage.getItem('nippy.token')
 const store = createStore({
+    modules: {auth},
     state(){
         return {
             longitude: '',
@@ -12,7 +13,6 @@ const store = createStore({
             basket: basket ? JSON.parse(basket) : [],
             provider: null,
             overlay: false,
-            isLoggedIn: isLoggedIn ? true : false,
         }
     },
 
@@ -61,14 +61,6 @@ const store = createStore({
         activate_overlay(state,overlay){
             state.overlay = overlay
         },
-        login(payload){
-            localStorage.setItem('nippy.user', payload.user)
-            localStorage.setItem('nippy.token', payload.token)
-        },
-        logout(){
-            localStorage.removeItem('nippy.user')
-            localStorage.removeItem('nippy.token')
-        }
     },
 
     getters:{
@@ -92,9 +84,6 @@ const store = createStore({
         },
         overlay: state => {
             return state.overlay
-        }        ,
-        isLoggedIn: state =>{
-            return state.isLoggedIn
         }
     }
 
