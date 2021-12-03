@@ -10,13 +10,13 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="fname" placeholder="name@example.com" v-model="firstName">
+                                <input type="text" class="form-control" id="fname" placeholder="name@example.com" v-model="data.firstName">
                                 <label for="fname">First Name</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="lname" placeholder="name@example.com" v-model="lastName">
+                                <input type="text" class="form-control" id="lname" placeholder="name@example.com" v-model="data.lastName">
                                 <label for="lname">Last Name</label>
                             </div>
                         </div>
@@ -24,23 +24,23 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="email" placeholder="name@example.com" v-model="email">
+                                <input type="email" class="form-control" id="email" placeholder="name@example.com" v-model="data.email">
                                 <label for="email">Email Address</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pnum" placeholder="name@example.com" v-model="phone">
+                                <input type="text" class="form-control" id="pnum" placeholder="name@example.com" v-model="data.phone">
                                 <label for="pnum">Phone Number</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4" v-if="deliveryMode == 'Delivery'">
                     <p class="mb-2 text-dark h6">Delivery Address</p>
                     <div class="mb-3">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="sAddr" placeholder="name@example.com" v-model="deliveryAddress">
+                            <input type="text" class="form-control" id="sAddr" placeholder="name@example.com" v-model="data.deliveryAddress">
                             <label for="sAddr">Street Address</label>
                         </div>
                     </div>
@@ -68,12 +68,12 @@
                 <div>
                     <p class="mb-2 text-dark h6">Payment Method</p>
                     <div class="mb-3">
-                        <div class="px-3 border py-2 rounded form-check d-flex justify-content-between" :class="payMethod == 'Flutterwave'? 'border-primary' : ''">
+                        <div class="px-3 border py-2 rounded form-check d-flex justify-content-between" :class="data.payMethod == 'Flutterwave'? 'border-primary' : ''">
                             <label class="form-check-label" for="flutterradio">
                                 <img src="@/assets/images/flutterwave.svg" alt="" width="16" height="16" class="me-1">
                                 Flutterwave
                             </label>
-                            <input class="form-check-input"  type="radio" name="flutterradio" id="flutterradio" value="Flutterwave" v-model="payMethod">
+                            <input class="form-check-input"  type="radio" name="flutterradio" id="flutterradio" value="Flutterwave" v-model="data.payMethod">
                         </div>
                     </div>
                 </div>
@@ -86,6 +86,7 @@
 </template>
 <script>
 import OrderSummaryCheckout from "@/components/OrderSummaryCheckout.vue";
+import {mapGetters} from 'vuex'
 export default {
     name: "CheckoutGuest",
     components: { OrderSummaryCheckout },
@@ -100,6 +101,9 @@ export default {
                 payMethod: ''
             }
         }
+    },
+    computed:{
+        ...mapGetters(['deliveryMode'])
     }
 }
 </script>

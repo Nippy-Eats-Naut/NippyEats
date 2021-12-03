@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4" v-if="deliveryMode == 'Delivery'">
                     <div class="d-flex justify-content-between">
                         <p class="mb-2 text-dark h6">Delivery Address</p>
                         <a class="text-secondary btn btn-sm">
@@ -101,6 +101,7 @@
 <script>
 import OrderSummaryCheckout from "@/components/OrderSummaryCheckout.vue";
 import authHeader from '../services/auth-header';
+import {mapGetters} from 'vuex'
 export default {
     name: "CheckoutRegisteredUser",
     components: { OrderSummaryCheckout },
@@ -108,6 +109,9 @@ export default {
         return{
             user: {}
         }
+    },
+    computed:{
+        ...mapGetters(['deliveryMode'])
     },
     beforeMount(){
         var config = {

@@ -28,7 +28,7 @@
             </div>
         </div>
         <div>
-            <router-link to="/checkout/user" v-if="id != null" class="btn btn-primary text-white w-100 btn-lg">Proceed To Checkout</router-link>
+            <router-link to="/checkout/user" v-if="loggedIn != null" class="btn btn-primary text-white w-100 btn-lg">Proceed To Checkout</router-link>
             <router-link to="/checkout/guest" v-else class="btn btn-primary text-white w-100 btn-lg">Proceed To Checkout</router-link>
         </div>
     </div>
@@ -37,15 +37,11 @@
 import {mapGetters} from 'vuex'
 export default {
     name: 'BasketOrderSummary',
-    data(){
-        return{
-            id: localStorage.getItem('nippy.token')
-        }
-    },
     computed: {
         ...mapGetters([
             'basket', 'provider'
         ]),
+        ...mapGetters('auth', ['loggedIn']),
         subTotal(){
             var totalSum = this.basket.reduce(function(res, meal){
                 var mp = meal.price;

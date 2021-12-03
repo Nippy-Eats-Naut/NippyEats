@@ -47,7 +47,7 @@
                 <p class="h6">NGN {{subTotal+500}}</p>
             </div>
             <div>
-                <router-link to="/checkout/user" v-if="id != null" class="btn btn-primary text-white w-100 btn-lg">Proceed To Checkout</router-link>
+                <router-link to="/checkout/user" v-if="loggedIn != null" class="btn btn-primary text-white w-100 btn-lg">Proceed To Checkout</router-link>
                 <router-link to="/checkout/guest" v-else class="btn btn-primary text-white w-100 btn-lg">Proceed To Checkout</router-link>
             </div>
             
@@ -58,11 +58,6 @@
 import {mapGetters} from 'vuex'
 export default {
     name: 'BasketMeal',
-    data(){
-        return{
-            id: localStorage.getItem('nippy.token')
-        }
-    },
     methods:{ 
         removeMenu(meal){
             this.$store.commit('REMOVE_menu', meal)
@@ -72,6 +67,7 @@ export default {
         ...mapGetters([
             'basket', 'provider'
         ]),
+        ...mapGetters('auth', ['loggedIn']),
         subTotal(){
             var totalSum = this.basket.reduce(function(res, meal){
                 var mp = meal.price;

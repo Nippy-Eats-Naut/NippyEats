@@ -27,11 +27,11 @@
         <div class="container my-5">
             <div class="d-flex justify-content-between mb-5" v-for="track, index in tracks" :key="index">
                 <div class="d-flex align-items-baseline">
-                    <div :class="'me-4 p-1 h-25 rounded-circle '+ track.color">
-                    </div>
+                    <!-- <div :class="'me-4 p-1 h-25 rounded-pill '+ track.color"></div> -->
+                    <div :class="'me-4 p-2 rounded-pill '+ track.color"></div>
                     <div class="d-flex">
                         <div class="me-3">
-                            <i :class="track.icon +' '+ track.color +' '+'fs-3 text-white rounded-circle p-3'"></i>
+                            <i :class="track.icon +' '+ track.color +' '+'fs-3 text-white rounded-pill p-3'"></i>
                         </div>
                         <div>
                             <p :class="'mb-1 fw-bold '+ track.text">{{track.title}}</p>
@@ -63,7 +63,7 @@ export default {
                     sub_title: 'We have received your order',
                     time: '10:15 am',
                     icon: 'bi bi-clipboard',
-                    color: 'btn-primary ',
+                    color: 'bg--orange ',
                     text: 'text-dark'
                 },
                 {
@@ -71,7 +71,7 @@ export default {
                     sub_title: 'Your order has been confirmed',
                     time: '10:17 am',
                     icon: 'bi bi-clipboard-check',
-                    color: 'btn-primary ',
+                    color: 'bg--orange ',
                     text: 'text-dark'
                 },
                 {

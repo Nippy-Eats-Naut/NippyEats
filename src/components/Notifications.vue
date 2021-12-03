@@ -1,5 +1,6 @@
 <template>
     <div class="dropdown-menu p-0 rounded border-0" aria-labelledby="notification">
+    <i class="bi bi-caret-up-fill position-absolute top-0 end-0 translate-middle fs-4 text--orange"></i>
         <div class="bg--orange ps-3 py-2">
             <p class="mb-0 text-white">Your Notifications</p>
         </div>

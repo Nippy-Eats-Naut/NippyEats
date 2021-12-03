@@ -19,8 +19,8 @@
                 </div>
                 <div class="d-flex mb-3" v-if="desktop">
                     <div class="form-check mr-3 p-0" v-for="modes,index in deliveryModes" :key="index">
-                        <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="type" @change="addDeliveryMode">
-                        <label :for="`type${index}`" class="form-check-label btn" :class="type == modes? 'btn-dark text-white': ''">
+                        <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="deliveryMode">
+                        <label :for="`type${index}`" class="form-check-label btn" :class="deliveryMode == modes? 'btn-dark text-white': ''">
                             {{modes}}
                         </label>
                     </div>
@@ -59,8 +59,8 @@
                 </div>
                 <div class="d-flex">
                     <div class="form-check mr-3 p-0" v-for="modes,index in deliveryModes" :key="index">
-                        <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="type" @change="addDeliveryMode">
-                        <label :for="`type${index}`" class="form-check-label btn-sm" :class="type == modes? 'btn-dark text-white': ''">
+                        <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="deliveryMode">
+                        <label :for="`type${index}`" class="form-check-label btn-sm" :class="deliveryMode == modes? 'btn-dark text-white': ''">
                             {{modes}}
                         </label>
                     </div>
@@ -109,7 +109,6 @@ export default {
     name: "Resturant",
     data() {
         return {
-            type: "Pick up",
             provider: null,
             reviews:[],
             menus: [],
@@ -119,6 +118,14 @@ export default {
     },
     inject: ["mq"],
     computed: {
+        deliveryMode:{
+            get(){
+                return this.$store.state.deliveryMode
+            },
+            set(value){
+                this.$store.commit('deliveryMode', value)
+            }
+        },
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         },
@@ -130,6 +137,7 @@ export default {
                 else if (mode == 'dine_in') fooMode.push('Dine in')
                 else fooMode.push('Pick up')
             })
+            this.$store.commit('deliveryMode', fooMode[0])
             return fooMode
         },
         workingDays(){
@@ -176,9 +184,6 @@ export default {
                 return menu.title
             });
         },
-        addDeliveryMode(){
-            this.$store.commit('deliveryMode', this.type)
-        }
     },
     components: { ResturantMeal, BasketMeal, ResturantPageCarousel, Reviews, StarRating },
     mounted(){

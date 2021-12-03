@@ -19,7 +19,8 @@ import Order from "../views/Order.vue"
 import OrderSuccess from "../views/OrderSuccess.vue"
 import Resturants from "../views/Resturants.vue"
 import AllResturants from "../views/AllResturants.vue"
-import ResturantPage from "../views/ResturantPage.vue"
+const ResturantPage = () => import("../views/ResturantPage.vue")
+// import ResturantPage from "../views/ResturantPage.vue"
 import SignUp from "../views/SignUp.vue"
 import TermsAndConditions from "../views/TermsAndConditions.vue"
 import TrackOrders from "../views/TrackOrders.vue"
@@ -152,7 +153,8 @@ const routes = [
         component: TermsAndConditions
     },
     {
-        path: '/trackorders/:id',
+        //path: '/trackorders/:id',
+        path: '/trackorders',
         name: 'TrackOrders',
         component: TrackOrders
     },
