@@ -25,12 +25,12 @@
         </div>
         <div v-if="desktop">
             <div class="card-img-overlay --left">
-                <button class="shadow btn bg-light text--orange rounded-circle" @click="scroll_left">
+                <button class="shadow btn bg-light text--orange rounded-circle" @click="scroll__left">
                     <i class="bi bi-arrow-left"></i>
                 </button>
             </div>
             <div class="card-img-overlay --right">
-                <button class="shadow btn bg-light text--orange rounded-circle" @click="scroll_right">
+                <button class="shadow btn bg-light text--orange rounded-circle" @click="scroll__right">
                     <i class="bi bi-arrow-right"></i>
                 </button>
             </div>
@@ -47,13 +47,13 @@ export default {
         }
     },
     methods: {
-        scroll_left() {
-        let content = document.querySelector(".row.--nr");
-        content.scrollLeft -= 50;
+        scroll__left() {
+            let content1 = document.querySelector(".--nr");
+            content1.scrollLeft -= 50;
         },
-        scroll_right() {
-        let content = document.querySelector(".row.--nr");
-        content.scrollLeft += 50;
+        scroll__right() {
+            let content1 = document.querySelector(".--nr");
+            content1.scrollLeft += 50;
         }
     },
     computed:{

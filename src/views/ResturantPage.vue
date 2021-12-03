@@ -19,7 +19,7 @@
                 </div>
                 <div class="d-flex mb-3" v-if="desktop">
                     <div class="form-check mr-3 p-0" v-for="modes,index in deliveryModes" :key="index">
-                        <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="type">
+                        <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="type" @change="addDeliveryMode">
                         <label :for="`type${index}`" class="form-check-label btn" :class="type == modes? 'btn-dark text-white': ''">
                             {{modes}}
                         </label>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="d-flex">
                     <div class="form-check mr-3 p-0" v-for="modes,index in deliveryModes" :key="index">
-                        <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="type">
+                        <input type="radio" name="type" class="form-check-input d-none" :id="`type${index}`" :value="modes" v-model="type" @change="addDeliveryMode">
                         <label :for="`type${index}`" class="form-check-label btn-sm" :class="type == modes? 'btn-dark text-white': ''">
                             {{modes}}
                         </label>
@@ -175,6 +175,9 @@ export default {
             return this.menus.map(menu=> {
                 return menu.title
             });
+        },
+        addDeliveryMode(){
+            this.$store.commit('deliveryMode', this.type)
         }
     },
     components: { ResturantMeal, BasketMeal, ResturantPageCarousel, Reviews, StarRating },

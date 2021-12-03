@@ -1,11 +1,23 @@
 <template>
     <div class="card border-0">
-        <div class="row --cr">
-            <div v-for="rec,index in menus" :key="index" class="col-md-4 col-6 card border-0 px-3">
-                    <img :src="rec.logo != null ? rec.logo.fileUrl : require('@/assets/images/2logo.png')" class="card-img rounded-0" :height="desktop? 220:156">
-                <router-link :to="`/resturant/${rec.id}`" class="shadow card-img-overlay btn-overlay btn py-2 mb-3 mx-5" :class="desktop?'px-4':'px-1'">
-                        <label class="text-truncate pe-2">{{rec.name}}</label><i class="bi bi-arrow-right"></i>
-                </router-link>
+        <div v-if="$route.path == '/home'">
+            <div class="row --cr">
+                <div v-for="rec,index in menus" :key="index" class="col-md-4 col-6 card border-0 px-3">
+                        <img :src="rec.value.img != null ? rec.value.img.fileUrl : require('@/assets/images/2logo.png')" class="card-img rounded-0" :height="desktop? 220:156">
+                    <router-link :to="`/resturant/${rec.value.providerId}`" class="shadow card-img-overlay btn-overlay btn py-2 mb-3 mx-5" :class="desktop?'px-4':'px-1'">
+                            <label class="text-truncate pe-2">{{rec.value.title}}</label><i class="bi bi-arrow-right"></i>
+                    </router-link>
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            <div class="row --cr">
+                <div v-for="rec,index in menus" :key="index" class="col-md-4 col-6 card border-0 px-3">
+                        <img :src="rec.logo != null ? rec.logo.fileUrl : require('@/assets/images/2logo.png')" class="card-img rounded-0" :height="desktop? 220:156">
+                    <router-link :to="`/resturant/${rec.id}`" class="shadow card-img-overlay btn-overlay btn py-2 mb-3 mx-5" :class="desktop?'px-4':'px-1'">
+                            <label class="text-truncate pe-2">{{rec.name}}</label><i class="bi bi-arrow-right"></i>
+                    </router-link>
+                </div>
             </div>
         </div>
         <div v-if="desktop">

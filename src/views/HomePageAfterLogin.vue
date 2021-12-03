@@ -25,7 +25,7 @@
         </div>
         <div class="mb-5">
             <p class="fs-5 fw-bold">Fast food</p>
-            <BrowseCard :meals="3" />
+            <BrowseCard :menus="fastFood" />
         </div>
     </div>
 </template>
@@ -139,8 +139,8 @@ export default {
             .then(response => {
                 let data = response.data.data;
                 let __data = data.filter(a => {
-                    var name = a.category == "menu"
-                    return name;
+                    if(a.category == "menu") 
+                        return a
                 });
                 this.fastFood = __data;
             });
