@@ -22,7 +22,7 @@ export default {
     name: 'Alert',
     props: {
         errors:{type: Array},
-        success: {type: Boolean},
+        success: {type: Boolean, default: false},
         message: {type: String},
         category: {type: String},
         link: {type: Boolean}

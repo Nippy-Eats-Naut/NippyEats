@@ -12,6 +12,7 @@
                     <button class="btn text-white btn-primary " @click="getProvider">Find Food</button>
                 </div>
             </div>
+            <Alert class="w-50 mt-2" :message="message" category="alert" :success="success" :link="false"/>
         </div>
     </div>
     <div class="container my-5">
@@ -45,14 +46,15 @@
     <div class="container">
         <div class="row mb-5">
             <div class="col-md-6">
-                <img src="@/assets/images/Group_68.png" alt="Where To Eat" class="img-fluid">
+                <img src="@/assets/images/Group_68.png" alt="Where To Eat" class="card-img" :height="desktop?'':250">
             </div>
             <div class="col-md-4">
                 <p class="fw-bold fs-1">Looking for Where To Eat?</p>
                 <p class="text-secondary mb-4">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
-                <router-link to="" class="btn text--orange">
+                <router-link to="/resturants" class="btn text--orange">
                     Find Resturant <i class="ms-2 bi bi-arrow-right"></i>
                 </router-link>
+                <Alert class="w-50 mt-2" :message="$route.params.message" category="alert" :link="false"/>
             </div>
         </div>
         <div class="row mb-5 justify-content-center">
@@ -64,12 +66,12 @@
                 </router-link>
             </div>
             <div class="col-md-6">
-                <img src="@/assets/images/Group_71.png" alt="Food Business" class="img-fluid">
+                <img src="@/assets/images/Group_71.png" alt="Food Business" class="card-img" :height="desktop?'':250">
             </div>
         </div>
         <div class="row mb-5">
             <div class="col-md-6">
-                <img src="@/assets/images/Group_73.png" alt="Delivery Partner" class="img-fluid">
+                <img src="@/assets/images/Group_73.png" alt="Delivery Partner" class="card-img" :height="desktop?'':250">
             </div>
             <div class="col-md-4">
                 <p class="fw-bold fs-1">Become A Delivery Partner</p>
@@ -82,6 +84,7 @@
     </div>
 </template>
 <script>
+import Alert from '../components/Alert.vue'
 import BrowseCard from '../components/BrowseCard.vue'
 import NewResturants from '../components/NewResturants.vue';
 export default {
@@ -91,18 +94,40 @@ export default {
         return {
             addr: null,
             newProviders: [],
-            recommended: []
+            recommended: [],
+            message: null,
+            success: null,
         };
     },
     methods:{
-        getProvider(){
-            navigator.geolocation.getCurrentPosition(position => {
-                var lat = position.coords.latitude;
-                var long = position.coords.longitude;
-                this.$store.commit('store_location', {long,lat});
-                console.log(lat, long);
-            })
-            this.$router.push('/home')
+        getGeo(location){
+            if(!this.addr){
+                this.message = "Address cannot be empty"
+                this.success = false
+            }
+            else{
+                console.log(location);
+                var lat = location.latitude
+                var long = location.longitude
+                var addr = this.addr
+                this.$store.commit('store_location', {long,lat,addr});
+                console.log(lat, long, addr);
+                this.$router.push('/home')
+            }
+        },
+        getProvider(){ 
+            if(!this.addr){
+                this.message = "Address cannot be empty"
+            }
+            else{
+                navigator.geolocation.getCurrentPosition(position => {
+                    const location = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    }
+                    this.getGeo(location)
+                })
+            }
         }
     },
     computed: {
@@ -110,7 +135,7 @@ export default {
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         }
     },
-    components: { BrowseCard, NewResturants },
+    components: { BrowseCard, NewResturants,Alert },
     beforeMount(){
         var config = {
             method: 'get',
@@ -160,7 +185,7 @@ export default {
     .hero-img{
         background-image: url("../assets/images/Rectangle_1.png");
         background-color: hsla(0, 0%, 0%, 0.55);
-        height: 40vh;
+        height: 250px;
         background-size: cover;
     }
     input::placeholder{
@@ -173,7 +198,7 @@ export default {
     }
     @media only screen and (min-width: 768px) {
         .hero-img{
-            height: 100vh;
+            height: 450px;
         } 
     }
 </style>

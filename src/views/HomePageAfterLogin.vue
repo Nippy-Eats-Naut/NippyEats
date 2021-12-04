@@ -63,7 +63,7 @@ export default {
             var newProviders = this.newProviders.filter(a => {
                 var modes = a.orderInformation.deliveryModes.find((modes) => modes === mode);
                 return modes
-            }).slice(0, 4);
+            }).slice(0, 8);
 
             var recommended = this.recommended.filter(a => {
                 var modes = a.orderInformation.deliveryModes.find((modes) => modes === mode);
@@ -80,8 +80,9 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'longitude','latitude'
+            'longitude','latitude','address'
         ]),
+        ...mapGetters('auth',['loggedIn']),
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         },
@@ -107,45 +108,48 @@ export default {
             url: "https://api.nippyeats.com/v1/foodies/explore",
             headers: { }
         };
-        /*if (localStorage.getItem('nippy.token') === null){  
-            this.axios(config)
-            .then((response) => {
-                this.resturants = response.data.data.data
-            });
-            this.axios(config2)
-            .then((response) => {
-                this.resturants = response.data.data.data
-            });
-        }else{
-            localStorage.getItem('nippy.user.location') */
-            this.axios(config)
-            .then((response) => {
-                let data = response.data.data.data
-                this.resturants = data
-                let fooData =  data.sort(function(a, b){
-                    var foo = a.updatedAt;
-                    var bar = b.updatedAt;
-                    return new Date( bar ) - new Date( foo )
-                })
-                this.newProviders = fooData;
-            });
+        var config4 = {
+            method: 'get',
+            url: `https://api.nippyeats.com/v1/foodies/providers`,
+            headers: { }
+        };
+        this.axios(config)
+        .then((response) => {
+            let data = response.data.data.data
+            this.resturants = data
+        });
 
-            this.axios(config2)
-            .then((response) => {
-                this.recommended = response.data.data.recommended
-            });
+        this.axios(config2)
+        .then((response) => {
+            this.recommended = response.data.data.recommended
+        });
 
-            this.axios(config3)
-            .then(response => {
-                let data = response.data.data;
-                let __data = data.filter(a => {
-                    if(a.category == "menu") 
-                        return a
-                });
-                this.fastFood = __data;
+        this.axios(config3)
+        .then(response => {
+            let data = response.data.data;
+            let __data = data.filter(a => {
+                if(a.category == "menu") 
+                    return a
             });
-        //}
-    }
+            this.fastFood = __data;
+        });
+
+        this.axios(config4)
+        .then((response) => {
+            let data = response.data.data.data
+            let fooData =  data.sort(function(a, b){
+                var foo = a.updatedAt;
+                var bar = b.updatedAt;
+                return new Date( bar ) - new Date( foo )
+            })
+            this.newProviders = fooData;
+        });
+    },
+    created() {
+        if (!this.loggedIn && !this.address) {
+            this.$router.push("/");
+        }
+    },
 }
 </script>
 <style scoped>

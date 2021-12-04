@@ -109,7 +109,7 @@ export default {
     name: "Resturant",
     data() {
         return {
-            provider: null,
+            provider: {},
             reviews:[],
             menus: [],
             pagMenu: 4,

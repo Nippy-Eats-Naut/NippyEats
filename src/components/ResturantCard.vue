@@ -11,7 +11,7 @@
         </div>
         <div v-else>
             <div class="row hr-scroll" :class="$route.path =='/search' || $route.path =='/resturants/all'? 'flex-wrap':'flex-nowrap'">
-                <div v-for="provider,index in providers" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2">
+                <div v-for="provider,index in providers" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2" :title="provider.name">
                     <div class="card-img-overlay">
                         <button class="bg--grey btn rounded-circle" @click="Fav(provider.id)">
                             <i class="bi bi-heart-fill text-white"></i>
@@ -21,15 +21,15 @@
                         <div class="image-div">
                             <img :src="provider.logo != null ? provider.logo.fileUrl : ''" class="card-img" height="172">
                         </div>
-                        <div class="d-flex justify-content-between py-2 card-body px-1">
+                        <div class="d-flex justify-content-between p-1 card-body">
                             <div>
-                                <p class="card-title fw-bold">{{provider.name}}</p>
-                                <p class="card-text small text-secondary">Avg. food time {{provider.orderInformation.averageFoodTime}}</p>
+                                <p class="card-title mb-0 fw-bold text-truncate">{{provider.name}}</p>
                             </div>
                             <div>
-                                <p class="small d-flex"><i class="bi bi-star-fill text--orange me-1"></i>{{provider.rating}}</p>
+                                <p class="small mb-0 d-flex"><i class="bi bi-star-fill text--orange me-1"></i>{{provider.rating}}</p>
                             </div>
                         </div>
+                        <p class="card-text small text-secondary p-1 mb-0">Avg. food time {{provider.orderInformation.averageFoodTime}}</p>
                     </router-link>
                 </div>
             </div>
@@ -92,6 +92,10 @@ export default {
     }
     img.card-img{
         border-radius: 6.29213px;
+    }
+    
+    .card:hover {
+        box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
     }
     @media only screen and (min-width: 768px) {
         .hr-scroll{

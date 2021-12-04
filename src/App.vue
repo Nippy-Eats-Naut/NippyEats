@@ -1,11 +1,15 @@
 <template>
-  <NavbarLogin id="navbar" v-if="loggedIn"/>
+  <NavbarLogin id="navbar" v-if="loggedIn || address"/>
+
   <div v-else>
     <div v-if="auth"></div>
     <NavbarNoLogin v-else/>
   </div>
+
   <router-view></router-view>
+
   <Footer v-if="!auth"/>
+
   <div :class="overlay==true? 'modal-backdrop show fade':''"></div>
 </template>
 
@@ -20,7 +24,7 @@ export default {
     NavbarLogin, Footer,NavbarNoLogin
   },
   computed:{
-    ...mapGetters([ 'overlay' ]),
+    ...mapGetters([ 'overlay', 'address' ]),
     ...mapGetters('auth', ['loggedIn']),
     auth(){
       return this.$route.meta.class === "Auth"

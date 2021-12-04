@@ -3,7 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Homepage from "../views/HomePage.vue";
 import AboutUs from "../views/AboutUs.vue"
-import Basket from "../views/Basket.vue"
+// import Basket from "../views/Basket.vue"
+const Basket = () => import("../views/Basket.vue")
 import CheckoutGuest from "../views/CheckoutGuest.vue"
 import CheckoutRegisteredUser from "../views/CheckoutRegisteredUser.vue"
 import ContactUs from "../views/ContactUs.vue"
@@ -12,13 +13,16 @@ import FAQs from "../views/FAQs.vue"
 import Favourites from "../views/Favourites.vue"
 import FoodCategory from "../views/FoodCategory.vue"
 import FoodListing from "../views/FoodListing.vue"
-import HomePageAfterLogin from "../views/HomePageAfterLogin.vue"
+const HomePageAfterLogin = () => import("../views/HomePageAfterLogin.vue")
+// import HomePageAfterLogin from "../views/HomePageAfterLogin.vue"
 import InviteFriends from "../views/InviteFriends.vue"
 import Login from "../views/Login.vue"
 import Order from "../views/Order.vue"
 import OrderSuccess from "../views/OrderSuccess.vue"
-import Resturants from "../views/Resturants.vue"
-import AllResturants from "../views/AllResturants.vue"
+// import Resturants from "../views/Resturants.vue"
+const Resturants = () => import("../views/Resturants.vue")
+// import AllResturants from "../views/AllResturants.vue"
+const AllResturants = () => import("../views/AllResturants.vue")
 const ResturantPage = () => import("../views/ResturantPage.vue")
 // import ResturantPage from "../views/ResturantPage.vue"
 import SignUp from "../views/SignUp.vue"
@@ -29,7 +33,8 @@ import WhatWeDo from "../views/WhatWeDo.vue"
 import VerifySignUp from "../views/VerifySignUp.vue"
 import PasswordReset from "../views/PasswordReset.vue"
 import AccountSettings from "../views/AccountSettings.vue"
-import Search from "../views/Search.vue"
+// import Search from "../views/Search.vue"
+const Search = () => import("../views/Search.vue")
 import Notification from "../views/MobileNotification.vue"
 
 
@@ -47,12 +52,18 @@ const routes = [
     {
         path: '/basket',
         name: 'Basket',
-        component: Basket
+        component: Basket,
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/checkout/guest',
         name: 'CheckoutGuest',
-        component: CheckoutGuest
+        component: CheckoutGuest,
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/checkout/user',
@@ -88,7 +99,10 @@ const routes = [
     {
         path: '/category/:id/:slug',
         name: 'FoodCategory',
-        component: FoodCategory
+        component: FoodCategory,
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/food-listing',
@@ -100,7 +114,7 @@ const routes = [
         name: 'HomePageAfterLogin',
         component: HomePageAfterLogin,
         meta: {
-            requirePermission: true
+            guest: true
         }
     },
     {
@@ -122,22 +136,34 @@ const routes = [
     {
         path: '/orders',
         name: 'Order',
-        component: Order
+        component: Order,
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/order-success',
         name: 'OrderSuccess',
-        component: OrderSuccess
+        component: OrderSuccess,
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/resturants',
         name: 'Resturants',
-        component: Resturants
+        component: Resturants,
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/resturant/:id',
         name: 'ResturantPage',
-        component: ResturantPage
+        component: ResturantPage,
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/signup',
@@ -156,7 +182,10 @@ const routes = [
         //path: '/trackorders/:id',
         path: '/trackorders',
         name: 'TrackOrders',
-        component: TrackOrders
+        component: TrackOrders,
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/wallet',
@@ -209,24 +238,28 @@ const routes = [
         component: Search,
         props: route => ({ query: route.query.q}),
         meta: {
-            requireAuth: true
+            guest: true
         }
     },
     {
         path: '/resturants/all',
         name: 'AllResturants',
         component: AllResturants,
+        meta: {
+            guest: true
+        }
     },
     
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+    history: createWebHistory(),
+    routes,
 })
 
 router.beforeEach((to, from, next) => {
     const loggedIn = localStorage.getItem('user');
+    const address = JSON.parse(localStorage.getItem('address'));
     if (to.matched.some(record => record.meta.requireAuth)){
         if (!loggedIn){
             next({
@@ -238,17 +271,19 @@ router.beforeEach((to, from, next) => {
           next()
         }
     }
-    // else if (to.matched.some(record => record.meta.requirePermission)){
-    //     if (localStorage.getItem('nippy.token') == null && store.state.longitude == ""){
-    //         next({
-    //             path:'/login',
-    //             query: { redirect: to.fullPath }
-    //         })
-    //     }
-    //     else{
-    //       next()
-    //     }
-    // }
+    else if(to.matched.some(record => record.meta.guest)){
+        if (loggedIn && address == null){
+            next({
+                path: '/',
+                name: 'Homepage',
+                query: { redirect: to.fullPath },
+                params: { message: "Address cannot be empty"}
+            })
+        }
+        else{
+          next()
+        }
+    }
     else {
       next()
     }

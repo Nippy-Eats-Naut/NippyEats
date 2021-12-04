@@ -1,7 +1,7 @@
 <template>
     <div class="card border-0">
         <div class="row --nr">
-            <div v-for="res,index in resturants" :key="index" class="col-md-3 col-6 card border-0 px-2">
+            <div v-for="res,index in resturants" :key="index" class="col-md-3 col-6 card --shadow border-0 px-2" :title="res.name">
                 <div class="card-img-overlay --a">
                      <button class="bg--grey btn rounded-circle">
                         <i class="bi bi-heart-fill text-white"></i>
@@ -11,15 +11,15 @@
                     <div class="image-div">
                         <img :src="res.logo != null ? res.logo.fileUrl : ''" class="card-img" height="172">
                     </div>
-                    <div class="d-flex justify-content-between py-2 card-body px-1">
+                    <div class="d-flex justify-content-between p-1 card-body">
                         <div>
-                            <p class="card-title fw-bold">{{res.name}}</p>
-                            <p class="card-text small text-secondary">N{{res.orderInformation.minimumOrderAmount}} Delivery Fee <i class="bi bi-dot"></i>{{res.orderInformation.averageFoodTimes}}</p>
+                            <p class="card-title mb-0 fw-bold text-truncate">{{res.name}}</p>
                         </div>
                         <div>
-                            <p class="small d-flex"><i class="bi bi-star-fill text--orange me-1"></i> {{res.rating}}</p>
+                            <p class="small mb-0 d-flex"><i class="bi bi-star-fill text--orange me-1"></i> {{res.rating}}</p>
                         </div>
                     </div>
+                    <p class="card-text p-1 mb-0 small text-secondary">N{{res.orderInformation.minimumOrderAmount}} Delivery Fee <i class="bi bi-dot"></i>{{res.orderInformation.averageFoodTimes}}</p>
                 </router-link>
             </div>
         </div>
@@ -92,6 +92,9 @@ export default {
     .row{
         overflow-x: auto;
         flex-wrap: nowrap;
+    }
+    .--shadow:hover {
+        box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
     }
     @media only screen and (min-width: 768px) {
         .row{

@@ -33,6 +33,11 @@ export default {
 <style scoped>
     .w--100{
         width: 100%;
-        height: 380px;
+        height: 250px;
+    }
+    @media only screen and (min-width: 768px) {
+        .w--100{
+            height: 380px;
+        } 
     }
 </style>

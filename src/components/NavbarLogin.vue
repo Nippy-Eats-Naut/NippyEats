@@ -11,9 +11,10 @@
                 </router-link>
             </div>
             <div class="nav-item" v-if="desktop">
-                <div class="nav-item align-items-baseline" :class="user.deliveryAddresses==null?'d-none':'w-50'">
+                <div class="nav-item align-items-baseline" :class="user.deliveryAddresses==null && address == null ?'d-none':'w-50'">
                     <i class="bi bi-geo-alt-fill me-2"></i>
-                    <p class="navbar-text mb-0 me-2 text-truncate">{{user.deliveryAddresses}}</p>
+                    <p class="navbar-text mb-0 me-2 text-truncate" v-if="address != ''">{{address}}</p>
+                    <p class="navbar-text mb-0 me-2 text-truncate" v-else>{{user.deliveryAddresses}}</p>
                 </div>
                 <div class="input-group has-icon" v-if="$route.path !='/search'">
                     <span class="form-control-feedback">
@@ -23,7 +24,7 @@
                 </div>
             </div>
             <div class="nav-item" v-if="desktop">
-                <div class="dropdown nav-item" >
+                <div class="dropdown nav-item" v-if="loggedIn">
                     <button class="btn pb-0 nav-link" type="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-bell-fill position-relative text-dark">
                             <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
@@ -44,11 +45,11 @@
 </template>
 
 <script>
-import SidenavLoggedIn from "./SidenavLoggedIn.vue";
-import Notifications from "./Notifications.vue";
-import NavbarMobileRight from "./NavbarMobileRight.vue";
+import SidenavLoggedIn from "./SidenavLoggedIn.vue"
+import Notifications from "./Notifications.vue"
+import NavbarMobileRight from "./NavbarMobileRight.vue"
 import {mapGetters} from 'vuex'
-import authHeader from '../services/auth-header';
+import authHeader from '../services/auth-header'
 export default{
     inject: ["mq"],
     name: "NavbarLogin",
@@ -70,8 +71,9 @@ export default{
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         },
         ...mapGetters([
-            'basket'
-        ])
+            'basket', 'address'
+        ]),
+        ...mapGetters('auth',['loggedIn']),
     },
     beforeMount(){
         var config = {

@@ -1,7 +1,7 @@
 <template>
     <div class="border border-1 rounded p-3 border-dark">
         <p class="text-center fs-6 fw-bold mb-3">Order Summary</p>
-        <div  v-for="meal,index in basket" :key="index" class="mb-3">
+        <div  v-for="meal,index in basket" :key="index" class="mb-3 --shadow">
             <div class="row mb-2">
                 <div class="col-md-3 col-3">
                     <img :src="meal.img != null ? meal.img : require('@/assets/images/2logo.png')" alt="" class="rounded auto-img">
@@ -91,3 +91,9 @@ export default {
     },
 }
 </script>
+<style scoped>
+    
+    .--shadow:hover {
+        box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+    }
+</style>

@@ -8,10 +8,14 @@
                 <img src="#" alt="" class="me-3" width="" height="">
                 <div>
                     <p class="fw-bold fs-4 mb-1">{{user.firstName}} {{user.lastName}}</p>
-                    <div class="d-flex align-items-baseline" :class="user.deliveryAddresses==null?'d-none':'w-50'">
-                        <i class="bi bi-geo-alt-fill me-2"></i>
-                        <p class="navbar-text mb-0 me-2 text-truncate">{{user.deliveryAddresses}}</p>
+                    <div v-if="!desktop">
+                        <div class="d-flex align-items-baseline" :class="user.deliveryAddresses==null && address == null ?'d-none':'w-50'">
+                            <i class="bi bi-geo-alt-fill me-2"></i>
+                            <p class="navbar-text mb-0 me-2 text-truncate" v-if="address != ''">{{address}}</p>
+                            <p class="navbar-text mb-0 me-2 text-truncate" v-else>{{user.deliveryAddresses}}</p>
+                        </div>
                     </div>
+                    
                     <router-link class="text--orange" to="/account-settings">Account Settings</router-link>
                 </div>
             </div>
@@ -28,13 +32,13 @@
                         <p class="mb-0">My Order</p>
                     </router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="loggedIn">
                     <router-link to="/favourites" class="nav-link" @click="handleClick">
                         <i class="bi bi-heart me-3"></i>
                         <p class="mb-0">Favourites</p>
                     </router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="loggedIn">
                     <router-link to="/wallet" class="nav-link" @click="handleClick">
                         <i class="bi bi-wallet me-3"></i>
                         <p class="mb-0">Wallet</p>
@@ -46,7 +50,7 @@
                         <p class="mb-0">Invites Friends</p>
                     </router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="loggedIn">
                     <a class="nav-link" @click="Logout">
                         <i class="bi bi-box-arrow-right me-3"></i>
                         <p class="mb-0">Log Out</p>
@@ -72,6 +76,7 @@
 </template>
 <script>
 import Logout from "./Logout.vue"
+import {mapGetters} from 'vuex'
 export default {
     name: "SidenavLoggedIn",
     inject: ["mq"],
@@ -93,7 +98,11 @@ export default {
     computed:{
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
-        }
+        },
+        ...mapGetters([
+            'address'
+        ]),
+        ...mapGetters('auth',['loggedIn']),
     },
     methods: {
         handleClick(){
@@ -102,7 +111,6 @@ export default {
         },
         Logout(){
             this.$emit("update:parent", this.fooOpen);
-            //this.$store.commit('activate_overlay', false)
             this.openModal = true
         }
     }

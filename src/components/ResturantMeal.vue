@@ -2,10 +2,11 @@
     <div>
         <div v-if="link" class="d-flex justify-content-between mb-4">  
             <p class="h4 mb-0">{{menus.title}}</p>
-            <router-link :to="`/category/${menus.providerId}/${menus.slug}`">see more</router-link> 
+            <!-- <router-link :to="`/category/${menus.providerId}/${menus.slug}`">see more</router-link>  -->
+            <a class="btn" @click="pagMenu += 4">see more</a> 
         </div>
         <div class="row">
-            <div class="card shadow-sm py-2 border-0 mb-3" v-for="meal,index in menus.menus.slice(0,pagMenu)" :key="index" :class="col">
+            <div class="card py-2 border-0 mb-3" v-for="meal,index in menus.menus.slice(0,pagMenu)" :key="index" :class="col" :title="meal.title">
                 <a class="row text-decoration-none text-dark" data-bs-toggle="modal" :data-bs-target="`#FoodDetails${meal.id}`">
                     <div class="col-md-6 col-6">
                         <div class="card-img-overlay">
@@ -13,10 +14,10 @@
                                 <i class="bi bi-heart text-dark"></i>
                             </button>
                         </div>
-                        <img :src="meal.img != null ? meal.img : require('@/assets/images/2logo.png')" :class="desktop?'auto-img':'mobile-img'">
+                        <img :src="meal.img != null ? meal.img.fileUrl : require('@/assets/images/2logo.png')" :width="desktop?166:183" height="127">
                     </div>
                     <div class="col-md-6 col-6">
-                        <p class="fw-bold mb-1">{{meal.title}}</p>
+                        <p class="fw-bold mb-1 text-truncate">{{meal.title}}</p>
                         <p class="text-secondary small mb-2 text-truncate" :title="meal.description">{{meal.description}}</p>
                         <p class="text-secondary mb-1 fw-bold">{{meal.currency}} {{parseFloat(meal.price.toString())}}</p>
                         <p class="text-secondary small mb-0">Avg. delivery time <i class="bi bi-dot"></i>30-40 min</p>
@@ -67,5 +68,8 @@ export default {
         aspect-ratio: 2/1;
         height: 100%;
         width: 100%
+    }
+    .card:hover {
+        box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
     }
 </style>

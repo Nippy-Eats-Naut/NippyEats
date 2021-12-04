@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import { auth } from "./auth.module";
 
 let basket = localStorage.getItem('basket');
+let address = localStorage.getItem('address');
 const store = createStore({
     modules: {auth},
     state(){
@@ -13,7 +14,8 @@ const store = createStore({
             basket: basket ? JSON.parse(basket) : [],
             provider: null,
             overlay: false,
-            deliveryMode: null
+            deliveryMode: null,
+            address: address ? JSON.parse(address) : null,
         }
     },
 
@@ -21,6 +23,8 @@ const store = createStore({
         store_location(state, payload) {
             state.latitude = payload.lat
             state.longitude = payload.long
+            state.address = payload.addr
+            localStorage.setItem('address', address);
         },
         add_alerts(state, payload){
             state.message = payload.msg
@@ -73,6 +77,9 @@ const store = createStore({
         },
         latitude: state=> {
             return state.latitude;
+        },
+        address: state=> {
+            return state.address;
         },
         message: state => {
             return state.message;
