@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="nav-item">
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                    <i class="bi bi-justify"></i>
+                    <i class="bi bi-justify text-dark"></i>
                 </button>
                 <SidenavNoLogin />
                 <router-link to="/home" class="navbar-brand">
@@ -11,8 +11,8 @@
                 </router-link>
             </div>
             <div class="nav-item">
-                <router-link to="/login" class="btn btn-primary text-white">
-                    <i class="bi bi-person" v-if="!desktop"></i>Login/Sign Up
+                <router-link to="/login" class="btn btn-primary text-white" :class="desktop ?'':'btn-sm'">
+                    <i class="bi bi-person" v-if="!desktop"></i>Login
                 </router-link>
             </div>
         </div>

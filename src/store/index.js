@@ -3,6 +3,7 @@ import { auth } from "./auth.module";
 
 let basket = localStorage.getItem('basket');
 let address = localStorage.getItem('address');
+
 const store = createStore({
     modules: {auth},
     state(){
@@ -15,7 +16,7 @@ const store = createStore({
             provider: null,
             overlay: false,
             deliveryMode: null,
-            address: address ? JSON.parse(address) : null,
+            address: address ? address : null,
         }
     },
 
@@ -24,7 +25,7 @@ const store = createStore({
             state.latitude = payload.lat
             state.longitude = payload.long
             state.address = payload.addr
-            localStorage.setItem('address', address);
+            localStorage.setItem('address', payload.addr);
         },
         add_alerts(state, payload){
             state.message = payload.msg

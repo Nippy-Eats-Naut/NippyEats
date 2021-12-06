@@ -12,7 +12,7 @@
                     <button class="btn text-white btn-primary " @click="getProvider">Find Food</button>
                 </div>
             </div>
-            <Alert class="w-50 mt-2" :message="message" category="alert" :success="success" :link="false"/>
+            <Alert class="mt-2" :message="$route.params.message || message" category="alert" :success="success" :link="false" :class="desktop?'w-50':''"/>
         </div>
     </div>
     <div class="container my-5">
@@ -54,7 +54,6 @@
                 <router-link to="/resturants" class="btn text--orange">
                     Find Resturant <i class="ms-2 bi bi-arrow-right"></i>
                 </router-link>
-                <Alert class="w-50 mt-2" :message="$route.params.message" category="alert" :link="false"/>
             </div>
         </div>
         <div class="row mb-5 justify-content-center">
