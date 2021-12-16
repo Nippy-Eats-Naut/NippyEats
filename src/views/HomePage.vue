@@ -33,11 +33,13 @@
                 <p class="text-white fw-bold" :class="desktop?'fs-1':'fs-4'">Download the App</p>
                 <p class="text-white"  :class="desktop?'':'small w-75 mb-1'">Make meals more accessible on your fingertips</p>
                 <div class="d-flex mt-2">
-                    <a href="" class="me-3">
-                        <img src="@/assets/images/google.png" alt="Get on google play" :width="desktop?100:60" :height="desktop?30:20">
+                    <a href="" class="me-3 btn">
+                        <!-- <img src="@/assets/images/google.png" alt="Get on google play" :width="desktop?100:60" :height="desktop?30:20"> -->
+                        <img src="@/assets/images/google.png" alt="Get on google play">
                     </a>
-                    <a href="">
-                        <img src="@/assets/images/apple.png" alt="Get on apple store" :width="desktop?100:60" :height="desktop?30:20">
+                    <a href="" class="btn">
+                        <img src="@/assets/images/apple.png" alt="Get on apple store">
+                        <!-- <img src="@/assets/images/apple.png" alt="Get on apple store" :width="desktop?100:60" :height="desktop?30:20"> -->
                     </a>
                 </div>
             </div>
@@ -180,6 +182,7 @@ export default {
         justify-content: center;
         background-color: rgba(252, 76, 1, 1);
         border-radius: 15px;
+        height: 250px;
     }
     .hero-img{
         background-image: url("../assets/images/Rectangle_1.png");
