@@ -5,7 +5,7 @@
                 <div class="modal-content">
                     <div class="modal-header p-0">
                         <button type="button" class="btn-close bg-light mt-3 mx-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <img :src="menu.img != null ? menu.img : require('@/assets/images/2logo.png')" alt="" height="200" class="rounded w-100">
+                        <img :src="menu.img != null ? menu.img.fileUrl : require('@/assets/images/2logo.png')" alt="" height="200" class="rounded w-100">
                     </div>
                     <div class="modal-body">
                         <div>

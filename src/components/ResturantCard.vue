@@ -14,7 +14,7 @@
                 <div v-for="provider,index in providers" :key="index" class="col-md-3 col-6 mb-3 card border-0 px-2" :title="provider.name">
                     <div class="card-img-overlay">
                         <button class="bg--grey btn rounded-circle" @click="Fav(provider.id)">
-                            <i class="bi bi-heart-fill text-white"></i>
+                            <i class="bi bi-heart-fill" :class="heart != null && heart.providerId == provider.id ? heart.color : 'text-white'"></i>
                         </button>
                     </div>
                     <router-link :to="`/resturant/${provider.id}`" class="text-decoration-none text-dark">
@@ -37,7 +37,8 @@
     </div>
 </template>
 <script>
-import authHeader from '../services/auth-header';
+import AppService from "../services/app.service"
+import { mapGetters } from 'vuex'
 export default {
     name: 'ResturantCard',
     props: {
@@ -48,7 +49,8 @@ export default {
     data(){
         return{
             message: null,
-            success: null
+            success: null,
+            heart: null
         }
     },
     inject: ['mq'],
@@ -56,22 +58,23 @@ export default {
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         },
+        ...mapGetters('auth',['loggedIn']),
     },
     methods:{
         Fav(id){
-            var config = {
-                method: 'post',
-                url: 'https://api.nippyeats.com/v1/foodies/providers/favorite',
-                headers: authHeader(),
-                data : JSON.stringify({"providerId": id})
-            };
-
-            this.axios(config)
-            .then(response => {
-                let msg = response.data.message
-                let succ = response.data.success
-                this.$store.commit('add_alert', {msg,succ})
-            })
+            if (this.loggedIn){
+                AppService.favourite(id)
+                .then(response => {
+                    let msg = response.data.message
+                    let succ = response.data.success
+                    if (succ)
+                        this.heart = {color: 'text--orange', providerId: id}
+                    this.$store.commit('add_alerts', {msg,succ})
+                })
+            }
+            else{
+                this.$router.push('/login')
+            }
         }
     }
 }

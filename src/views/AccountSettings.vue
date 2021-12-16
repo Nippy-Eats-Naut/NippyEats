@@ -47,6 +47,7 @@
 </template>
 <script>
 import Alert from "../components/Alert.vue";
+import authHeader from "../services/auth-header"
 export default {
     name: "AccountSettings",
     inject: ["mq"],
@@ -64,10 +65,7 @@ export default {
             var config = {
                 method: "put",
                 url: "https://api.nippyeats.com/v1/foodies/",
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("nippy.token")}`,
-                    "Content-Type": "application/json"
-                },
+                headers: authHeader(),
                 data: JSON.stringify({"firstName": this.user.firstName,
                                     "lastName": this.user.lastName,
                                     "phone": this.user.phone
@@ -92,10 +90,7 @@ export default {
         var config = {
             method: "get",
             url: "https://api.nippyeats.com/v1/foodies/",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("nippy.token")}`,
-                "Content-Type": "application/json"
-            }
+            headers: authHeader()
         };
         this.axios(config)
             .then(response => {

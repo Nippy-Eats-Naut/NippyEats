@@ -76,16 +76,18 @@ export default{
         ...mapGetters('auth',['loggedIn']),
     },
     beforeMount(){
-        var config = {
-            method: 'get',
-            url: 'https://api.nippyeats.com/v1/foodies/',
-            headers: authHeader()
-        };
+        if (this.loggedIn){
+            var config = {
+                method: 'get',
+                url: 'https://api.nippyeats.com/v1/foodies/',
+                headers: authHeader()
+            };
 
-        this.axios(config)
-        .then(response => {
-            this.user = response.data.data
-        })
+            this.axios(config)
+            .then(response => {
+                this.user = response.data.data
+            })
+        }
     }
 }
 </script>

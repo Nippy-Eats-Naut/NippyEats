@@ -1,8 +1,9 @@
 <template>
-  <NavbarLogin id="navbar" v-if="loggedIn || address"/>
+
+  <div v-if="auth"></div>
 
   <div v-else>
-    <div v-if="auth"></div>
+    <NavbarLogin id="navbar" v-if="loggedIn || address"/>
     <NavbarNoLogin v-else/>
   </div>
 

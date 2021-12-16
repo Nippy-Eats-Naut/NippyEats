@@ -3,7 +3,7 @@
         <div v-if="link" class="d-flex justify-content-between mb-4">  
             <p class="h4 mb-0">{{menus.title}}</p>
             <!-- <router-link :to="`/category/${menus.providerId}/${menus.slug}`">see more</router-link>  -->
-            <a class="btn" @click="pagMenu += 4">see more</a> 
+            <a class="btn" v-show="menus.length > 4" @click="pagMenu += 4">see more</a> 
         </div>
         <div class="row">
             <div class="card py-2 border-0 mb-3" v-for="meal,index in menus.menus.slice(0,pagMenu)" :key="index" :class="col" :title="meal.title">

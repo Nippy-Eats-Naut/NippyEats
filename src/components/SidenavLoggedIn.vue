@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     
-                    <router-link class="text--orange" to="/account-settings">Account Settings</router-link>
+                    <router-link  v-if="loggedIn" class="text--orange" to="/account-settings">Account Settings</router-link>
                 </div>
             </div>
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" :class="desktop?'ps-5':'ps-3'">
@@ -55,6 +55,9 @@
                         <i class="bi bi-box-arrow-right me-3"></i>
                         <p class="mb-0">Log Out</p>
                     </a>
+                </li>
+                <li class="nav-item" v-if="!loggedIn">
+                    <router-link to="/login" class="btn btn-primary text-white mt-5 d-flex justify-content-center">Login/Sign Up</router-link>
                 </li>
             </ul>
             <div class="position-absolute bottom-0">

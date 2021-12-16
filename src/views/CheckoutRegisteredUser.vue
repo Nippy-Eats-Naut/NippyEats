@@ -77,7 +77,23 @@
                 </div>
                 <div>
                     <p class="mb-3 text-dark h6">Payment Method</p>
-                    <div class="form-check mb-2">
+                    <div class="d-flex">
+                        <div class="px-3 border py-2 rounded form-check w-100 me-2" :class="data.payMethod == 'Flutterwave'? 'border-primary' : ''">
+                            <label class="form-check-label" for="flutterradio">
+                                <img src="@/assets/images/flutterwave.svg" alt="" width="16" height="16" class="me-1">
+                                Flutterwave
+                            </label>
+                            <input class="form-check-input d-none"  type="radio" name="flutterradio" id="flutterradio" value="Flutterwave" v-model="data.payMethod">
+                        </div>
+                        <div class="px-3 border py-2 rounded form-check w-100 ms-2" :class="data.payMethod == 'Wallet'? 'border-primary' : ''">
+                            <label class="form-check-label" for="foodieradio">
+                                <router-link to="/wallet">Foodie Wallet</router-link>
+                            </label>
+                            <input class="form-check-input d-none"  type="radio" name="foodieradio" id="foodieradio" value="Wallet" v-model="data.payMethod">
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-check mb-2">
                         <label class="form-check-label text-dark" for="cardradio">
                             <i class="bi bi-credit-card-2-front me-1"></i>
                             **** **** 2456
@@ -89,7 +105,7 @@
                             Foodie Wallet(N3,000)
                         </label>
                         <input class="form-check-input"  type="radio" name="walletradio" id="walletradio" value="Wallet">
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-md-4">
@@ -107,7 +123,8 @@ export default {
     components: { OrderSummaryCheckout },
     data(){
         return{
-            user: {}
+            user: {},
+            data: []
         }
     },
     computed:{
