@@ -28,19 +28,19 @@
     </div>
     <div class="container mb-5">
         <div class="card border-0">
-            <img class="card-img download" src="@/assets/images/Mask_Group.png" :class="desktop?'':'ms-2'">
-            <div class="card-img-overlay download" :class="desktop?'px-5':'ps-2 pe-5'">
-                <p class="text-white fw-bold" :class="desktop?'fs-1':'fs-4'">Download the App</p>
-                <p class="text-white"  :class="desktop?'':'small w-75 mb-1'">Make meals more accessible on your fingertips</p>
-                <div class="d-flex mt-2">
-                    <a href="" class="me-3 btn">
-                        <!-- <img src="@/assets/images/google.png" alt="Get on google play" :width="desktop?100:60" :height="desktop?30:20"> -->
-                        <img src="@/assets/images/google.png" alt="Get on google play">
-                    </a>
-                    <a href="" class="btn">
-                        <img src="@/assets/images/apple.png" alt="Get on apple store">
-                        <!-- <img src="@/assets/images/apple.png" alt="Get on apple store" :width="desktop?100:60" :height="desktop?30:20"> -->
-                    </a>
+            <div>
+                <img src="@/assets/images/downloadImage.png"  class="card-img" alt="Get on google play">
+                <div class="card-img-overlay" :class="desktop?'px-5':'ps-2 pe-5'">
+                    <p class="text-white fw-bold" :class="desktop?'fs-1':'fs-4'">Download the App</p>
+                    <p class="text-white"  :class="desktop?'':'small w-75 mb-1'">Make meals more accessible on your fingertips</p>
+                    <div class="d-flex mt-2">
+                        <a href="" class="me-1" :class="desktop?'btn':''">
+                            <img src="@/assets/images/google.png" alt="Get on google play" :height="desktop?'':24">
+                        </a>
+                        <a href="" :class="desktop?'btn':''">
+                            <img src="@/assets/images/apple.png" alt="Get on apple store" :height="desktop?'':24">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -175,14 +175,6 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: center;
-    }
-    .card-img-overlay.download{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background-color: rgba(252, 76, 1, 1);
-        border-radius: 15px;
-        height: 250px;
     }
     .hero-img{
         background-image: url("../assets/images/Rectangle_1.png");
