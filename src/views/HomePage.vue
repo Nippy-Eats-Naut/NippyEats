@@ -8,7 +8,14 @@
                     <span class="form-control-feedback">
                         <i class="bi bi-geo-alt-fill text-white"></i>
                     </span>
-                    <input type="text" class="form-control border-0 text-white rounded bg-transparent w-50" placeholder="Where are you at?" v-model="addr">
+                    
+                    <GMapAutocomplete
+                        placeholder="Where are you at?"
+                        @place_changed="setPlace"
+                        class="form-control border-0 text-white rounded bg-transparent w-50"
+                        
+                    >
+                    </GMapAutocomplete>
                     <button class="btn text-white btn-primary " @click="getProvider">Find Food</button>
                 </div>
             </div>
@@ -93,41 +100,28 @@ export default {
     inject: ["mq"],
     data() {
         return {
-            addr: null,
             newProviders: [],
             recommended: [],
             message: null,
             success: null,
+            currentPlace: null
         };
     },
     methods:{
-        getGeo(location){
-            if(!this.addr){
-                this.message = "Address cannot be empty"
-                this.success = false
-            }
-            else{
-                console.log(location);
-                var lat = location.latitude
-                var long = location.longitude
-                var addr = this.addr
-                this.$store.commit('store_location', {long,lat,addr});
-                console.log(lat, long, addr);
-                this.$router.push('/home')
-            }
+        setPlace(place){
+            this.currentPlace = place;
         },
         getProvider(){ 
-            if(!this.addr){
+            if(!this.currentPlace){
                 this.message = "Address cannot be empty"
             }
             else{
-                navigator.geolocation.getCurrentPosition(position => {
-                    const location = {
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude
-                    }
-                    this.getGeo(location)
-                })
+                var lat = this.currentPlace.geometry.location.lat();
+                var lng =  this.currentPlace.geometry.location.lng();
+                var addr = this.currentPlace.formatted_address;
+                this.$store.commit('store_location', {lng,lat,addr});
+                console.log(lat, lng, addr);
+               this.$router.push('/home')
             }
         }
     },
@@ -143,7 +137,7 @@ export default {
             url: 'https://api.nippyeats.com/v1/foodies/providers',
             headers: { }
         };
-         var config2 = {
+        var config2 = {
             method: 'get',
             url: `https://api.nippyeats.com/v1/foodies/providers/featured-and-recommended`,
             headers: { }
