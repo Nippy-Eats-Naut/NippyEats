@@ -8,9 +8,9 @@
                 <div class="mb-4">
                     <div class="d-flex justify-content-between">
                         <p class="mb-2 text-dark h6">Personal Information</p>
-                        <a class="text-secondary btn btn-sm">
+                        <!-- <a class="text-secondary btn btn-sm">
                             <i class="bi bi-pencil-fill me-1"></i> Edit
-                        </a>
+                        </a> -->
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6 mb-3">
@@ -44,14 +44,23 @@
                 <div class="mb-4" v-if="deliveryMode == 'Delivery'">
                     <div class="d-flex justify-content-between">
                         <p class="mb-2 text-dark h6">Delivery Address</p>
-                        <a class="text-secondary btn btn-sm">
+                        <!-- <a class="text-secondary btn btn-sm">
                             <i class="bi bi-pencil-fill me-1"></i> Edit
-                        </a>
+                        </a> -->
                     </div>
                     <div class="mb-3">
                         <div class="">
                             <label for="sAddr">Street Address</label>
-                            <input type="text" class="form-control" id="sAddr" v-model="user.deliveryAddresses">
+                            <GMapAutocomplete
+                                placeholder="Where are you at?"
+                                @place_changed="setPlace"
+                                class="form-control"
+                                 id="sAddr"
+                                
+                            >
+                            </GMapAutocomplete>
+
+                            <!-- <input type="text" class="form-control" id="sAddr" v-model="user.deliveryAddresses"> -->
                         </div>
                     </div>
                     <div class="row">
@@ -115,6 +124,7 @@
     </div>
 </template>
 <script>
+import AppService from "../services/app.service"
 import OrderSummaryCheckout from "@/components/OrderSummaryCheckout.vue";
 import authHeader from '../services/auth-header';
 import {mapGetters} from 'vuex'
@@ -124,7 +134,24 @@ export default {
     data(){
         return{
             user: {},
-            data: []
+            data: [],
+            currentPlace: null
+        }
+    },
+    method:{
+        setPlace(place){
+            this.currentPlace = place;
+            this.user.deliveryAddresses = this.currentPlace.formatted_address;
+        },
+        placeOrders(){
+            AppService.placeOrders(this.data)
+            .then(response => {
+                let msg = response.data.message
+                let succ = response.data.success
+                if (succ)
+                    this.heart = {color: 'text--orange', providerId: id}
+                this.$store.commit('add_alerts', {msg,succ})
+            })
         }
     },
     computed:{
