@@ -43,19 +43,19 @@
                 <div>
                     <div class="d-flex justify-content-between">
                         <p class="text-secondary mb-1">Subtotal</p>
-                        <p class="h6 mb-1">{{subTotal}}</p>
+                        <p class="h6 mb-1">NGN {{subTotal}}</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="text-secondary mb-1">Delivery fee</p>
-                        <p class="h6 mb-1">N2,000</p>
+                        <p class="h6 mb-1">NGN 2,000</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="text-secondary mb-1">VAT</p>
-                        <p class="h6 mb-1">N500</p>
+                        <p class="h6 mb-1">NGN 500</p>
                     </div>
                     <div class="d-flex justify-content-between mt-1 mb-2">
                         <p class="text-dark mb-1">Total</p>
-                        <p class="h6 mb-1">{{subTotal + 2500}}</p>
+                        <p class="h6 mb-1">NGN {{subTotal + 2500}}</p>
                     </div>
                 </div>
                 <button class="btn btn-primary btn-lg w-100" @click="placeOrders">Proceed To Payment</button>
@@ -82,59 +82,55 @@ export default {
         },
         
         placeOrders(){
-            const orders = this.basket.map(item => {
-                // Group initialization
-                if (!item.providerId) {
-                    item.providerId = [];
-                }
+            var sortedOrders = []
+            this.basket.map(item => {
 
-                // Grouping
-                const orderItem = {
-                    providerId: item.providerId,
-                    deliveryMode: menu.deliveryMode,
-                    paymentMode: this.paymentMethod,
-                    menus: [
+                let found = sortedOrders.find(value => value.providerId == item.providerId);
+                
+                if (!found) {
+                    sortedOrders.push({
+                        providerId: item.providerId,
+                        deliveryMode: item.deliveryMode,
+                        paymentMode: this.paymentMethod,
+                        menus: [
+                            {
+                                menuId: item.id,
+                                name: item.title,
+                                price: item.price,
+                                quantity: item.quantity,
+                                //currency: item.currency,
+                            }
+                        ]
+                    })
+                }
+                else{
+                    found.menus.push(
                         {
                             menuId: item.id,
                             name: item.title,
                             price: item.price,
-                            //img: item.img,
                             quantity: item.quantity,
-                            currency: item.currency,
+                            //currency: item.currency,
                         }
-                    ]
+                    )
                 }
-
-                return orderItem;
                 }
             );
-                console.log(orders)
+                console.log(sortedOrders)
 
-            // this.basket.forEach(menu => {
-            //     const data = {
-            //         providerId: menu.providerId,
-            //         paymentMode: this.paymentMethod,
-            //         deliveryMode: menu.deliveryMode,
-            //         menus: {
-            //             quantity: menu.quantity,
-            //             menuId: menu.id,
-            //             name: menu.title,
-            //             price: menu.price
-            //         }
-            //     }
-            //     console.log(data)
-            //     AppService.placeOrders(data)
-            //     .then(response => {
-            //         let msg = response.data.message
-            //         let succ = response.data.success
-            //         this.$store.commit('add_alerts', {msg,succ})
-            //     })
-            // })
+            sortedOrders.forEach(menu => {
+                AppService.createOrders(menu)
+                .then(response => {
+                    let msg = response.data.message
+                    let succ = response.data.success
+                    this.$store.commit('add_alerts', {msg,succ})
+                })
+            })
         }
     },
     computed: {
         ...mapGetters([
-            'basket', 'deliveryMode'
+            'basket'
         ]),
         subTotal(){
             var totalSum = this.basket.reduce(function(res, meal){
