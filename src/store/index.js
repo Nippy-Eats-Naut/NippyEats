@@ -39,15 +39,79 @@ const store = createStore({
                 state.success = null;
             }, 10000)
         },
+
+        // add_menu(state, payload){
+        //     let provider = state.basket.find(item =>item.providerId == payload.menu.providerId);
+            
+
+        //     if(provider) {
+        //         let menu = provider.menus.find(item => item.menuId == payload.menu.id);
+
+        //         if(menu){
+        //             menu.quantity = payload.quantity
+        //         }
+        //         else{
+        //             provider.menus.push({
+        //                 menuId: payload.menu.id,
+        //                 name: payload.menu.title,
+        //                 price: payload.menu.price,
+        //                 img: payload.menu.img,
+        //                 quantity: payload.quantity,
+        //                 currency: payload.menu.currency,
+        //                 providerName: state.provider              
+        //             })
+        //         }
+        //     }
+        //     else{
+        //         state.basket.push({
+        //             providerId: payload.menu.providerId,
+        //             deliveryMode: state.deliveryMode,
+        //             menus: [
+        //                 {
+        //                     menuId: payload.menu.id,
+        //                     name: payload.menu.title,
+        //                     price: payload.menu.price,
+        //                     img: payload.menu.img,
+        //                     quantity: payload.quantity,
+        //                     currency: payload.menu.currency,
+        //                     providerName: state.provider
+        //                 }
+        //             ]
+        //         })
+        //     }
+        //     this.commit('SAVE_menu');
+        // },
+
+        // check_quantity(state, payload){
+        //     let foundProvider = state.basket.find(item => item.providerId == payload.menu.providerId);
+
+        //     if (foundProvider){
+        //         let found = foundProvider.menus.find(item => item.menuId == payload.menu.id);
+    
+        //         found.quantity = payload.quantity;
+        //         return found.quantity
+        //     }else {
+        //         return payload.quantity
+        //     }
+        // },
         add_menu(state, payload){
             let found = state.basket.find(item => item.id == payload.menu.id);
 
             if (found) {
                 found.quantity = payload.quantity;
             } else {
-                payload.menu.quantity = payload.quantity
-                payload.menu.provider = state.provider
-                state.basket.push(payload.menu)
+                // payload.menu.quantity = payload.quantity
+                // payload.menu.deliveryMode = state.deliveryMode
+                // payload.menu.provider = state.provider
+                var menu = payload.menu
+                state.basket.push({
+                    menu,
+                    quantity: payload.quantity,
+                    deliveryMode: state.deliveryMode,
+                    provider: state.provider
+
+                })
+                // this.commit('check_provider', payload.menu)
             }      
             this.commit('SAVE_menu');
         },

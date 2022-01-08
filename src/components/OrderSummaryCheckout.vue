@@ -58,15 +58,19 @@
                         <p class="h6 mb-1">{{subTotal + 2500}}</p>
                     </div>
                 </div>
-                <button class="btn btn-primary btn-lg w-100">Proceed To Payment</button>
+                <button class="btn btn-primary btn-lg w-100" @click="placeOrders">Proceed To Payment</button>
             </div>
         </div>
     </div>
 </template>
 <script>
+import AppService from "../services/app.service"
 import {mapGetters} from 'vuex'
 export default {
     name: 'OrderSummaryCheckout',
+    props: {
+        paymentMethod: {type: String}
+    },
     data(){
         return{
             edit: false
@@ -75,11 +79,62 @@ export default {
     methods:{
         removeMenu(meal){
             this.$store.commit('REMOVE_menu', meal)
+        },
+        
+        placeOrders(){
+            const orders = this.basket.map(item => {
+                // Group initialization
+                if (!item.providerId) {
+                    item.providerId = [];
+                }
+
+                // Grouping
+                const orderItem = {
+                    providerId: item.providerId,
+                    deliveryMode: menu.deliveryMode,
+                    paymentMode: this.paymentMethod,
+                    menus: [
+                        {
+                            menuId: item.id,
+                            name: item.title,
+                            price: item.price,
+                            //img: item.img,
+                            quantity: item.quantity,
+                            currency: item.currency,
+                        }
+                    ]
+                }
+
+                return orderItem;
+                }
+            );
+                console.log(orders)
+
+            // this.basket.forEach(menu => {
+            //     const data = {
+            //         providerId: menu.providerId,
+            //         paymentMode: this.paymentMethod,
+            //         deliveryMode: menu.deliveryMode,
+            //         menus: {
+            //             quantity: menu.quantity,
+            //             menuId: menu.id,
+            //             name: menu.title,
+            //             price: menu.price
+            //         }
+            //     }
+            //     console.log(data)
+            //     AppService.placeOrders(data)
+            //     .then(response => {
+            //         let msg = response.data.message
+            //         let succ = response.data.success
+            //         this.$store.commit('add_alerts', {msg,succ})
+            //     })
+            // })
         }
     },
     computed: {
         ...mapGetters([
-            'basket',
+            'basket', 'deliveryMode'
         ]),
         subTotal(){
             var totalSum = this.basket.reduce(function(res, meal){
