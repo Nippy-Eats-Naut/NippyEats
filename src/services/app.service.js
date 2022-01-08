@@ -13,7 +13,7 @@ class AppService {
     return axios(config);
   }
 
-  placeOrders(data){
+  createOrders(data){
     var config = {
       method: "post",
       url: API_URL + 'orders',

@@ -67,6 +67,11 @@
                             Add to Basket ({{menu.currency}} {{parseFloat(menu.price.toString())}})
                         </button>
                     </div>
+                    <Alert 
+                        :message="msg"
+                        :success="true"
+                        category="alert"
+                        />
                 </div>
             </div>
         </div>
@@ -75,6 +80,7 @@
 <script>
 import Reviews from "./Reviews.vue"
 import StarRating from 'vue-star-rating'
+import Alert from "./Alert.vue";
 export default {
     name: "FoodDetails",
     props:{
@@ -85,7 +91,8 @@ export default {
     data() {
         return {
             quantity: 1,
-            reviews: []
+            reviews: [],
+            msg: null
         };
     },
     methods:{
@@ -93,9 +100,10 @@ export default {
             let quantity = this.quantity;
             let menu = this.menu
             this.$store.commit('add_menu', {menu, quantity})
+            this.msg = "Menu successfully added to basket"
         }
     },
-    components: { Reviews, StarRating },
+    components: { Reviews, StarRating, Alert },
     /*beforeMount(){
         /*var config = {
             method: 'get',

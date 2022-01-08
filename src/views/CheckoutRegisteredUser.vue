@@ -16,13 +16,13 @@
                         <div class="col-md-6 mb-3">
                             <div class="">
                                 <label for="fname">First Name</label>
-                                <input type="text" class="form-control" id="fname" v-model="user.firstName">
+                                <input type="text" class="form-control" id="fname" v-model="data.user.firstName">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="">
                                 <label for="lname">Last Name</label>
-                                <input type="text" class="form-control" id="lname" v-model="user.lastName">
+                                <input type="text" class="form-control" id="lname" v-model="data.user.lastName">
                             </div>
                         </div>
                     </div>
@@ -30,13 +30,13 @@
                         <div class="col-md-6 mb-3">
                             <div class="">
                                 <label for="email">Email Address</label>
-                                <input type="email" class="form-control" id="email" v-model="user.email">
+                                <input type="email" class="form-control" id="email" v-model="data.user.email">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="">
                                 <label for="pnum">Phone Number</label>
-                                <input type="text" class="form-control" id="pnum" v-model="user.phone">
+                                <input type="text" class="form-control" id="pnum" v-model="data.user.phone">
                             </div>
                         </div>
                     </div>
@@ -53,33 +53,31 @@
                             <label for="sAddr">Street Address</label>
                             <GMapAutocomplete
                                 placeholder="Where are you at?"
-                                @place_changed="setPlace"
+                                @place_changed="Location"
                                 class="form-control"
-                                 id="sAddr"
+                                id="sAddr"
                                 
                             >
                             </GMapAutocomplete>
-
-                            <!-- <input type="text" class="form-control" id="sAddr" v-model="user.deliveryAddresses"> -->
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <div class="">
                                 <label for="city">City</label>
-                                <input type="text" class="form-control" id="city">
+                                <input type="text" class="form-control" id="city"  v-model="data.currentPlace.location.city">
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <div class="">
                                 <label for="state">State</label>
-                                <input type="text" class="form-control" id="state">
+                                <input type="text" class="form-control" id="state" v-model="data.currentPlace.location.state">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="">
                                 <label for="postcode">Postal Code</label>
-                                <input type="text" class="form-control" id="postcode">
+                                <input type="text" class="form-control" id="postcode"  v-model="data.currentPlace.location.postalcode">
                             </div>
                         </div>
                     </div>
@@ -87,21 +85,26 @@
                 <div>
                     <p class="mb-3 text-dark h6">Payment Method</p>
                     <div class="d-flex">
-                        <div class="px-3 border py-2 rounded form-check w-100 me-2" :class="data.payMethod == 'Flutterwave'? 'border-primary' : ''">
+                        <div class="px-3 border py-2 rounded form-check w-100 me-2" :class="data.payMethod == 'pay_now'? 'border-primary' : ''">
                             <label class="form-check-label" for="flutterradio">
                                 <img src="@/assets/images/flutterwave.svg" alt="" width="16" height="16" class="me-1">
-                                Flutterwave
+                                Pay now (Flutterwave)
                             </label>
-                            <input class="form-check-input d-none"  type="radio" name="flutterradio" id="flutterradio" value="Flutterwave" v-model="data.payMethod">
+                            <input class="form-check-input d-none"  type="radio" name="flutterradio" id="flutterradio" value="pay_now" v-model="data.payMethod">
                         </div>
-                        <div class="px-3 border py-2 rounded form-check w-100 ms-2" :class="data.payMethod == 'Wallet'? 'border-primary' : ''">
+                        <div class="px-3 border py-2 rounded form-check w-100 me-2" :class="data.payMethod == 'pay_on_delivery'? 'border-primary' : ''">
+                            <label class="form-check-label" for="laterradio">
+                                Pay on delivery
+                            </label>
+                            <input class="form-check-input d-none"  type="radio" name="laterradio" id="laterradio" value="pay_on_delivery" v-model="data.payMethod">
+                        </div>
+                        <!-- <div class="px-3 border py-2 rounded form-check w-100 ms-2" :class="payMethod == 'Wallet'? 'border-primary' : ''">
                             <label class="form-check-label" for="foodieradio">
                                 <router-link to="/wallet">Foodie Wallet</router-link>
                             </label>
-                            <input class="form-check-input d-none"  type="radio" name="foodieradio" id="foodieradio" value="Wallet" v-model="data.payMethod">
-                        </div>
+                            <input class="form-check-input d-none"  type="radio" name="foodieradio" id="foodieradio" value="Wallet" v-model="payMethod">
+                        </div> -->
                     </div>
-
                     <!-- <div class="form-check mb-2">
                         <label class="form-check-label text-dark" for="cardradio">
                             <i class="bi bi-credit-card-2-front me-1"></i>
@@ -118,13 +121,12 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <OrderSummaryCheckout />
+                <OrderSummaryCheckout :data="data"  />
             </div>
         </div>
     </div>
 </template>
 <script>
-import AppService from "../services/app.service"
 import OrderSummaryCheckout from "@/components/OrderSummaryCheckout.vue";
 import authHeader from '../services/auth-header';
 import {mapGetters} from 'vuex'
@@ -133,29 +135,23 @@ export default {
     components: { OrderSummaryCheckout },
     data(){
         return{
-            user: {},
-            data: [],
-            currentPlace: null
+            data: {   
+                user: {},
+                payMethod: null,
+                currentPlace: {
+                    street: "",
+                    location: {}
+                }
+            }
         }
     },
-    method:{
-        setPlace(place){
-            this.currentPlace = place;
-            this.user.deliveryAddresses = this.currentPlace.formatted_address;
-        },
-        placeOrders(){
-            AppService.placeOrders(this.data)
-            .then(response => {
-                let msg = response.data.message
-                let succ = response.data.success
-                if (succ)
-                    this.heart = {color: 'text--orange', providerId: id}
-                this.$store.commit('add_alerts', {msg,succ})
-            })
+    methods:{
+        Location(place){
+            this.currentPlace.street = place.formatted_address;
         }
     },
     computed:{
-        ...mapGetters(['deliveryMode'])
+        ...mapGetters(['deliveryMode', 'basket'])
     },
     beforeMount(){
         var config = {
@@ -166,10 +162,10 @@ export default {
 
         this.axios(config)
         .then(response => {
-            this.user = response.data.data
+            this.data.user = response.data.data
         })
         .catch(function (error) {
-        console.log(error);
+            console.log(error);
         });
     }
 }

@@ -195,10 +195,6 @@ export default {
         },
     },
     components: { ResturantMeal, BasketMeal, ResturantPageCarousel, Reviews, StarRating },
-    mounted(){
-        var provider = this.provider.name
-        this.$store.commit('fetch_provider', provider)
-    },
     beforeMount(){
         var config = {
             method: 'get',
@@ -218,6 +214,7 @@ export default {
         this.axios(config)
         .then((response) => {
             this.provider = response.data.data
+            this.$store.commit('fetch_provider', response.data.data.name)
         });
 
         this.axios(config2)

@@ -57,8 +57,15 @@
                         <p class="text-dark mb-1">Total</p>
                         <p class="h6 mb-1">NGN {{subTotal + 2500}}</p>
                     </div>
+                    <button class="btn btn-primary btn-lg w-100" @click="placeOrders" :disabled="loading">
+                        <span
+                            v-show="loading"
+                            class="spinner-border spinner-border-sm"
+                            role="status" aria-hidden="true"
+                            ></span>
+                            <span v-show="!loading">Proceed To Payment</span>
+                    </button>
                 </div>
-                <button class="btn btn-primary btn-lg w-100" @click="placeOrders">Proceed To Payment</button>
             </div>
         </div>
     </div>
@@ -69,10 +76,11 @@ import {mapGetters} from 'vuex'
 export default {
     name: 'OrderSummaryCheckout',
     props: {
-        paymentMethod: {type: String}
+        data: {type: Object}
     },
     data(){
         return{
+            loading: false,
             edit: false
         }
     },
@@ -82,24 +90,25 @@ export default {
         },
         
         placeOrders(){
+            this.loading = true
             var sortedOrders = []
-            this.basket.map(item => {
 
+            //Validation section
+
+            this.basket.map(item => {
                 let found = sortedOrders.find(value => value.providerId == item.providerId);
                 
                 if (!found) {
                     sortedOrders.push({
                         providerId: item.providerId,
                         deliveryMode: item.deliveryMode,
-                        paymentMode: this.paymentMethod,
+                        paymentMode: this.data.paymentMethod,
+                        address: this.data.currentPlace,
                         menus: [
                             {
                                 menuId: item.id,
-                                name: item.title,
-                                price: item.price,
-                                quantity: item.quantity,
-                                //currency: item.currency,
-                            }
+                                quantity: item.quantity
+                           }
                         ]
                     })
                 }
@@ -107,15 +116,11 @@ export default {
                     found.menus.push(
                         {
                             menuId: item.id,
-                            name: item.title,
-                            price: item.price,
-                            quantity: item.quantity,
-                            //currency: item.currency,
+                            quantity: item.quantity
                         }
                     )
                 }
-                }
-            );
+            });
                 console.log(sortedOrders)
 
             sortedOrders.forEach(menu => {
@@ -125,7 +130,13 @@ export default {
                     let succ = response.data.success
                     this.$store.commit('add_alerts', {msg,succ})
                 })
+                .catch(function (error) {
+                    let msg = error.response.data.message
+                    let succ = error.response.data.success
+                    this.$store.commit('add_alerts', {msg,succ})
+                });
             })
+            this.loading = false
         }
     },
     computed: {
