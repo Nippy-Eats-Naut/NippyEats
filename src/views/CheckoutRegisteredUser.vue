@@ -124,20 +124,22 @@
                 <OrderSummaryCheckout :data="data"  />
             </div>
         </div>
+        <Alert :message="$store.state.message" category="alert" :success="$store.state.success" :link="false" />
     </div>
 </template>
 <script>
 import OrderSummaryCheckout from "@/components/OrderSummaryCheckout.vue";
 import authHeader from '../services/auth-header';
 import {mapGetters} from 'vuex'
+import Alert from "../components/Alert.vue";
 export default {
     name: "CheckoutRegisteredUser",
-    components: { OrderSummaryCheckout },
+    components: { OrderSummaryCheckout, Alert },
     data(){
         return{
             data: {   
                 user: {},
-                payMethod: null,
+                payMethod: '',
                 currentPlace: {
                     street: "",
                     location: {}

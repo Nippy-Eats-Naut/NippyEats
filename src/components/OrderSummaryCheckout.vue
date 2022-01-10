@@ -63,7 +63,7 @@
                             class="spinner-border spinner-border-sm"
                             role="status" aria-hidden="true"
                             ></span>
-                            <span v-show="!loading">Proceed To Payment</span>
+                            <span v-show="loading == false">Proceed To Payment</span>
                     </button>
                 </div>
             </div>
@@ -90,59 +90,73 @@ export default {
         },
         
         placeOrders(){
-            this.loading = true
-            var sortedOrders = []
-
-            //Validation section
-
-            this.basket.map(item => {
-                let found = sortedOrders.find(value => value.providerId == item.providerId);
-                
-                if (!found) {
-                    sortedOrders.push({
-                        providerId: item.providerId,
-                        deliveryMode: item.deliveryMode,
-                        paymentMode: this.data.paymentMethod,
-                        address: this.data.currentPlace,
-                        menus: [
-                            {
-                                menuId: item.id,
-                                quantity: item.quantity
-                           }
-                        ]
-                    })
+            if(this.loggedIn){
+                if(!this.data.payMethod || !this.data.currentPlace.street || !this.data.currentPlace.location.state ||
+                    !this.data.currentPlace.location.city || !this.data.currentPlace.location.postalcode
+                ){
+                    var msg = "Field cannot be empty";
+                    var succ = false;
+                    this.$store.commit('add_alerts', {msg,succ})
                 }
                 else{
-                    found.menus.push(
-                        {
-                            menuId: item.id,
-                            quantity: item.quantity
-                        }
-                    )
-                }
-            });
-                console.log(sortedOrders)
+                    this.loading = true
 
-            sortedOrders.forEach(menu => {
-                AppService.createOrders(menu)
-                .then(response => {
-                    let msg = response.data.message
-                    let succ = response.data.success
-                    this.$store.commit('add_alerts', {msg,succ})
-                })
-                .catch(function (error) {
-                    let msg = error.response.data.message
-                    let succ = error.response.data.success
-                    this.$store.commit('add_alerts', {msg,succ})
-                });
-            })
-            this.loading = false
+                    var sortedOrders = []
+                    this.basket.map(item => {
+                        let found = sortedOrders.find(value => value.providerId == item.providerId);
+                        
+                        if (!found) {
+                            sortedOrders.push({
+                                providerId: item.providerId,
+                                deliveryMode: item.deliveryMode,
+                                paymentMode: this.data.paymentMethod,
+                                address: this.data.currentPlace,
+                                menus: [
+                                    {
+                                        menuId: item.id,
+                                        quantity: item.quantity
+                                }
+                                ]
+                            })
+                        }
+                        else{
+                            found.menus.push(
+                                {
+                                    menuId: item.id,
+                                    quantity: item.quantity
+                                }
+                            )
+                        }
+                    });
+                    
+                    console.log(sortedOrders)
+
+                    sortedOrders.forEach(menu => {
+                        AppService.createOrders(menu)
+                        .then(response => {
+                            let msg = response.data.message
+                            let succ = response.data.success
+                            this.$store.commit('add_alerts', {msg,succ})
+                        })
+                        .catch(error => {
+                            let msg = error.response.data.message
+                            let succ = error.response.data.success
+                            this.$store.commit('add_alerts', {msg,succ})
+                        });
+                    })
+                    this.loading = false
+                }
+            }
+            else{
+                this.$router.push('/login')
+            }
         }
     },
     computed: {
         ...mapGetters([
             'basket'
         ]),
+        ...mapGetters('auth', ['loggedIn']),
         subTotal(){
             var totalSum = this.basket.reduce(function(res, meal){
                 var mp = meal.price;

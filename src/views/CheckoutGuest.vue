@@ -89,6 +89,7 @@
                 <OrderSummaryCheckout :data="data" />
             </div>
         </div>
+        <Alert :message="$store.state.message" category="alert" :success="$store.state.success" :link="false" />
     </div>
 </template>
 <script>
