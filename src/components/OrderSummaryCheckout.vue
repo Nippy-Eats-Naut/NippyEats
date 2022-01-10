@@ -109,7 +109,7 @@ export default {
                             sortedOrders.push({
                                 providerId: item.providerId,
                                 deliveryMode: item.deliveryMode,
-                                paymentMode: this.data.paymentMethod,
+                                paymentMode: this.data.payMethod,
                                 address: this.data.currentPlace,
                                 menus: [
                                     {

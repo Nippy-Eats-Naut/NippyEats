@@ -149,7 +149,7 @@ export default {
     },
     methods:{
         Location(place){
-            this.currentPlace.street = place.formatted_address;
+            this.data.currentPlace.street = place.formatted_address;
         }
     },
     computed:{
