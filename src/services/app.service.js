@@ -37,8 +37,8 @@ class AppService {
     var baseFare = 400
 
     var Fee = baseFare + 50*d
-
-    return Fee.toFixed(2);
+    
+    return parseFloat(Fee.toFixed(2).toString());
   }
 
 }

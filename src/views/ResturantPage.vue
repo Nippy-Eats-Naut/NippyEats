@@ -214,7 +214,13 @@ export default {
         this.axios(config)
         .then((response) => {
             this.provider = response.data.data
-            this.$store.commit('fetch_provider', response.data.data.name)
+
+            const _provider = {
+                name: response.data.data.name,
+                longitude: response.data.data.longitude,
+                latitude: response.data.data.latitude
+            }
+            this.$store.commit('fetch_provider', _provider)
         });
 
         this.axios(config2)

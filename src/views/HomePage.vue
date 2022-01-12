@@ -110,17 +110,17 @@ export default {
     methods:{
         setPlace(place){
             this.currentPlace = place;
+            console.log(place);
+            //return place;
         },
         getProvider(){ 
-            this.setPlace()
-
-            if(this.$store.state.currentPlace == null){
+            if(this.currentPlace == null){
                 this.message = "Address cannot be empty"
             }
             else{
-                var lat = place.geometry.location.lat();
-                var lng =  place.geometry.location.lng();
-                var addr = place.formatted_address;
+                var lat = this.currentPlace.geometry.location.lat();
+                var lng =  this.currentPlace.geometry.location.lng();
+                var addr = this.currentPlace.formatted_address;
                 this.$store.commit('store_location', {lng,lat,addr});
                 console.log(lat, lng, addr);
                this.$router.push('/home')

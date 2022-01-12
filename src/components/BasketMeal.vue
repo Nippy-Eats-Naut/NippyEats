@@ -34,15 +34,15 @@
             <p class="h6">Order Summary</p>
             <div class="d-flex justify-content-between">
                 <p class="mb-1 text-secondary">Subtotal</p>
-                <p class="h6">NGN {{subTotal}}</p>
+                <p class="h6">₦{{subTotal}}</p>
             </div>
             <div class="d-flex justify-content-between">
                 <p class="mb-1 text-secondary">Delivery Fee</p>
-                <p class="h6">NGN 500</p>
+                <p class="h6">₦{{deliveryFee}}</p>
             </div>
             <div class="d-flex justify-content-between">
                 <p class="h6">Total</p>
-                <p class="h6">NGN {{subTotal+500}}</p>
+                <p class="h6">₦{{subTotal+deliveryFee}}</p>
             </div>
             <div>
                 <router-link to="/checkout/user" v-if="loggedIn != null" class="btn btn-primary text-white w-100 btn-lg">Proceed To Checkout</router-link>
@@ -53,6 +53,7 @@
     </div>
 </template>
 <script>
+import AppService from "../services/app.service"
 import {mapGetters} from 'vuex'
 export default {
     name: 'BasketMeal',
@@ -63,16 +64,60 @@ export default {
     },
     computed:{
         ...mapGetters([
-            'basket', 'provider'
+            'basket', 'currentPlace'
         ]),
         ...mapGetters('auth', ['loggedIn']),
+
         subTotal(){
             var totalSum = this.basket.reduce(function(res, meal){
                 var mp = meal.price;
                return res + (mp * meal.quantity);
            }, 0);
            return totalSum;
-       },
+        },
+
+        deliveryFee(){
+            var delivery = []
+            this.basket.map(item => {
+                let found = delivery.find(value => value.providerId == item.providerId);
+                
+                if (!found) {
+                    delivery.push({
+                        providerId: item.providerId,
+                        longitude: item.longitude,
+                        latitude: item.latitude,
+                        menus: [
+                            {
+                                menuId: item.id,
+                                quantity: item.quantity
+                            }
+                        ]
+                    })
+                }
+                else{
+                    found.menus.push(
+                        {
+                            menuId: item.id,
+                            quantity: item.quantity
+                        }
+                    )
+                }
+            });
+
+            const mk1 = {
+                longitude: this.currentPlace.longitude,
+                latitude: this.currentPlace.latitude
+            }
+            var totalDelivery = delivery.reduce(function(res, meal){
+                const mk2 = {
+                    longitude: meal.longitude,
+                    latitude: meal.latitude
+                }
+
+                return res+ AppService.deliveryFee(mk1, mk2);
+           }, 0);
+           return totalDelivery;
+        }
     },
 }
 </script>

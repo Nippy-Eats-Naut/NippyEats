@@ -43,19 +43,19 @@
                 <div>
                     <div class="d-flex justify-content-between">
                         <p class="text-secondary mb-1">Subtotal</p>
-                        <p class="h6 mb-1">NGN {{subTotal}}</p>
+                        <p class="h6 mb-1">₦{{subTotal}}</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="text-secondary mb-1">Delivery fee</p>
-                        <p class="h6 mb-1">NGN 2,000</p>
+                        <p class="h6 mb-1">₦{{deliveryFee}}</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="text-secondary mb-1">VAT</p>
-                        <p class="h6 mb-1">NGN 500</p>
+                        <p class="h6 mb-1">₦</p>
                     </div>
                     <div class="d-flex justify-content-between mt-1 mb-2">
                         <p class="text-dark mb-1">Total</p>
-                        <p class="h6 mb-1">NGN {{subTotal + 2500}}</p>
+                        <p class="h6 mb-1">₦{{subTotal + deliveryFee}}</p>
                     </div>
                     <button class="btn btn-primary btn-lg w-100" @click="placeOrders" :disabled="loading">
                         <span
@@ -154,16 +154,60 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'basket'
+            'basket', 'currentPlace'
         ]),
         ...mapGetters('auth', ['loggedIn']),
+
         subTotal(){
             var totalSum = this.basket.reduce(function(res, meal){
                 var mp = meal.price;
                return res + (mp * meal.quantity);
            }, 0);
            return totalSum;
-       },
+        },
+
+        deliveryFee(){
+            var delivery = []
+            this.basket.map(item => {
+                let found = delivery.find(value => value.providerId == item.providerId);
+                
+                if (!found) {
+                    delivery.push({
+                        providerId: item.providerId,
+                        longitude: item.longitude,
+                        latitude: item.latitude,
+                        menus: [
+                            {
+                                menuId: item.id,
+                                quantity: item.quantity
+                            }
+                        ]
+                    })
+                }
+                else{
+                    found.menus.push(
+                        {
+                            menuId: item.id,
+                            quantity: item.quantity
+                        }
+                    )
+                }
+            });
+
+            const mk1 = {
+                longitude: this.currentPlace.longitude,
+                latitude: this.currentPlace.latitude
+            }
+            var totalDelivery = delivery.reduce(function(res, meal){
+                const mk2 = {
+                    longitude: meal.longitude,
+                    latitude: meal.latitude
+                }
+
+                return res+ AppService.deliveryFee(mk1, mk2);
+           }, 0);
+           return totalDelivery;
+        }
     },
 }
 </script>

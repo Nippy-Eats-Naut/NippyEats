@@ -9,8 +9,6 @@ const store = createStore({
     modules: {auth},
     state(){
         return {
-            //longitude: '',
-            //latitude: '',
             message: null,
             success: null,
             basket: basket ? JSON.parse(basket) : [],
@@ -25,11 +23,8 @@ const store = createStore({
 
     mutations: {
         store_location(state, payload) {
-            // state.latitude = payload.lat
-            // state.longitude = payload.long
-            // state.address = payload.addr
             const currentPlace = {
-                longitude: payload.long,
+                longitude: payload.lng,
                 latitude: payload.lat,
                 address: payload.addr
             }
@@ -56,7 +51,9 @@ const store = createStore({
             } else {
                 payload.menu.quantity = payload.quantity
                 payload.menu.deliveryMode = state._deliveryMode
-                payload.menu.provider = state.provider
+                payload.menu.provider = state.provider.name
+                payload.menu.longitude = state.provider.longitude
+                payload.menu.latitude = state.provider.latitude
                 state.basket.push(payload.menu)
             }      
             this.commit('SAVE_menu');

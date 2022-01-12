@@ -259,7 +259,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const loggedIn = localStorage.getItem('user');
-    const address = localStorage.getItem('address');
+    const address = JSON.parse(localStorage.getItem('currentPlace')).address;
     if (to.matched.some(record => record.meta.requireAuth)){
         if (!loggedIn){
             next({

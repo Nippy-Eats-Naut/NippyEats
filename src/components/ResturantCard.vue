@@ -29,7 +29,7 @@
                                 <p class="small mb-0 d-flex"><i class="bi bi-star-fill text--orange me-1"></i>{{provider.rating}}</p>
                             </div>
                         </div>
-                        <p class="card-text small text-secondary p-1 mb-0">Avg. food time {{provider.orderInformation.averageFoodTime}}</p>
+                        <p class="card-text small text-secondary p-1 mb-0">₦{{deliveryFee(provider.longitude, provider.latitude)}} Delivery Fee • {{provider.orderInformation.averageFoodTime}}</p>
                     </router-link>
                 </div>
             </div>
@@ -59,6 +59,9 @@ export default {
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         },
         ...mapGetters('auth',['loggedIn']),
+        ...mapGetters([
+            'currentPlace',
+        ]),
     },
     methods:{
         Fav(id){
@@ -75,7 +78,26 @@ export default {
             else{
                 this.$router.push('/login')
             }
+        },
+
+        deliveryFee(long, lat){
+            const mk1 = {
+                longitude: this.currentPlace.longitude,
+                latitude: this.currentPlace.latitude
+            }
+
+            const mk2 = {
+                longitude: long,
+                latitude: lat
+            }
+
+            var Fee = AppService.deliveryFee(mk1, mk2)
+
+            return Fee
         }
+    },
+    mounted(){
+        this.deliveryFee
     }
 }
 </script>

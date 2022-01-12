@@ -19,7 +19,7 @@
                             <p class="small mb-0 d-flex"><i class="bi bi-star-fill text--orange me-1"></i> {{res.rating}}</p>
                         </div>
                     </div>
-                    <p class="card-text p-1 mb-0 small text-secondary" v-if="currentPlace">N{{deliveryFee(res.longitude, res.latitude)}} Delivery Fee <i class="bi bi-dot"></i>{{res.orderInformation.averageFoodTimes}}</p>
+                    <p class="card-text p-1 mb-0 small text-secondary" v-if="currentPlace">₦{{deliveryFee(res.longitude, res.latitude)}} Delivery Fee • {{res.orderInformation.averageFoodTime}}</p>
                 </router-link>
             </div>
         </div>
@@ -76,8 +76,7 @@ export default {
     },
     computed:{
         ...mapGetters([
-            'currentPlace', 
-            // 'latitude'
+            'currentPlace',
         ]),
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
