@@ -2,15 +2,15 @@ import { createStore } from 'vuex'
 import { auth } from "./auth.module";
 
 let basket = localStorage.getItem('basket');
-let address = localStorage.getItem('address');
+let currentPlace = localStorage.getItem('currentPlace');
 let deliveryMode = localStorage.getItem('deliveryMode');
 
 const store = createStore({
     modules: {auth},
     state(){
         return {
-            longitude: '',
-            latitude: '',
+            //longitude: '',
+            //latitude: '',
             message: null,
             success: null,
             basket: basket ? JSON.parse(basket) : [],
@@ -18,16 +18,23 @@ const store = createStore({
             overlay: false,
             deliveryMode: deliveryMode ? JSON.parse(deliveryMode).deliveryMode : null,
             _deliveryMode: deliveryMode ? JSON.parse(deliveryMode)._deliveryMode : null,
-            address: address ? address : null,
+            address: currentPlace ? JSON.parse(currentPlace).address : null,
+            currentPlace: currentPlace ? JSON.parse(currentPlace) : null,
         }
     },
 
     mutations: {
         store_location(state, payload) {
-            state.latitude = payload.lat
-            state.longitude = payload.long
-            state.address = payload.addr
-            localStorage.setItem('address', payload.addr);
+            // state.latitude = payload.lat
+            // state.longitude = payload.long
+            // state.address = payload.addr
+            const currentPlace = {
+                longitude: payload.long,
+                latitude: payload.lat,
+                address: payload.addr
+            }
+            state.currentPlace = currentPlace
+            localStorage.setItem('currentPlace', JSON.stringify(currentPlace));
         },
         add_alerts(state, payload){
             state.message = payload.msg
@@ -95,12 +102,12 @@ const store = createStore({
     },
 
     getters:{
-        longitude: state=> {
-            return state.longitude;
+        currentPlace: state=> {
+            return state.currentPlace;
         },
-        latitude: state=> {
-            return state.latitude;
-        },
+        // latitude: state=> {
+        //     return state.currentPlace.latitude;
+        // },
         address: state=> {
             return state.address;
         },

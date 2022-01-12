@@ -19,7 +19,7 @@
                             <p class="small mb-0 d-flex"><i class="bi bi-star-fill text--orange me-1"></i> {{res.rating}}</p>
                         </div>
                     </div>
-                    <p class="card-text p-1 mb-0 small text-secondary">N{{res.orderInformation.minimumOrderAmount}} Delivery Fee <i class="bi bi-dot"></i>{{res.orderInformation.averageFoodTimes}}</p>
+                    <p class="card-text p-1 mb-0 small text-secondary" v-if="currentPlace">N{{deliveryFee(res.longitude, res.latitude)}} Delivery Fee <i class="bi bi-dot"></i>{{res.orderInformation.averageFoodTimes}}</p>
                 </router-link>
             </div>
         </div>
@@ -38,6 +38,8 @@
     </div>
 </template>
 <script>
+import AppService from "../services/app.service"
+import {mapGetters} from 'vuex'
 export default {
     name: 'NewResturants',
     inject: ["mq"],
@@ -54,12 +56,36 @@ export default {
         scroll__right() {
             let content1 = document.querySelector(".--nr");
             content1.scrollLeft += 50;
+        },
+
+        deliveryFee(long, lat){
+            const mk1 = {
+                longitude: this.currentPlace.longitude,
+                latitude: this.currentPlace.latitude
+            }
+
+            const mk2 = {
+                longitude: long,
+                latitude: lat
+            }
+
+            var Fee = AppService.deliveryFee(mk1, mk2)
+
+            return Fee
         }
     },
     computed:{
+        ...mapGetters([
+            'currentPlace', 
+            // 'latitude'
+        ]),
         desktop(){
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
-        }
+        },
+    },
+
+    mounted(){
+        this.deliveryFee
     }
 }
 </script>

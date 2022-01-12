@@ -80,7 +80,9 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'longitude','latitude','address'
+            'currentPlace',
+            // 'latitude',
+            'address'
         ]),
         ...mapGetters('auth',['loggedIn']),
         desktop(){
@@ -94,7 +96,7 @@ export default {
     beforeMount(){
         var config = {
             method: 'get',
-            url: `https://api.nippyeats.com/v1/foodies/providers?longitude=${this.longitude}&latitude=${this.latitude}`,
+            url: `https://api.nippyeats.com/v1/foodies/providers?longitude=${this.currentPlace.longitude}&latitude=${this.currentPlace.latitude}`,
             headers: { }
         };
          var config2 = {
