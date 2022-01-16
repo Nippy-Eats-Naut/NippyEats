@@ -10,10 +10,10 @@
                     <p class="fw-bold text-white">Company</p>
                     <ul>
                         <li>
-                            <router-link class="footer--link" to="/about-us">About NappyEats</router-link>
+                            <router-link class="footer--link" to="/about-us">About NippyEats</router-link>
                         </li>
                         <li>
-                            <router-link class="footer--link" to="/resturants">Food Vendors</router-link>
+                            <a href="https://provider.nippyeats.com" target="_blank" class="footer--link">Food Vendors</a>
                         </li>
                         <li>
                             <router-link class="footer--link" to="/become-a-delivery-partner">Become a Delivery Partner</router-link>
@@ -66,7 +66,7 @@ export default{
 <style scoped>
     .footer--link{
         text-decoration: none;
-        color:white;
+        color:white !important;
     }
     ul{
         padding:0px;

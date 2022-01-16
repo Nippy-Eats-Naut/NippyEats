@@ -15,7 +15,7 @@ const store = createStore({
             provider: null,
             overlay: false,
             deliveryMode: deliveryMode ? JSON.parse(deliveryMode).deliveryMode : null,
-            _deliveryMode: deliveryMode ? JSON.parse(deliveryMode)._deliveryMode : null,
+            _deliveryMode: deliveryMode ? JSON.parse(deliveryMode)._deliveryMode : 'delivery',
             address: currentPlace ? JSON.parse(currentPlace).address : null,
             currentPlace: currentPlace ? JSON.parse(currentPlace) : null,
         }

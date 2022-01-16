@@ -24,7 +24,7 @@
             </div>
             <div class="d-flex justify-content-between">
                 <p class="text-dark">Total</p>
-                <p class="text-dark">₦{{subTotal + deliveryFee}}</p>
+                <p class="text-dark">₦{{(subTotal + deliveryFee).toFixed(2)}}</p>
             </div>
         </div>
         <div>

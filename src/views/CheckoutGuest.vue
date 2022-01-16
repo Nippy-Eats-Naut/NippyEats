@@ -52,22 +52,16 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="city" placeholder="name@example.com"  v-model="data.currentPlace.location.city">
                                 <label for="city">City</label>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-6 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="state" placeholder="name@example.com"  v-model="data.currentPlace.location.state">
-                                <label for="state">State</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="postcode" placeholder="name@example.com"  v-model="data.currentPlace.location.postalcode">
-                                <label for="postcode">Postal Code</label>
+                                <textarea class="form-control" placeholder="Leave a note here" id="delivery_note" v-model="data.note"></textarea>
+                                <label for="delivery_note">Delivery note</label>
                             </div>
                         </div>
                     </div>
@@ -95,9 +89,10 @@
 <script>
 import OrderSummaryCheckout from "@/components/OrderSummaryCheckout.vue";
 import {mapGetters} from 'vuex'
+import Alert from "../components/Alert.vue";
 export default {
     name: "CheckoutGuest",
-    components: { OrderSummaryCheckout },
+    components: { OrderSummaryCheckout, Alert },
     data(){
         return{
             data: {

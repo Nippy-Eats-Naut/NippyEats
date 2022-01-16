@@ -62,22 +62,16 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-6 mb-3">
                             <div class="">
                                 <label for="city">City</label>
                                 <input type="text" class="form-control" id="city"  v-model="data.currentPlace.location.city">
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="">
-                                <label for="state">State</label>
-                                <input type="text" class="form-control" id="state" v-model="data.currentPlace.location.state">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="">
-                                <label for="postcode">Postal Code</label>
-                                <input type="text" class="form-control" id="postcode"  v-model="data.currentPlace.location.postalcode">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a note here" id="delivery_note" v-model="data.note"></textarea>
+                                <label for="delivery_note">Delivery note</label>
                             </div>
                         </div>
                     </div>
@@ -92,32 +86,7 @@
                             </label>
                             <input class="form-check-input d-none"  type="radio" name="flutterradio" id="flutterradio" value="pay_now" v-model="data.payMethod">
                         </div>
-                        <div class="px-3 border py-2 rounded form-check w-100 me-2" :class="data.payMethod == 'pay_on_delivery'? 'border-primary' : ''">
-                            <label class="form-check-label" for="laterradio">
-                                Pay on delivery
-                            </label>
-                            <input class="form-check-input d-none"  type="radio" name="laterradio" id="laterradio" value="pay_on_delivery" v-model="data.payMethod">
-                        </div>
-                        <!-- <div class="px-3 border py-2 rounded form-check w-100 ms-2" :class="payMethod == 'Wallet'? 'border-primary' : ''">
-                            <label class="form-check-label" for="foodieradio">
-                                <router-link to="/wallet">Foodie Wallet</router-link>
-                            </label>
-                            <input class="form-check-input d-none"  type="radio" name="foodieradio" id="foodieradio" value="Wallet" v-model="payMethod">
-                        </div> -->
                     </div>
-                    <!-- <div class="form-check mb-2">
-                        <label class="form-check-label text-dark" for="cardradio">
-                            <i class="bi bi-credit-card-2-front me-1"></i>
-                            **** **** 2456
-                        </label>
-                        <input class="form-check-input"  type="radio" name="cardradio" id="cardradio" value="Card">
-                    </div>
-                    <div class="form-check mb-2">
-                        <label class="form-check-label text-dark" for="walletradio">
-                            Foodie Wallet(N3,000)
-                        </label>
-                        <input class="form-check-input"  type="radio" name="walletradio" id="walletradio" value="Wallet">
-                    </div> -->
                 </div>
             </div>
             <div class="col-md-4">

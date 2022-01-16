@@ -55,7 +55,7 @@
                     </div>
                     <div class="d-flex justify-content-between mt-1 mb-2">
                         <p class="text-dark mb-1">Total</p>
-                        <p class="h6 mb-1">₦{{subTotal + deliveryFee}}</p>
+                        <p class="h6 mb-1">₦{{(subTotal + deliveryFee).toFixed(2)}}</p>
                     </div>
                     <button class="btn btn-primary btn-lg w-100" @click="placeOrders" :disabled="loading">
                         <span

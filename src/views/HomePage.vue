@@ -16,7 +16,7 @@
                         
                     >
                     </GMapAutocomplete>
-                    <button class="btn text-white btn-primary " @click="getProvider">Find Food</button>
+                    <button class="btn text-white btn-primary " @click.prevent="getProvider">Find Food</button>
                 </div>
             </div>
             <Alert class="mt-2" :message="$route.params.message || message" category="alert" :success="success" :link="false" :class="desktop?'w-50':''"/>
@@ -98,6 +98,7 @@ import NewResturants from '../components/NewResturants.vue';
 export default {
     name: "HomePage",
     inject: ["mq"],
+    components: { BrowseCard, NewResturants,Alert },
     data() {
         return {
             newProviders: [],
@@ -110,8 +111,6 @@ export default {
     methods:{
         setPlace(place){
             this.currentPlace = place;
-            console.log(place);
-            //return place;
         },
         getProvider(){ 
             if(this.currentPlace == null){
@@ -123,7 +122,7 @@ export default {
                 var addr = this.currentPlace.formatted_address;
                 this.$store.commit('store_location', {lng,lat,addr});
                 console.log(lat, lng, addr);
-               this.$router.push('/home')
+                this.$router.push('/home')
             }
         }
     },
@@ -132,7 +131,6 @@ export default {
             return this.mq.current !== 'xs' && this.mq.current !== 'sm'
         }
     },
-    components: { BrowseCard, NewResturants,Alert },
     beforeMount(){
         var config = {
             method: 'get',

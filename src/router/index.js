@@ -260,7 +260,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const loggedIn = localStorage.getItem('user');
     const currentPlace = localStorage.getItem('currentPlace');
-    const address = currentPlace ? JSON.parse(currentPlace).address : null;
+    console.log('router',currentPlace)
+    //const address = JSON.parse(currentPlace) ? JSON.parse(currentPlace).address : '';
+    //console.log(address)
     if (to.matched.some(record => record.meta.requireAuth)){
         if (!loggedIn){
             next({
@@ -273,7 +275,7 @@ router.beforeEach((to, from, next) => {
         }
     }
     else if(to.matched.some(record => record.meta.guest)){
-        if (!loggedIn && address == null){
+        if (!loggedIn && !currentPlace){
             next({
                 path: '/',
                 name: 'Homepage',
