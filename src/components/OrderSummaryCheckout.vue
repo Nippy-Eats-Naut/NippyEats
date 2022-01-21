@@ -91,9 +91,7 @@ export default {
         
         placeOrders(){
             if(this.loggedIn){
-                if(!this.data.payMethod || !this.data.currentPlace.street || !this.data.currentPlace.location.state ||
-                    !this.data.currentPlace.location.city || !this.data.currentPlace.location.postalcode
-                ){
+                if(!this.data.payMethod || !this.data.currentPlace.street){
                     var msg = "Field cannot be empty";
                     var succ = false;
                     this.$store.commit('add_alerts', {msg,succ})
@@ -137,6 +135,7 @@ export default {
                             let msg = response.data.message
                             let succ = response.data.success
                             this.$store.commit('add_alerts', {msg,succ})
+                            
                         })
                         .catch(error => {
                             let msg = error.response.data.message
