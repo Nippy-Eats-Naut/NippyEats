@@ -81,7 +81,6 @@ export default {
     computed: {
         ...mapGetters([
             'currentPlace',
-            // 'latitude',
             'address'
         ]),
         ...mapGetters('auth',['loggedIn']),
@@ -147,11 +146,11 @@ export default {
             this.newProviders = fooData;
         });
     },
-    created() {
-        if (!this.loggedIn && !this.address) {
-            this.$router.push("/");
-        }
-    },
+    // created() {
+    //     if (!this.loggedIn && !this.address) {
+    //         this.$router.push("/");
+    //     }
+    // },
 }
 </script>
 <style scoped>

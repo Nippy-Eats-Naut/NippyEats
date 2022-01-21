@@ -49,42 +49,39 @@
                         </a> -->
                     </div>
                     <div class="mb-3">
-                        <div class="">
-                            <label for="sAddr">Street Address</label>
-                            <GMapAutocomplete
-                                placeholder="Where are you at?"
-                                @place_changed="Location"
-                                class="form-control"
-                                id="sAddr"
-                                
-                            >
-                            </GMapAutocomplete>
-                        </div>
+                        <label for="sAddr">Street Address</label>
+                        <GMapAutocomplete
+                            placeholder="Where are you at?"
+                            @place_changed="Location"
+                            class="form-control mb-3"
+                            id="sAddr"
+                            
+                        >
+                        </GMapAutocomplete>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
+                    <div class="row mb-3">
+                        <!-- <div class="col-md-6 mb-3">
                             <div class="">
                                 <label for="city">City</label>
                                 <input type="text" class="form-control" id="city"  v-model="data.currentPlace.location.city">
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a note here" id="delivery_note" v-model="data.note"></textarea>
-                                <label for="delivery_note">Delivery note</label>
-                            </div>
+                        <div class="col-md-6 mb-3"> -->
+                        <div class="">
+                            <label for="delivery_note">Delivery note</label>
+                            <textarea class="form-control" placeholder="Leave a note here" id="delivery_note" v-model="data.note"></textarea>
                         </div>
                     </div>
                 </div>
                 <div>
                     <p class="mb-3 text-dark h6">Payment Method</p>
-                    <div class="d-flex">
-                        <div class="px-3 border py-2 rounded form-check w-100 me-2" :class="data.payMethod == 'pay_now'? 'border-primary' : ''">
+                    <div class="shadow-sm border p-2 rounded col-md-3">
+                        <div class="form-check">
                             <label class="form-check-label" for="flutterradio">
                                 <img src="@/assets/images/flutterwave.svg" alt="" width="16" height="16" class="me-1">
-                                Pay now (Flutterwave)
+                                Flutterwave
                             </label>
-                            <input class="form-check-input d-none"  type="radio" name="flutterradio" id="flutterradio" value="pay_now" v-model="data.payMethod">
+                            <input class="form-check-input"  type="radio" name="flutterradio" id="flutterradio" value="pay_now" v-model="data.payMethod">
                         </div>
                     </div>
                 </div>
